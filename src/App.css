@@ -20,3 +20,55 @@
 .App-link {
   color: #09d3ac;
 }
+
+#demo-image {
+  width: 40%;
+  height: 30%;
+  display: inline-block;
+  background-color: white;
+  position: fixed;
+  top: 24%;
+  right: 10%
+  
+}
+
+#motto {
+  width: 40%;
+  position: fixed;
+  top: 20%;
+  left: 10%;
+}
+
+#get-started {
+  position: fixed;
+  top: 56%;
+  right: 10%;
+  width: 40%;
+  background-color: #8F1C3F;
+  border-color: #8F1C3F;
+}
+
+#login {
+  position: fixed;
+  top: 62%;
+  right: 10%;
+  width: 40%;
+  background-color: #8F1C3F;
+  border-color: #8F1C3F;
+}
+
+#nav-bar {
+  background-color: #8F1C3F !important;
+}
+
+.navbar-light .navbar-brand {
+  color: #F1F1E8
+}
+
+.navbar-light .navbar-nav .nav-link {
+  color: #F1F1E8
+}
+
+.dropdown-menu {
+  left: -60px
+}
