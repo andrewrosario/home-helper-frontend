@@ -132,3 +132,13 @@
 nav > p {
   cursor: pointer;
 }
+
+#submit-task {
+  margin-left: auto;
+  margin-right: auto
+}
+
+#tasks {
+  overflow: scroll;
+  height: 50vh
+}
