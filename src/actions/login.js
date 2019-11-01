@@ -1,7 +1,6 @@
 import history from "../history";
 
 export function login(user) {
-
     return (dispatch) => {
         dispatch({type: 'START_LOGIN_REQUEST'})
         fetch(`${process.env.REACT_APP_API_URL}/login`, {
@@ -25,7 +24,6 @@ export function login(user) {
             }
         })
         .then(user => {
-            console.log(user)
             localStorage.setItem("jwt", user.jwt)
             localStorage.setItem("userId", user.user.id);
             dispatch({ type: "LOGIN", user})

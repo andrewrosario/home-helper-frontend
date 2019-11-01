@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import Welcome from './components/welcome'
-import './App.css';
-import { Router, Switch, Route, Redirect } from 'react-router-dom';
+import './App.scss';
+import { Router, Switch, Route } from 'react-router-dom';
 import { connect } from 'react-redux'
 import history from './history';
 import NoviceDashboard from './containers/dashboard';
-
+import updateUser from './actions/updateUser'
 
 class App extends Component {
-
   render() {
     return (
       <Router history={history}>
@@ -25,7 +24,9 @@ class App extends Component {
 }
 
 function mapStateToProps(state) {
-  return { currentUser: state.LoginReducer.currentUser.user }
+  if(state.LoginReducer.currentUser) {
+    return {currentUser: state.LoginReducer.currentUser.user}
+  }
 }
 
-export default connect(mapStateToProps)(App);
+export default connect(mapStateToProps, { updateUser })(App);

@@ -7,7 +7,7 @@ import { Provider } from 'react-redux'
 import rootReducer from './reducers/index'
 import thunk from 'redux-thunk';
 import '@fortawesome/fontawesome-free/css/all.min.css';
-import './index.css';
+import './index.scss';
 import App from './App';
 import { loadState, saveState } from './localStorage'
 
