@@ -34,5 +34,4 @@ class NewUser extends Component {
     }
 }
 
- 
 export default connect(null, { login })(NewUser);

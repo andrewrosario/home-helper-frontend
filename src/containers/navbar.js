@@ -1,27 +1,21 @@
-import React, { Component } from 'react';
-import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
+import React from 'react';
+import { slide as Menu } from 'react-burger-menu';
+import { logout } from '../actions/logout'
+import { connect } from 'react-redux'
 
-class NavBar extends Component {
-    state = {  }
-    render() { 
-        return (
-          <Navbar id='nav-bar' bg="light" expand="lg">
-            <Navbar.Brand href="#home"><p>Home Helper</p></Navbar.Brand>
-            <Navbar.Toggle aria-controls="basic-navbar-nav" />
-            <Navbar.Collapse id="basic-navbar-nav">
-              <Nav className="ml-auto">
-                <NavDropdown title="Menu" class='mr-sm-2' id="basic-nav-dropdown">
-                  <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-                  <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
-                  <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-                  <NavDropdown.Divider />
-                  <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
-                </NavDropdown>
-              </Nav>
-            </Navbar.Collapse>
-          </Navbar>
-          );
-    }
+const NavBar = (props) => {
+  return ( 
+    <Menu>
+      <a className="menu-item" href="/">
+        Home
+      </a>
+      <p>Projects</p>
+      {props.projects.map( (project, index)=> <p key={index} className='menu-item' onClick={() => props.handleProjectClick(project.id)}>{project.title}</p>)}
+      <br></br>
+      <p className='menu-item' onClick={props.toggleCreateProject}>Create New Project</p>
+      <p className='menu-item' onClick={props.logout}>Logout</p>
+    </Menu>
+   );
 }
- 
-export default NavBar;
+
+export default connect(null, { logout }) (NavBar);

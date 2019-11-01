@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {Button, Modal} from 'react-bootstrap';
+import { Button, Modal } from 'react-bootstrap';
 import NewUser from '../containers/newUser'
 import Login from '../containers/login'
 
@@ -11,6 +11,7 @@ const  WelcomePage = () => {
         setShowSignUp(false)
         setShowLogin(false)
     }
+
     const handleShow = (event) => event.target.id === 'get-started' ? setShowSignUp(true) : setShowLogin(true)
 
     return ( 
@@ -18,7 +19,7 @@ const  WelcomePage = () => {
         <div id={'welcome'} style={{backgroundImage: "url(/tools.jpg)", height: '100vh', backgroundSize: 'cover'}}>
         </div>
         <div id={'call-to-action'}>
-            <img id={'motto'} src={process.env.PUBLIC_URL + '/motto.png'}></img>
+            <img id={'motto'} src={process.env.PUBLIC_URL + '/motto.png'} alt='The smart way to DIY'></img>
         </div>
         <div id={'demo-image'}>
         </div>
@@ -26,7 +27,7 @@ const  WelcomePage = () => {
         <Button id={'login'} onClick={handleShow} className={'rounded-pill'}>Log In</Button>
         <Modal show={showSignUp} onHide={handleClose}>
             <Modal.Header closeButton>
-            <Modal.Title>Sign Up</Modal.Title>
+                <Modal.Title>Sign Up</Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <NewUser />
@@ -34,7 +35,7 @@ const  WelcomePage = () => {
         </Modal>
         <Modal show={showLogin} onHide={handleClose}>
             <Modal.Header closeButton>
-            <Modal.Title>Log In</Modal.Title>
+                <Modal.Title>Log In</Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <Login />
