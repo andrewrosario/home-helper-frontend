@@ -140,12 +140,17 @@ nav > p {
 
 #tasks {
   overflow: scroll;
-  height: 70vh
+  height: 62vh
+}
+
+#details {
+  overflow: scroll;
+  height: 55vh;
 }
 
 #materials {
   overflow: scroll;
-  height: 30vh;
+  height: 35vh;
 }
 
 .edit-button {

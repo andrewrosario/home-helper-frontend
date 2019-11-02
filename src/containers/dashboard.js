@@ -1,12 +1,13 @@
 import React from 'react';
 import NavBar from './navbar'
-import { Modal } from 'react-bootstrap';
+import { Modal } from 'react-bootstrap'
 import { connect } from 'react-redux'
-import NewProject from './newProject';
+import NewProject from './newProject'
 import TaskContainer from './taskContainer'
 import DetailsContainer from './detailsContainer'
 import MaterialsContainer from './materialsContainer'
-import ChatContainer from './chatContainer';
+import ChatContainer from './chatContainer'
+import ProjectCardContainer from './projectCardContainer'
 
 class NoviceDashboard extends React.PureComponent {
     constructor(props) {
@@ -14,7 +15,7 @@ class NoviceDashboard extends React.PureComponent {
         const showModal = props.user.novice_projects.length ? false : true
         this.state = {
             currentProject: null,
-            showCreateProject: showModal,
+            showCreateProject: showModal
         }
     }
 
@@ -36,27 +37,45 @@ class NoviceDashboard extends React.PureComponent {
         .then(data => {
             this.setState({
                 ...this.state,
-                currentProject: data.project
+                currentProject: data.project,
             })
         })
     }
 
     render() { 
         return ( 
-            <div>
-                <NavBar projects={this.props.user.novice_projects} toggleCreateProject={this.toggleCreateProject} handleProjectClick={this.handleProjectClick}/>
-                <div id='dashboard-container' className='container'>
-                    <div id='tasks-details' className='row'>
-                        {this.state.currentProject && <><MaterialsContainer projectId={this.state.currentProject.id} materials={this.state.currentProject.materials}/><ChatContainer /></>}
-                        {this.state.currentProject ? <TaskContainer projectId={this.state.currentProject.id} tasks={this.state.currentProject.tasks} /> : <h1>There is No Project Selected, Please Select a Project or Create a new one.</h1>}
-                        {this.state.currentProject && <DetailsContainer />}
-                    {/* </div>
-                    <div id='materials-chat' className='row'> */}
+            <div className='mt-2'>
+                <NavBar 
+                    projects={this.props.user.novice_projects} 
+                    toggleCreateProject={this.toggleCreateProject} 
+                    handleProjectClick={this.handleProjectClick}
+                />
+
+                { !this.state.currentProject && <ProjectCardContainer /> }
+                { this.state.currentProject && <div id='dashboard-container' className='container'>
+                    <div className='row'>
+                        <div className='col-8'>
+                            <div className='row border-bottom border-dark'>
+                                <MaterialsContainer projectId={this.state.currentProject.id} materials={this.state.currentProject.materials}/>
+                            </div>
+                            <div className='row mt-3'>
+                               <TaskContainer projectId={this.state.currentProject.id} tasks={this.state.currentProject.tasks} />
+                            </div>
+                        </div>
+                        <div className='col-4 border-left border-dark'>
+                            <div className='row'>
+                               <DetailsContainer />
+                            </div>
+                            <div className= 'row'>
+                                <ChatContainer />
+                            </div>
+                        </div>
                     </div>
-                </div>
+                </div> }
+
                 <Modal show={this.state.showCreateProject} onHide={this.toggleCreateProject}>
                     <Modal.Header closeButton>
-                    <Modal.Title>Create a New Project</Modal.Title>
+                    {this.props.novice_projects.length > 0 ? <Modal.Title>Create a New Project</Modal.Title> : <Modal.Title>Welcome! Join our Community by Creating a Project</Modal.Title>}
                     </Modal.Header>
                     <Modal.Body>
                         <NewProject toggleCreateProject={this.toggleCreateProject}/>
@@ -70,7 +89,7 @@ class NoviceDashboard extends React.PureComponent {
 function mapStateToProps(state){
     return {
         user: state.UserReducer.currentUser.user,
-        projects: state.UserReducer.currentUser.user.projects
+        novice_projects: state.UserReducer.currentUser.user.novice_projects
     }
 }
  

@@ -108,8 +108,8 @@ class TaskContainer extends React.PureComponent {
 
     render() { 
         return ( 
-            <div id='tasks' className='col-8'>
-            <h1>Tasks</h1>
+            <div id='tasks' className='col-12'>
+            <h3>Tasks</h3>
             <Table>
                 <thead>
                     <tr>

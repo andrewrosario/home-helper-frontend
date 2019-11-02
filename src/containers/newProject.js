@@ -36,13 +36,13 @@ class NewProject extends Component {
                         <Form.Control type='text' name='name' placeholder='Project Name' onChange={this.handleFormChange} />
                         <Form.Control as='textarea' name='description' placeholder='Project Description' onChange={this.handleFormChange} />
                         <Form.Control as='select' name='type' onChange={this.handleFormChange}>
-                            <option value='1'>Project Type</option>
-                            <option value='2'>Paint</option>
-                            <option value='3'>Plubming</option>
-                            <option value='4'>Electrical</option>
-                            <option value='5'>Carpentry</option>
-                            <option value='6'>Flooring</option>
-                            <option value='7'>Landscaping</option>
+                            <option>Project Type</option>
+                            <option value='1'>Paint</option>
+                            <option value='2'>Plubming</option>
+                            <option value='3'>Electrical</option>
+                            <option value='4'>Carpentry</option>
+                            <option value='5'>Flooring</option>
+                            <option value='6'>Landscaping</option>
                         </Form.Control>
                         <Button type="submit">
                             Begin Planning

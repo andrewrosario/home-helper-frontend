@@ -110,8 +110,8 @@ class MaterialsContainer extends Component {
 
     render() { 
         return ( 
-            <div id='materials' className='col-8'>
-            <h1>Materials</h1>
+            <div id='materials' className='col-12 mb-2 pb-2'>
+            <h3>Materials</h3>
             <Table>
                 <thead>
                     <tr>
