@@ -1,9 +1,8 @@
-import React, { Component } from 'react';
+import React from 'react';
 import TaskListItem from '../components/taskListItem'
+import TaskNewForm from '../components/taskNewForm'
 import TaskEditForm from '../components/taskEditForm'
 import { Table } from 'react-bootstrap';
-// import { thisTypeAnnotation } from '@babel/types';
-
 
 class TaskContainer extends React.PureComponent {
     constructor(props) {
@@ -11,41 +10,27 @@ class TaskContainer extends React.PureComponent {
         this.state = { 
             project_id: props.projectId,
             tasks: props.tasks,
-            showNewTaskModal: false
+            showNewModal: false,
+            showEditModal: false
          }
     }
 
-    // componentDidMount() {
-    //     this.setState({
-    //         ...this.state,
-    //         tasks: this.props.project.tasks
-    //     })
-    // }
-
-    componentDidUpdate(prevProps) {
-        console.log('state', this.state)
-        console.log('prevProps', prevProps)
-        console.log('this.props', this.props)
+    componentDidUpdate() {
         if(this.props.projectId !== this.state.project_id) {
             this.setState({
                 ...this.state,
                 tasks: this.props.tasks,
-                project_id: this.props.projectId
+                project_id: this.props.projectId,
+                editTask: null,
+                newTask: false
             })
         }
     }
 
-    handleAddTaskClick = () => {
-        this.setState({
-            ...this.state,
-            showNewTaskModal: !this.state.showNewTaskModal
-        })
-    }
-
-    handleDoneEditTaskClick = (text, time) => {
+    fetchPostPatch = (text, time, isComplete, method, path) => {
         const projectId = this.state.project_id
-        fetch(`${process.env.REACT_APP_API_URL}/tasks`, {
-            method: 'POST',
+        fetch(`${process.env.REACT_APP_API_URL}/${path}`, {
+            method: `${method}`,
             headers: {
                 'Content-Type': 'application/json',
                 Accept: 'application/json',
@@ -55,30 +40,105 @@ class TaskContainer extends React.PureComponent {
                 task: {
                     text: text,
                     time_required: time,
-                    project_id: projectId
+                    project_id: projectId,
+                    is_complete: isComplete
                 }
             })
         })
         .then(resp => resp.json())
         .then(tasks => {
-            console.log('tasks', tasks)
             this.setState({
                 ...this.state,
                 tasks: tasks,
-                showNewTaskModal: false
+                showNewModal: false,
+                newTask: false,
+                showEditModal: false,
+                editTask: null
             })
+        })
+    }
+
+    handleDeleteClick = () => {
+        if (window.confirm("Do you really want to delete this task?")) { 
+            fetch(`${process.env.REACT_APP_API_URL}/tasks/${this.state.editTask.id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Accept: 'application/json',
+                    "Authorization": 'Bearer ' + localStorage.getItem("jwt")
+                }
+            })
+            .then(resp => resp.json())
+            .then(tasks => {
+                this.setState({
+                    ...this.state,
+                    tasks: tasks,
+                    showNewModal: false,
+                    newTask: false,
+                    showEditModal: false,
+                    editTask: null
+                })
+            })
+          }
+    }
+
+    handleDoneNewClick = (text, time) => {
+        this.fetchPostPatch(text, time, false, 'POST', 'tasks')
+    }
+
+    handleDoneEditClick = (id, text, time, isComplete) => {
+        this.fetchPostPatch(text, time, isComplete, 'PATCH', `tasks/${id}`)
+    }
+
+    handleNewClick = () => {
+        this.setState({
+            ...this.state,
+            showNewModal: !this.state.showNewModal,
+            newTask: true
+        })
+    }
+
+    handleEditClick = (task) => {
+        this.setState({
+            ...this.state,
+            editTask: task,
+            showEditModal: !this.state.showEditModal
         })
     }
 
     render() { 
         return ( 
-            <div id='tasks' className='col-8 container'>
+            <div id='tasks' className='col-8'>
             <h1>Tasks</h1>
             <Table>
-                {this.state.tasks && this.state.tasks.map( task => <TaskListItem  key={task.id} task={task}/>)}
+                <thead>
+                    <tr>
+                        <th>Complete</th>
+                        <th>Description</th>
+                        <th>Time Required</th>
+                        <th>Edit</th>
+                    </tr>
+                </thead>
+                {this.state.tasks && this.state.tasks.map( task => <TaskListItem  
+                                                                        key={task.id} 
+                                                                        task={task} 
+                                                                        handleDoneEditClick={this.handleDoneEditClick} 
+                                                                        handleEditClick={this.handleEditClick}
+                                                                    />)}
             </Table>
-            <TaskEditForm show={this.state.showNewTaskModal} handleDoneEditTaskClick={this.handleDoneEditTaskClick} handleAddTaskClick={this.handleAddTaskClick}/>
-            <button id='new-task' onClick={this.handleAddTaskClick}>Add a Task</button>
+            {this.state.editTask && <TaskEditForm 
+                                        task={this.state.editTask} 
+                                        show={this.state.showEditModal} 
+                                        handleDoneEditClick={this.handleDoneEditClick}
+                                        handleEditClick={this.handleEditClick}
+                                        handleDeleteClick={this.handleDeleteClick}
+                                        />}
+            {this.state.newTask &&  <TaskNewForm 
+                                        show={this.state.showNewModal} 
+                                        handleDoneEditClick={this.handleDoneNewClick} 
+                                        handleNewClick={this.handleNewClick}
+                                    />}
+            <button id='new-task' onClick={this.handleNewClick}>Add a Task</button>
             </div>
          );
     }

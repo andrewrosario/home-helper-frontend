@@ -4,6 +4,7 @@ import { logout } from '../actions/logout'
 import { connect } from 'react-redux'
 
 const NavBar = (props) => {
+  console.log(props)
   return ( 
     <Menu>
       <a className="menu-item" href="/">
@@ -18,4 +19,10 @@ const NavBar = (props) => {
    );
 }
 
-export default connect(null, { logout }) (NavBar);
+function mapStateToProps(state) {
+  return {
+      projects: state.UserReducer.currentUser.user.novice_projects
+  }
+}
+
+export default connect(mapStateToProps, { logout }) (NavBar);

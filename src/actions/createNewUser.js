@@ -19,6 +19,8 @@ export function createNewUser(user) {
             }
         })
         .then(user => {
+            localStorage.setItem("jwt", user.jwt)
+            localStorage.setItem("userId", user.user.id);
             dispatch({ type: "LOGIN", user})
             history.push('/novice-dashboard')
         })

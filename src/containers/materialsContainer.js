@@ -1,13 +1,145 @@
 import React, { Component } from 'react';
-
+import { Table } from 'react-bootstrap';
+import MaterialListItem from '../components/materialListItem'
+import MaterialNewForm from '../components/materialNewForm'
+import MaterialEditForm from '../components/materialEditForm'
 
 class MaterialsContainer extends Component {
-    state = {  }
+    constructor(props) {
+        super(props)
+        this.state = { 
+            project_id: props.projectId,
+            materials: props.materials,
+            showNewModal: false,
+            showEditModal: false,
+            focus: null
+         }
+    }
+
+    componentDidUpdate() {
+        if(this.props.projectId !== this.state.project_id) {
+            this.setState({
+                ...this.state,
+                materials: this.props.materials,
+                project_id: this.props.projectId,
+                showNewModal: false,
+                showEditModal: false,
+                focus: null,
+            })
+        }
+    }
+
+    fetchPostPatch = (name, amount, unit, link, cost, method, path) => {
+        const projectId = this.state.project_id
+        fetch(`${process.env.REACT_APP_API_URL}/${path}`, {
+            method: `${method}`,
+            headers: {
+                'Content-Type': 'application/json',
+                Accept: 'application/json',
+                "Authorization": 'Bearer ' + localStorage.getItem("jwt")
+            },
+            body: JSON.stringify({
+                material: {
+                    name: name,
+                    amount: amount,
+                    amount_unit: unit,
+                    link: link,
+                    cost: cost,
+                    project_id: projectId
+                }
+            })
+        })
+        .then(resp => resp.json())
+        .then(materials => {
+            this.setState({
+                ...this.state,
+                materials: materials,
+                showNewModal: false,
+                showEditModal: false,
+                focus: null
+            })
+        })
+    }
+
+    handleNewClick = () => {
+        this.setState({
+            ...this.state,
+            showNewModal: !this.state.showNewModal
+        })
+    }
+
+    handleDoneNewClick = (name, amount, unit, link, cost) => {
+        this.fetchPostPatch(name, amount, unit, link, cost, 'POST', 'materials')
+    }
+
+    handleEditClick = (material) => {
+        this.setState({
+            ...this.state,
+            focus: material,
+            showEditModal: !this.state.showEditModal
+        })
+    }
+
+    handleDoneEditTaskClick = (text, time) => {
+        this.fetchPostPatchTask(text, time, 'PATCH', `tasks/${this.state.editTask.id}`)
+    }
+
+    handleDeleteClick = () => {
+        if (window.confirm("Do you really want to delete this material?")) { 
+            fetch(`${process.env.REACT_APP_API_URL}/materials/${this.state.focus.id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Accept: 'application/json',
+                    "Authorization": 'Bearer ' + localStorage.getItem("jwt")
+                }
+            })
+            .then(resp => resp.json())
+            .then(materials => {
+                this.setState({
+                    ...this.state,
+                    materials: materials,
+                    showNewModal: false,
+                    showEditModal: false,
+                    focus: null
+                })
+            })
+          }
+    }
+
+
     render() { 
         return ( 
             <div id='materials' className='col-8'>
-                <h1>Materials</h1>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Amet massa vitae tortor condimentum lacinia quis vel eros. A erat nam at lectus urna duis convallis convallis tellus. Neque vitae tempus quam pellentesque nec nam aliquam sem. Mattis nunc sed blandit libero volutpat sed cras ornare. Laoreet id donec ultrices tincidunt arcu non sodales neque. Sit amet aliquam id diam maecenas ultricies mi. Semper risus in hendrerit gravida rutrum quisque non. Vel fringilla est ullamcorper eget nulla. Id ornare arcu odio ut. Sagittis id consectetur purus ut. Dictum at tempor commodo ullamcorper a lacus vestibulum sed arcu. Nunc sed velit dignissim sodales ut eu. Diam volutpat commodo sed egestas egestas fringilla phasellus. Fringilla urna porttitor rhoncus dolor purus non. Amet commodo nulla facilisi nullam vehicula ipsum a arcu. Consectetur purus ut faucibus pulvinar elementum integer enim neque. Risus sed vulputate odio ut enim blandit volutpat maecenas volutpat. Ipsum suspendisse ultrices gravida dictum.
+            <h1>Materials</h1>
+            <Table>
+                <thead>
+                    <tr>
+                        <th>Description</th>
+                        <th>Amount</th>
+                        <th>Cost</th>
+                        <th>Edit</th>
+                    </tr>
+                </thead>
+                {this.state.materials && this.state.materials.map( material => <MaterialListItem  
+                                                                                    key={material.id} 
+                                                                                    material={material} 
+                                                                                    handleEditClick={this.handleEditClick}
+                                                                                />)}
+            </Table>
+            {this.state.showEditModal &&    <MaterialEditForm 
+                                                material={this.state.focus} 
+                                                show={this.state.showEditModal} 
+                                                handleDoneEditClick={this.handleDoneEditClick} 
+                                                handleEditClick={this.handleEditClick}
+                                                handleDeleteClick={this.handleDeleteClick}
+                                            />}
+            {this.state.showNewModal &&     <MaterialNewForm 
+                                                show={this.state.showNewModal} 
+                                                handleDoneNewClick={this.handleDoneNewClick} 
+                                                handleNewClick={this.handleNewClick}
+                                            />}
+            <button id='new-material' onClick={this.handleNewClick}>Add a Material</button>
             </div>
          );
     }

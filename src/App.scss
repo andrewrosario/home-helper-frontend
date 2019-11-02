@@ -140,5 +140,18 @@ nav > p {
 
 #tasks {
   overflow: scroll;
-  height: 50vh
+  height: 70vh
+}
+
+#materials {
+  overflow: scroll;
+  height: 30vh;
+}
+
+.edit-button {
+  width: 20px;
+}
+
+#delete-task {
+  float: right
 }

@@ -55,7 +55,7 @@ class NewProject extends Component {
 
 
 function mapStateToProps(state){
-    return {user: state.LoginReducer.currentUser.user}
+    return {user: state.UserReducer.currentUser.user}
 }
  
 export default connect(mapStateToProps, { createNewProject } ) (NewProject);

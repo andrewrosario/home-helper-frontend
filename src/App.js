@@ -24,8 +24,8 @@ class App extends Component {
 }
 
 function mapStateToProps(state) {
-  if(state.LoginReducer.currentUser) {
-    return {currentUser: state.LoginReducer.currentUser.user}
+  if(state.UserReducer.currentUser) {
+    return {currentUser: state.UserReducer.currentUser.user}
   }
 }
 

@@ -19,7 +19,7 @@ const store = createStore(rootReducer, persistedState, composeEnhancers(
 
 store.subscribe(() => {
   saveState({
-    LoginReducer: store.getState().LoginReducer
+    UserReducer: store.getState().UserReducer
   });
 });
 
