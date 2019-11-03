@@ -5,13 +5,11 @@ import { createNewUser } from '../actions/createNewUser'
 
 class NewUser extends Component {
     state = { 
-        user: {
-            name: '',
-            email: '',
-            password: '',
-            password_confirmation: '',
-            image: null
-        }
+        name: '',
+        email: '',
+        password: '',
+        password_confirmation: '',
+        image: null
     }
 
     submitHandler = (e) => {
@@ -21,10 +19,15 @@ class NewUser extends Component {
 
     handleFormChange = event => {
         this.setState({
-            user: {
-                ...this.state.user,
-                [event.target.name]: event.target.value
-            }
+            ...this.state.user,
+            [event.target.name]: event.target.value
+        })
+    }
+
+    handleAddFiles = event => {
+        this.setState({ 
+            ...this.state.user,
+            image: event.target.files[0]
         })
     }
 
@@ -33,7 +36,7 @@ class NewUser extends Component {
             <div>
                 <Form onSubmit={(e) => this.submitHandler(e)}>
                     {['name', 'email', 'password', 'password_confirmation'].map( (name, index) => <Form.Control key={index} type={name} name={name} placeholder={name} value={this.state[name]} onChange={this.handleFormChange}/>)}
-                    <Form.Control type="file" name="image" onChange={this.handleFileChange} />
+                    <Form.Control type="file" name="image" onChange={this.handleAddFiles} />
                     <Button variant="primary" type="submit">
                         Submit
                     </Button>

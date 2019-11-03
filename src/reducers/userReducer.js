@@ -32,6 +32,7 @@ export default function UserReducer( state = { currentUser: null , requesting: f
                 requesting: true
             }
         case 'LOGOUT':
+            console.log('logout')
             localStorage.removeItem("jwt");
             localStorage.removeItem("userId");
             return {

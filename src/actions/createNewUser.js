@@ -1,15 +1,16 @@
 import history from "../history";
 
 export function createNewUser(user) {
+    const formData = new FormData()
+    for(let key in user) {
+        formData.append(key, user[key])
+    }
+
     return (dispatch) => {
         dispatch({type: 'START_CREATE_USER_REQUEST'})
         fetch(`${process.env.REACT_APP_API_URL}/users`, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                Accept: 'application/json'
-            },
-            body: JSON.stringify(user)
+            body: formData
         })
         .then(resp => {
             if (!resp.ok) {
@@ -19,8 +20,9 @@ export function createNewUser(user) {
             }
         })
         .then(user => {
+            console.log(user)
             localStorage.setItem("jwt", user.jwt)
-            localStorage.setItem("userId", user.user.id);
+            localStorage.setItem("userId", user.id);
             dispatch({ type: "LOGIN", user})
             history.push('/novice-dashboard')
         })

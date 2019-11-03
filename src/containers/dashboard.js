@@ -8,6 +8,7 @@ import ChatContainer from './chatContainer'
 import ProjectCardContainer from './projectCardContainer'
 import { slide as Menu } from 'react-burger-menu'
 import ProjectNewForm from './projectNewForm'
+import { logout } from '../actions/logout'
 
 class NoviceDashboard extends React.PureComponent {
     constructor(props) {
@@ -47,7 +48,7 @@ class NoviceDashboard extends React.PureComponent {
         .then(data => {
             this.setState({
                 ...this.state,
-                currentProject: data.project,
+                currentProject: data,
             })
             this.closeMenu()
         })
@@ -63,14 +64,13 @@ class NoviceDashboard extends React.PureComponent {
     render() { 
         return ( 
             <div className='mt-2'>
-
                 <Menu isOpen={this.state.menuOpen} onStateChange={(state) => this.handleStateChange(state)}>
                     <a className="menu-item" href="/">Home</a>
                     <p>Projects</p>
                     {this.props.novice_projects.map( (project, index)=> <p key={index} className='menu-item' onClick={() => this.handleProjectClick(project.id)}>{project.title}</p>)}
                     <br></br>
                     <p className='menu-item' onClick={this.toggleCreateProject}>Create New Project</p>
-                    <p className='menu-item' onClick={this.logout}>Logout</p>
+                    <p className='menu-item' onClick={this.props.logout}>Logout</p>
                 </Menu>
 
                 { !this.state.currentProject && <ProjectCardContainer /> }
@@ -86,7 +86,7 @@ class NoviceDashboard extends React.PureComponent {
                         </div>
                         <div className='col-4 border-left border-dark'>
                             <div className='row'>
-                               <DetailsContainer />
+                               <DetailsContainer project={this.state.currentProject} />
                             </div>
                             <div className= 'row'>
                                 <ChatContainer />
@@ -113,4 +113,4 @@ function mapStateToProps(state){
     }
 }
  
-export default connect(mapStateToProps)(NoviceDashboard);
+export default connect(mapStateToProps, { logout })(NoviceDashboard);

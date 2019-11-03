@@ -23,11 +23,9 @@ class ProjectNewForm extends Component {
         })
     }
 
-    prevStep = () => {
-        const { step } = this.state
-        this.setState({
-            step : step - 1
-        })
+    continue = (e) => {
+        e.preventDefault();
+        this.nextStep();
     }
 
     handleChange = input => event => {
@@ -52,7 +50,6 @@ class ProjectNewForm extends Component {
 
     submitHandler = (e) => {
         e.preventDefault()
-        console.log(this.state)
         this.props.createNewProject(this.state.project)
         this.props.closeProjectModal()
     }
@@ -62,24 +59,20 @@ class ProjectNewForm extends Component {
         switch(step) {
             case 1:
                 return <NewProject  
-                        nextStep={this.nextStep} 
+                        continue={this.continue} 
                         handleChange = {this.handleChange}
                         submitHandler = {this.submitHandler}
                         />
             case 2:
                 return <AddBeforePhotos 
-                        nextStep={this.nextStep}
-                        prevStep={this.prevStep}
                         handleAddFiles = {this.handleAddFiles}
                         submitHandler = {this.submitHandler}
                         />
-            // case 3:
-            //     return <Confirmation 
-            //             nextStep={this.nextStep}
-            //             prevStep={this.prevStep}
-            //             />
-            // case 4:
-            //     return <Success />
+            default:
+                return <NewProject  
+                        handleChange = {this.handleChange}
+                        submitHandler = {this.submitHandler}
+                        />
             }
     }
 }
