@@ -7,8 +7,7 @@ export default function UserReducer( state = { currentUser: null , requesting: f
                 currentUser: state.currentUser,
                 requesting: true
             }
-        case 'CREATE_NEW_USER':
-            
+        case 'CREATE_NEW_USER': 
             return {
                 ...state,
                 currentUser: currentUser,
@@ -41,6 +40,7 @@ export default function UserReducer( state = { currentUser: null , requesting: f
                 showNewProject: false
             }
         case "FINISH_CREATE_PROJECT":
+            console.log("finish create project", action.user)
             return {
                 ...state,
                 currentUser: action.user,

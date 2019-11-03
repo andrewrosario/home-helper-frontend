@@ -1,13 +1,13 @@
 import React from 'react';
-import NavBar from './navbar'
 import { Modal } from 'react-bootstrap'
 import { connect } from 'react-redux'
-import NewProject from './newProject'
 import TaskContainer from './taskContainer'
 import DetailsContainer from './detailsContainer'
 import MaterialsContainer from './materialsContainer'
 import ChatContainer from './chatContainer'
 import ProjectCardContainer from './projectCardContainer'
+import { slide as Menu } from 'react-burger-menu'
+import ProjectNewForm from './projectNewForm'
 
 class NoviceDashboard extends React.PureComponent {
     constructor(props) {
@@ -15,8 +15,17 @@ class NoviceDashboard extends React.PureComponent {
         const showModal = props.user.novice_projects.length ? false : true
         this.state = {
             currentProject: null,
-            showCreateProject: showModal
+            showCreateProject: showModal,
+            menuOpen: false
         }
+    }
+
+    handleStateChange (state) {
+        this.setState({menuOpen: state.isOpen})  
+    }
+
+    closeMenu () {
+        this.setState({menuOpen: false})
     }
 
     toggleCreateProject = () => {
@@ -24,6 +33,7 @@ class NoviceDashboard extends React.PureComponent {
             ...this.state,
             showCreateProject: !this.state.showCreateProject
         })
+        this.closeMenu()
     }
 
     handleProjectClick = (id) => {
@@ -39,17 +49,29 @@ class NoviceDashboard extends React.PureComponent {
                 ...this.state,
                 currentProject: data.project,
             })
+            this.closeMenu()
+        })
+    }
+
+    closeProjectModal = () => {
+        this.setState({
+            ...this.state,
+            showCreateProject: !this.state.showCreateProject
         })
     }
 
     render() { 
         return ( 
             <div className='mt-2'>
-                <NavBar 
-                    projects={this.props.user.novice_projects} 
-                    toggleCreateProject={this.toggleCreateProject} 
-                    handleProjectClick={this.handleProjectClick}
-                />
+
+                <Menu isOpen={this.state.menuOpen} onStateChange={(state) => this.handleStateChange(state)}>
+                    <a className="menu-item" href="/">Home</a>
+                    <p>Projects</p>
+                    {this.props.novice_projects.map( (project, index)=> <p key={index} className='menu-item' onClick={() => this.handleProjectClick(project.id)}>{project.title}</p>)}
+                    <br></br>
+                    <p className='menu-item' onClick={this.toggleCreateProject}>Create New Project</p>
+                    <p className='menu-item' onClick={this.logout}>Logout</p>
+                </Menu>
 
                 { !this.state.currentProject && <ProjectCardContainer /> }
                 { this.state.currentProject && <div id='dashboard-container' className='container'>
@@ -77,9 +99,7 @@ class NoviceDashboard extends React.PureComponent {
                     <Modal.Header closeButton>
                     {this.props.novice_projects.length > 0 ? <Modal.Title>Create a New Project</Modal.Title> : <Modal.Title>Welcome! Join our Community by Creating a Project</Modal.Title>}
                     </Modal.Header>
-                    <Modal.Body>
-                        <NewProject toggleCreateProject={this.toggleCreateProject}/>
-                    </Modal.Body>
+                    <ProjectNewForm closeProjectModal={this.closeProjectModal} />
                 </Modal>
             </div>
          );

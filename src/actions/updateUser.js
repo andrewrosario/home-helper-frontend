@@ -11,6 +11,5 @@ export default function updateUser(id) {
         .then(data => {
             dispatch({ type: "LOGIN", data})
         })
-    }
-    
+    } 
 }

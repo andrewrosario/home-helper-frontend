@@ -1,41 +1,24 @@
-import React, { Component } from 'react';
-import { Form, Button } from 'react-bootstrap';
+import React, { Component } from 'react'
+import { Form, Button } from 'react-bootstrap'
 import { connect } from 'react-redux'
-import { createNewProject} from '../actions/createNewProject'
+import { Modal } from 'react-bootstrap'
 
 class NewProject extends Component {
-    state = {  
-        project: {
-            user: this.props.user.id,
-            name: '',
-            description: '',
-            type: ''
-        } 
+    state = {
     }
 
-    handleFormChange = event => {
-        this.setState({
-            ...this.state,
-            project: {
-                ...this.state.project,
-                [event.target.name]: event.target.value
-            }
-        })
-    }
-
-    submitHandler = (e) => {
-        e.preventDefault()
-        this.props.createNewProject(this.state.project)
-        this.props.toggleCreateProject()
+    continue = (e) => {
+        e.preventDefault();
+        this.props.nextStep();
     }
 
     render() { 
             return (
-                <div>
-                    <Form onSubmit={(e) => this.submitHandler(e)}>
-                        <Form.Control type='text' name='name' placeholder='Project Name' onChange={this.handleFormChange} />
-                        <Form.Control as='textarea' name='description' placeholder='Project Description' onChange={this.handleFormChange} />
-                        <Form.Control as='select' name='type' onChange={this.handleFormChange}>
+                <Modal.Body>
+                    <Form>
+                        <Form.Control type='text' name='name' placeholder='Project Name' onChange={this.props.handleChange('name')} />
+                        <Form.Control as='textarea' name='description' placeholder='Project Description' onChange={this.props.handleChange('description')} />
+                        <Form.Control as='select' name='type' onChange={this.props.handleChange('type')}>
                             <option>Project Type</option>
                             <option value='1'>Paint</option>
                             <option value='2'>Plubming</option>
@@ -44,11 +27,14 @@ class NewProject extends Component {
                             <option value='5'>Flooring</option>
                             <option value='6'>Landscaping</option>
                         </Form.Control>
-                        <Button type="submit">
-                            Begin Planning
+                        <Button onClick={this.continue}>
+                            Add Before Pictures
+                        </Button>
+                        <Button onClick={this.props.submitHandler}>
+                            Continue without Photos
                         </Button>
                     </Form>
-                </div>
+                </Modal.Body>
             )
         }
     }
@@ -58,4 +44,4 @@ function mapStateToProps(state){
     return {user: state.UserReducer.currentUser.user}
 }
  
-export default connect(mapStateToProps, { createNewProject } ) (NewProject);
+export default connect(mapStateToProps ) (NewProject);

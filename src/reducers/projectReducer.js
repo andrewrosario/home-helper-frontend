@@ -12,6 +12,11 @@ export default function ProjectReducer( state = { currentUser: null , requesting
                 currentUser: action.user,
                 requesting: false
             }
+        case 'START_PHOTO_REQUEST':
+            return {
+                ...state,
+                requesting: false
+            }
         default:
             return state;
     }

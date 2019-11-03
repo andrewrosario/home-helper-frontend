@@ -8,7 +8,7 @@ class ProjectCardContainer extends Component {
         return ( 
             <div className='container overflow-auto'>
                 <div className='row'>
-                    {this.props.projects.map( (project) => <ProjectCard project={project} />)}
+                    {this.props.projects.map( (project) => <ProjectCard key={project.id} project={project} />)}
                 </div>
             </div>
          );

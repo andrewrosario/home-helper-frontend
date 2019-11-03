@@ -1,21 +1,23 @@
 export function createNewProject(project) {
+    const formData = new FormData()
+    const { user, name, description, type, before_photos } = project
+    formData.append('novice_id', user)
+    formData.append('title', name)
+    formData.append('description', description)
+    formData.append('project_type_id', parseInt(type))
+
+    for (const file of before_photos) {
+        formData.append('before_photos[]', file, file.name);
+    }
+
     return (dispatch) => {
         dispatch({type: 'START_CREATE_PROJECT_REQUEST'}, project)
         fetch(`${process.env.REACT_APP_API_URL}/projects`, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
-                Accept: 'application/json',
                 "Authorization": 'Bearer ' + localStorage.getItem("jwt")
             },
-            body: JSON.stringify({
-                project: {
-                    novice_id: project.user,
-                    title: project.name,
-                    description: project.description,
-                    project_type_id: parseInt(project.type)
-                }
-            })
+            body: formData
         })
         .then(resp => {
             if (!resp.ok) {
