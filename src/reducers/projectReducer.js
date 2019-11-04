@@ -3,14 +3,16 @@ export default function ProjectReducer( state = { currentProject: null , request
         case 'START_CREATE_PROJECT_REQUEST':
             return {
                 ...state,
-                currentUser: state.currentUser,
                 currentProject: null,
                 requesting: true
             }
         case "FINISH_CREATE_PROJECT":
+            console.log('projectreducer action', action.user)
+            const { novice_projects } = action.user
+            console.log('novice', novice_projects)
             return {
                 ...state,
-                currentUser: action.user,
+                currentProject: novice_projects[novice_projects.length - 1],
                 requesting: false
             }
         case "START_FETCH_PROJECT":

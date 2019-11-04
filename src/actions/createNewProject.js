@@ -28,7 +28,6 @@ export function createNewProject(project) {
         })
         .then(user => {
             dispatch({ type: "FINISH_CREATE_PROJECT", user})
-
         })
         .catch(error => console.log(error))
     }

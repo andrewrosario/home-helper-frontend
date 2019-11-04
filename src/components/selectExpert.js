@@ -30,8 +30,10 @@ class SelectExpert extends Component {
             <Modal.Body>
                     {this.state.experts.map( (expert, index) => <ExpertCard key={index} 
                                                                             expert={expert} 
-                                                                            projectId={this.props.projectTypeId} 
+                                                                            projectTypeId={this.props.projectTypeId} 
+                                                                            projectId={this.props.projectId}
                                                                             method={'add'}
+                                                                            toggleModal={this.props.toggleModal}
                                                                 />)}
             </Modal.Body>
          );

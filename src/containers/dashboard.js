@@ -11,6 +11,10 @@ import ProjectNewForm from './projectNewForm'
 import { logout } from '../actions/logout'
 import { fetchProject } from '../actions/fetchProject'
 import SelectExpert from '../components/selectExpert'
+import socketIOClient from "socket.io-client";
+
+const endpoint = "http://127.0.0.1:8000"
+const socket = socketIOClient(endpoint);
 
 class NoviceDashboard extends React.PureComponent {
     constructor(props) {
@@ -40,12 +44,13 @@ class NoviceDashboard extends React.PureComponent {
     }
 
     handleProjectClick = (id) => {
+        socket.emit('leave', `chat_id_${this.props.project.chat_id}`)
         this.props.fetchProject(id, this.closeMenu.bind(this))
     }
 
     render() {
-        if(this.props.currentProject) {
-            var { id, tasks, materials, project_type_id } = this.props.currentProject
+        if(this.props.project) {
+            var { id, tasks, materials, project_type_id } = this.props.project
         }
     
         return ( 
@@ -59,8 +64,8 @@ class NoviceDashboard extends React.PureComponent {
                     <p className='menu-item' onClick={this.props.logout}>Logout</p>
                     <p>Welcome {this.props.user.name}!</p>
                 </Menu>
-                { !this.props.currentProject && <ProjectCardContainer /> }
-                { this.props.currentProject && <div id='dashboard-container' className='container'>
+                { !this.props.project && <ProjectCardContainer /> }
+                { this.props.project && <div id='dashboard-container' className='container'>
                     <div className='row'>
                         <div className='col-8'>
                             <div className='row border-bottom border-dark'>
@@ -92,7 +97,7 @@ class NoviceDashboard extends React.PureComponent {
                     <Modal.Header closeButton>
                         Choose an Expert to Work With
                     </Modal.Header>
-                    <SelectExpert projectTypeId={project_type_id} />
+                    <SelectExpert projectTypeId={project_type_id} projectId={id} toggleModal={this.toggleModal.bind(this)} />
                 </Modal>
             </div>
          );
@@ -103,7 +108,7 @@ function mapStateToProps(state){
     return {
         user: state.UserReducer.currentUser.user,
         novice_projects: state.UserReducer.currentUser.user.novice_projects,
-        currentProject: state.ProjectReducer.currentProject
+        project: state.ProjectReducer.currentProject
     }
 }
  

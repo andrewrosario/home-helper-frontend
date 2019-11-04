@@ -11,9 +11,8 @@ function NewProject(props) {
         if (form.current.checkValidity() === false) {
             event.preventDefault()
             event.stopPropagation()
-            console.log('invalid')
         } else {
-            type === 'submit' ? props.continue(event, 2) : props.continue(event, 1)
+            type === 'submit' ? props.submitHandler(event) : props.continue(event, 1)
         }
         setValidated(true)
     };
@@ -32,7 +31,7 @@ function NewProject(props) {
                         Add Before Pictures
                     </Button>
                     <Button className='float-right' onClick={(event) => handleSubmit(event, 'submit')}>
-                        Choose and Expert Without Photos
+                        Continue Without Photos
                     </Button>
                 </Form.Group>
             </Form>

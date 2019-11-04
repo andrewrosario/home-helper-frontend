@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 import { createNewProject } from '../actions/createNewProject'
 import NewProject from './newProject'
 import AddBeforePhotos from '../components/addBeforePhotos'
-import SelectExpert from '../components/selectExpert'
 
 class ProjectNewForm extends Component {
     state = { 
@@ -58,17 +57,19 @@ class ProjectNewForm extends Component {
                 return <NewProject  
                         continue={this.continue} 
                         handleChange = {this.handleChange}
+                        submitHandler={this.submitHandler}
                         />
             case 2:
                 return <AddBeforePhotos 
                         handleAddFiles = {this.handleAddFiles}
-                        continue={this.continue}
+                        // continue={this.continue}
+                        submitHandler={this.submitHandler}
                         />
-            case 3:
-                return <SelectExpert 
-                        projectTypeId = {this.state.project.type}
-                        submitHandler = {this.submitHandler}
-                        />
+            // case 3:
+            //     return <SelectExpert 
+            //             projectTypeId = {this.state.project.type}
+            //             submitHandler = {this.submitHandler}
+            //             />
             default:
                 return <NewProject  
                         handleChange = {this.handleChange}
