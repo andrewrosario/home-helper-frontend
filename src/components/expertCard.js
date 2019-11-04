@@ -1,9 +1,11 @@
 import React from 'react';
+import { connect } from 'react-redux'
 import { MDBBtn, MDBCard, MDBCardBody, MDBCardImage, MDBCardTitle, MDBCardText, MDBCol } from 'mdbreact'
+import updateProject from '../actions/updateProject'
 
 
 const ExpertCard = (props) => {
-    const { image, name } = props.expert
+    const { id, image, name } = props.expert
     return ( 
         <MDBCol className='expert-card'>
             <MDBCard className='mt-2'>
@@ -11,13 +13,13 @@ const ExpertCard = (props) => {
                 <MDBCardBody>
                 <MDBCardTitle>{name}</MDBCardTitle>
                 <MDBCardText>
-                    
+                    {console.log(props)}
                 </MDBCardText>
-                    <MDBBtn onClick={props.removeExpert}>Remove this Expert</MDBBtn>
+                    {props.method == 'remove' ? <MDBBtn onClick={() => props.updateProject(props.projectId)}>Remove this Expert</MDBBtn> : <MDBBtn onClick={() => props.updateProject(props.projectId, id)}>Select this Expert</MDBBtn>}
                 </MDBCardBody>
             </MDBCard>
         </MDBCol>
      );
 }
  
-export default ExpertCard;
+export default connect(null, { updateProject })(ExpertCard)

@@ -10,15 +10,16 @@ import { slide as Menu } from 'react-burger-menu'
 import ProjectNewForm from './projectNewForm'
 import { logout } from '../actions/logout'
 import { fetchProject } from '../actions/fetchProject'
+import SelectExpert from '../components/selectExpert'
 
 class NoviceDashboard extends React.PureComponent {
     constructor(props) {
         super(props)
         const showModal = props.user.novice_projects.length ? false : true
         this.state = {
-            currentProject: null,
-            showCreateProject: showModal,
-            menuOpen: false
+            newProject: showModal,
+            menuOpen: false,
+            selectExpert: false
         }
     }
 
@@ -30,10 +31,10 @@ class NoviceDashboard extends React.PureComponent {
         this.setState({menuOpen: false})
     }
 
-    toggleCreateProject = () => {
+    toggleModal = (modalType) => {
         this.setState({
             ...this.state,
-            showCreateProject: !this.state.showCreateProject
+            [modalType]: !this.state[modalType]
         })
         this.closeMenu()
     }
@@ -42,14 +43,11 @@ class NoviceDashboard extends React.PureComponent {
         this.props.fetchProject(id, this.closeMenu.bind(this))
     }
 
-    closeProjectModal = () => {
-        this.setState({
-            ...this.state,
-            showCreateProject: !this.state.showCreateProject
-        })
-    }
-
-    render() { 
+    render() {
+        if(this.props.currentProject) {
+            var { id, tasks, materials, project_type_id } = this.props.currentProject
+        }
+    
         return ( 
             <div className='mt-2'>
                 <Menu isOpen={this.state.menuOpen} onStateChange={(state) => this.handleStateChange(state)}>
@@ -57,24 +55,24 @@ class NoviceDashboard extends React.PureComponent {
                     <p>Projects</p>
                     {this.props.novice_projects.map( (project, index)=> <p key={index} className='menu-item' onClick={() => this.handleProjectClick(project.id)}>{project.title}</p>)}
                     <br></br>
-                    <p className='menu-item' onClick={this.toggleCreateProject}>Create New Project</p>
+                    <p className='menu-item' onClick={() => this.toggleModal('newProject')}>Create New Project</p>
                     <p className='menu-item' onClick={this.props.logout}>Logout</p>
                     <p>Welcome {this.props.user.name}!</p>
                 </Menu>
-                { !this.state.currentProject && <ProjectCardContainer /> }
-                { this.state.currentProject && <div id='dashboard-container' className='container'>
+                { !this.props.currentProject && <ProjectCardContainer /> }
+                { this.props.currentProject && <div id='dashboard-container' className='container'>
                     <div className='row'>
                         <div className='col-8'>
                             <div className='row border-bottom border-dark'>
-                                <MaterialsContainer projectId={this.state.currentProject.id} materials={this.state.currentProject.materials}/>
+                                <MaterialsContainer projectId={id} materials={materials}/>
                             </div>
                             <div className='row mt-3'>
-                               <TaskContainer projectId={this.state.currentProject.id} tasks={this.state.currentProject.tasks} />
+                               <TaskContainer projectId={id} tasks={tasks} />
                             </div>
                         </div>
                         <div className='col-4 border-left border-dark'>
                             <div className='row'>
-                               <DetailsContainer project={this.state.currentProject} />
+                               <DetailsContainer toggleModal={this.toggleModal}/>
                             </div>
                             <div className= 'row'>
                                 <ChatContainer />
@@ -83,11 +81,18 @@ class NoviceDashboard extends React.PureComponent {
                     </div>
                 </div> }
 
-                <Modal show={this.state.showCreateProject} onHide={this.toggleCreateProject}>
+                <Modal show={this.state.newProject} onHide={() => this.toggleModal('newProject')}>
                     <Modal.Header closeButton>
                     {this.props.novice_projects.length > 0 ? <Modal.Title>Create a New Project</Modal.Title> : <Modal.Title>Welcome! Join our Community by Creating a Project</Modal.Title>}
                     </Modal.Header>
-                    <ProjectNewForm closeProjectModal={this.closeProjectModal} />
+                    <ProjectNewForm closeProjectModal={() => this.toggleModal('newProject')} />
+                </Modal>
+
+                <Modal show={this.state.selectExpert} onHide={() => this.toggleModal('selectExpert')}>
+                    <Modal.Header closeButton>
+                        Choose an Expert to Work With
+                    </Modal.Header>
+                    <SelectExpert projectTypeId={project_type_id} />
                 </Modal>
             </div>
          );
@@ -97,7 +102,8 @@ class NoviceDashboard extends React.PureComponent {
 function mapStateToProps(state){
     return {
         user: state.UserReducer.currentUser.user,
-        novice_projects: state.UserReducer.currentUser.user.novice_projects
+        novice_projects: state.UserReducer.currentUser.user.novice_projects,
+        currentProject: state.ProjectReducer.currentProject
     }
 }
  

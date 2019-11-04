@@ -1,33 +1,15 @@
 import React, { Component } from 'react'
 import ExpertCard from '../components/expertCard'
+import { connect } from 'react-redux'
+import { Button } from 'react-bootstrap'
 
 class DetailsContainer extends Component {
     state = {  }
 
-    removeExpert = () => {
-        const id = this.props.project.id
-        fetch(`${process.env.REACT_APP_API_URL}/projects/${id}`, {
-            method: 'PATCH',
-            headers: {
-            'Content-Type': 'application/json',
-            Accept: 'application/json',
-            "Authorization": 'Bearer ' + localStorage.getItem("jwt")
-            },
-            body: JSON.stringify({
-                expert_id: 'nil'
-            })
-        })
-        .then(resp => resp.json())
-        .then(data => {
-            console.log(data)
-        })
-    }
-
     render() {
-        const { title, before_photos, description, expert } = this.props.project
+        const { title, before_photos, description, expert, id } = this.props.currentProject
         return ( 
             <div id='details' className='col-12 border-bottom border-dark container2'>
-                {console.log(this.props.project)}
                 <h3>{title} Details</h3>
                 {before_photos.length && <h5>Before Photos</h5>}
                 <div className='row'>
@@ -36,10 +18,17 @@ class DetailsContainer extends Component {
                 <h5 className='mt-2'>Project Description</h5>
                 {description}
                 <h5 className='mt-2'>Your Expert</h5>
-                {expert && <ExpertCard expert={expert} removeExpert={this.removeExpert}/>}
+                {expert ? <ExpertCard expert={expert} projectId={id} method={'remove'}/> : <Button onClick={() => this.props.toggleModal('selectExpert')}>Find an Expert</Button>}
+
             </div>
          );
     }
 }
+
+function mapStateToProps(state){
+    return {
+        currentProject: state.ProjectReducer.currentProject
+    }
+}
  
-export default DetailsContainer;
+export default connect(mapStateToProps)(DetailsContainer)

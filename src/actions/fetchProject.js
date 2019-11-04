@@ -10,7 +10,7 @@ export function fetchProject(id, closeMenu) {
         }})
         .then(resp => resp.json())
         .then(data => {
-            dispatch({type: "FINISH_FETCH_PROJECT"}, data)
+            dispatch({type: "FINISH_FETCH_PROJECT", data})
             closeMenu()
         })
     }

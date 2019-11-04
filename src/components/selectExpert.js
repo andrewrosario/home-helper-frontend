@@ -1,25 +1,47 @@
-import React, { Component } from 'react';
-import { Form, Button, Modal} from 'react-bootstrap'
+import React, { Component } from 'react'
+import { Modal} from 'react-bootstrap'
+import ExpertCard from './expertCard'
+import { connect } from 'react-redux'
+import updateProject from '../actions/updateProject'
 
 class SelectExpert extends Component {
+    state = {
+        experts: []
+    }
+
     componentDidMount() {
-        fetch(`${process.env.REACT_APP_API_URL}/experts/${this.props.projectTypeId}`)
+        fetch(`${process.env.REACT_APP_API_URL}/experts/${this.props.projectTypeId}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                Accept: 'application/json',
+                "Authorization": 'Bearer ' + localStorage.getItem("jwt")
+            }
+        })
         .then(resp => resp.json())
         .then(data => {
-            console.log(data)
+            this.setState({
+                experts: data
+            })
         })
     }
 
-    state = {  }
     render() { 
         return ( 
             <Modal.Body>
-                <Form>
-                    <h2>Pick an Expert</h2>
-                </Form>
+                    {this.state.experts.map( (expert, index) => <ExpertCard key={index} 
+                                                                            expert={expert} 
+                                                                            projectId={this.props.projectTypeId} 
+                                                                            method={'add'}
+                                                                />)}
             </Modal.Body>
          );
     }
 }
+
+function mapStateToProps(state){
+    return {
+        currentProject: state.ProjectReducer.currentProject
+    }
+}
  
-export default SelectExpert;
+export default connect(mapStateToProps, { updateProject })(SelectExpert)

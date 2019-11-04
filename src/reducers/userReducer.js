@@ -37,6 +37,7 @@ export default function UserReducer( state = { currentUser: null , requesting: f
             return {
                 ...state,
                 currentUser: null,
+                currentProject: null,
                 showNewProject: false
             }
         case "FINISH_CREATE_PROJECT":

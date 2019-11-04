@@ -73,6 +73,7 @@ class ProjectNewForm extends Component {
                 return <NewProject  
                         handleChange = {this.handleChange}
                         continue={this.continue}
+                        method={'add'}
                         />
             }
     }
