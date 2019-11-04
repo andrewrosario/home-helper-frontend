@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { createNewProject } from '../actions/createNewProject'
 import NewProject from './newProject'
 import AddBeforePhotos from '../components/addBeforePhotos'
+import SelectExpert from '../components/selectExpert'
 
 class ProjectNewForm extends Component {
     state = { 
@@ -16,16 +17,12 @@ class ProjectNewForm extends Component {
         }
     }
 
-    nextStep = () => {
+    continue = (e, inc) => {
+        e.preventDefault()
         const { step } = this.state
         this.setState({
-            step : step + 1
+            step : step + inc
         })
-    }
-
-    continue = (e) => {
-        e.preventDefault();
-        this.nextStep();
     }
 
     handleChange = input => event => {
@@ -61,17 +58,21 @@ class ProjectNewForm extends Component {
                 return <NewProject  
                         continue={this.continue} 
                         handleChange = {this.handleChange}
-                        submitHandler = {this.submitHandler}
                         />
             case 2:
                 return <AddBeforePhotos 
                         handleAddFiles = {this.handleAddFiles}
+                        continue={this.continue}
+                        />
+            case 3:
+                return <SelectExpert 
+                        projectTypeId = {this.state.project.type}
                         submitHandler = {this.submitHandler}
                         />
             default:
                 return <NewProject  
                         handleChange = {this.handleChange}
-                        submitHandler = {this.submitHandler}
+                        continue={this.continue}
                         />
             }
     }

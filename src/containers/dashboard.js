@@ -9,6 +9,7 @@ import ProjectCardContainer from './projectCardContainer'
 import { slide as Menu } from 'react-burger-menu'
 import ProjectNewForm from './projectNewForm'
 import { logout } from '../actions/logout'
+import { fetchProject } from '../actions/fetchProject'
 
 class NoviceDashboard extends React.PureComponent {
     constructor(props) {
@@ -38,20 +39,7 @@ class NoviceDashboard extends React.PureComponent {
     }
 
     handleProjectClick = (id) => {
-        fetch(`${process.env.REACT_APP_API_URL}/projects/${id}`, {
-            headers: {
-            'Content-Type': 'application/json',
-            Accept: 'application/json',
-            "Authorization": 'Bearer ' + localStorage.getItem("jwt")
-        }})
-        .then(resp => resp.json())
-        .then(data => {
-            this.setState({
-                ...this.state,
-                currentProject: data,
-            })
-            this.closeMenu()
-        })
+        this.props.fetchProject(id, this.closeMenu.bind(this))
     }
 
     closeProjectModal = () => {
@@ -71,8 +59,8 @@ class NoviceDashboard extends React.PureComponent {
                     <br></br>
                     <p className='menu-item' onClick={this.toggleCreateProject}>Create New Project</p>
                     <p className='menu-item' onClick={this.props.logout}>Logout</p>
+                    <p>Welcome {this.props.user.name}!</p>
                 </Menu>
-
                 { !this.state.currentProject && <ProjectCardContainer /> }
                 { this.state.currentProject && <div id='dashboard-container' className='container'>
                     <div className='row'>
@@ -113,4 +101,4 @@ function mapStateToProps(state){
     }
 }
  
-export default connect(mapStateToProps, { logout })(NoviceDashboard);
+export default connect(mapStateToProps, { logout, fetchProject })(NoviceDashboard);

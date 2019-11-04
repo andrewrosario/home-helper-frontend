@@ -1,22 +1,21 @@
 import React, { useState, useRef } from 'react'
-import { Form, Button } from 'react-bootstrap'
+import { Form, Button, Modal} from 'react-bootstrap'
 import { connect } from 'react-redux'
-import { Modal } from 'react-bootstrap'
-
 
 function NewProject(props) {
-    const [validated, setValidated] = useState(false);
-    const form = useRef(null);
+    const [validated, setValidated] = useState(false)
+    const form = useRef(null)
+    const projectTypes = ['Paint', 'Plumbing', 'Electrical', 'Carpentry', 'Flooring', 'Landscaping']
 
     const handleSubmit = (event, type) => {
         if (form.current.checkValidity() === false) {
-        event.preventDefault();
-        event.stopPropagation();
-        console.log('invalid')
+            event.preventDefault()
+            event.stopPropagation()
+            console.log('invalid')
         } else {
-            type === 'submit' ? props.submitHandler(event) : props.continue(event)
+            type === 'submit' ? props.continue(event, 2) : props.continue(event, 1)
         }
-        setValidated(true);
+        setValidated(true)
     };
 
     return (
@@ -27,18 +26,13 @@ function NewProject(props) {
                     <Form.Control required as='textarea' name='description' placeholder='Project Description' onChange={props.handleChange('description')} />
                     <Form.Control required as='select' name='type' defaultValue='' onChange={props.handleChange('type')}>
                         <option disabled value=''> -- select a project type -- </option>
-                        <option value='1'>Paint</option>
-                        <option value='2'>Plubming</option>
-                        <option value='3'>Electrical</option>
-                        <option value='4'>Carpentry</option>
-                        <option value='5'>Flooring</option>
-                        <option value='6'>Landscaping</option>
+                        {projectTypes.map ( (type, index) => <option key={index} value={index + 1}>{type}</option>)}
                     </Form.Control>
                     <Button onClick={(event) => handleSubmit(event, 'continue')}>
                         Add Before Pictures
                     </Button>
                     <Button className='float-right' onClick={(event) => handleSubmit(event, 'submit')}>
-                        Continue without Photos
+                        Choose and Expert Without Photos
                     </Button>
                 </Form.Group>
             </Form>

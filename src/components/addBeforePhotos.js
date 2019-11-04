@@ -9,9 +9,7 @@ const AddBeforePhotos = (props) => {
             <Form>
                 <Form.Label>Add Before Photos</Form.Label>
                 <Form.Control type="file" name="image" onChange={props.handleAddFiles} multiple/>
-                <Button className='float-right' onClick={props.submitHandler}>
-                    Done
-                </Button>
+                <Button className='float-right' onClick={ (e) => props.continue(e, 1)}>Choose an Expert</Button>
             </Form>
         </Modal.Body>
      );
