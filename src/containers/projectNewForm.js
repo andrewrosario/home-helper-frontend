@@ -62,14 +62,8 @@ class ProjectNewForm extends Component {
             case 2:
                 return <AddBeforePhotos 
                         handleAddFiles = {this.handleAddFiles}
-                        // continue={this.continue}
                         submitHandler={this.submitHandler}
                         />
-            // case 3:
-            //     return <SelectExpert 
-            //             projectTypeId = {this.state.project.type}
-            //             submitHandler = {this.submitHandler}
-            //             />
             default:
                 return <NewProject  
                         handleChange = {this.handleChange}
@@ -81,7 +75,7 @@ class ProjectNewForm extends Component {
 }
 
 function mapStateToProps(state){
-    return {user: state.UserReducer.currentUser.user}
+    return {user: state.UserReducer.currentUser}
 }
  
 export default connect(mapStateToProps, { createNewProject } )(ProjectNewForm)

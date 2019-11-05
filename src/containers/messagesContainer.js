@@ -12,7 +12,7 @@ class MessagesContainer extends Component {
      }
 
     componentDidMount() {
-        fetch(`${process.env.REACT_APP_API_URL}/chats/${this.props.currentProject.id}`, {
+        fetch(`${process.env.REACT_APP_API_URL}/chats/${this.props.project.id}`, {
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem("jwt")
             }
@@ -26,11 +26,20 @@ class MessagesContainer extends Component {
                     messages: [...this.state.messages, data]
                 })
             })
-        });
-    }  
+            socket.emit('room', `chat_id_${this.props.project.chat_room.id}`)
+        })
+        .catch(err => console.log(err))
+    }
+
+    componentDidUpdate(prevProps) {
+        if(prevProps.project.id !== this.props.project.id) {
+            socket.emit('leave', `chat_id_${prevProps.project.chat_room.id}`)
+            socket.emit('room', `chat_id_${this.props.project.chat_room.id}`)
+        }
+    }
 
     renderChatMessages = () => {
-        if(!this.props.currentProject.chat) {
+        if(!this.props.project.chat) {
             return <h3 className='text-muted font-italic mt-5'>Select an Existing Chat or Start a New Chat</h3>
         } else {
             // return this.props.currentDisplayedChat.map( (message, key) => {
@@ -54,7 +63,7 @@ class MessagesContainer extends Component {
 function mapStateToProps(state){
     return {
         user: state.UserReducer.currentUser.user,
-        currentProject: state.ProjectReducer.currentProject
+        project: state.ProjectReducer.currentProject
     }
 }
  

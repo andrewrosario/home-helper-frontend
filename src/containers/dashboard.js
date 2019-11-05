@@ -44,7 +44,7 @@ class NoviceDashboard extends React.PureComponent {
     }
 
     handleProjectClick = (id) => {
-        socket.emit('leave', `chat_id_${this.props.project.chat_id}`)
+        this.props.project && socket.emit('leave', `chat_id_${this.props.project.chat_id}`)
         this.props.fetchProject(id, this.closeMenu.bind(this))
     }
 
@@ -106,8 +106,8 @@ class NoviceDashboard extends React.PureComponent {
 
 function mapStateToProps(state){
     return {
-        user: state.UserReducer.currentUser.user,
-        novice_projects: state.UserReducer.currentUser.user.novice_projects,
+        user: state.UserReducer.currentUser,
+        novice_projects: state.UserReducer.currentUser.novice_projects,
         project: state.ProjectReducer.currentProject
     }
 }

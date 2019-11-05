@@ -17,7 +17,7 @@ class ProjectCardContainer extends Component {
 
 function mapStateToProps(state){
     return {
-        projects: state.UserReducer.currentUser.user.novice_projects
+        projects: state.UserReducer.currentUser.novice_projects
     }
 }
  

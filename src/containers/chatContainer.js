@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { Col } from 'react-bootstrap'
 import socketIOClient from "socket.io-client";
 import MessagesContainer from './messagesContainer'
 import { connect } from 'react-redux'
@@ -57,21 +56,19 @@ class ChatContainer extends Component {
     render() { 
         return ( 
             <div id='chat'>
-                <Col id='chat-window'>
-                    <div id='messages-window' className='h-100'>
-                        <MessagesContainer />
-                        <form className='mt-1' onSubmit={(e) => {this.sendChatMessage(socket, e)}}>
-                            <input 
-                                className='w-75' 
-                                type='text' 
-                                onChange={(event) => this.handleMessageInputChange(event)} 
-                                value={this.state.message.text}>
-                            </input>
-                            <input type='submit'></input>
-                        </form>
-                    </div>
-                    <br></br>
-                </Col>
+                <div id='messages-window' className='h-100'>
+                    <MessagesContainer />
+                    <form className='mt-1' onSubmit={(e) => {this.sendChatMessage(socket, e)}}>
+                        <input 
+                            className='w-75' 
+                            type='text' 
+                            onChange={(event) => this.handleMessageInputChange(event)} 
+                            value={this.state.message.text}>
+                        </input>
+                        <input type='submit'></input>
+                    </form>
+                </div>
+                <br></br>
             </div>
          );
     }
@@ -79,7 +76,7 @@ class ChatContainer extends Component {
 
 function mapStateToProps(state){
     return {
-        user: state.UserReducer.currentUser.user,
+        user: state.UserReducer.currentUser,
         project: state.ProjectReducer.currentProject
     }
 }
