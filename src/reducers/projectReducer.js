@@ -30,11 +30,16 @@ export default function ProjectReducer( state = { currentProject: null , request
                 requesting: true
             }
         case "FINISH_UPDATE_PROJECT":
-                return {
-                    ...state,
-                    currentProject: action.data,
-                    requesting: false
-                }
+            return {
+                ...state,
+                currentProject: action.data,
+                requesting: false
+            }
+        case "LOGOUT":
+            return {
+                currentProject: null,
+                requesting: false
+            }
         default:
             return state;
     }

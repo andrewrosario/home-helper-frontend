@@ -25,10 +25,13 @@ io.on('connection', function(socket){
     socket.on('room', function(room) {
         console.log('join room', room)
         socket.join(room);
-    });
-    socket.on('sendMessage', (message) => {
-        io.sockets.in(`chat_id_${message.chat_id}`).emit('receiveMessage', chatMessage(message.user_id, message.text, message.chat_id));
-    });
+    })
+    socket.on('sendMessage', function(message) {
+        io.sockets.in(`chat_id_${message.chat_room_id}`).emit('receiveMessage', chatMessage(message.user_id, message.text, message.chat_room_id));
+    })
+    socket.on('updateTask', function(message) {
+        io.sockets.in(`task_id_${message.chat_room_id}`).emit('updateDashboard', 'update');
+    })
     socket.on('disconnect', function(){});
 });
 
@@ -36,11 +39,11 @@ server.listen(port, function(){
     console.log('listening on', port);
 });
 
-const chatMessage = (user_id, text, chat_id) => {
+const chatMessage = (user_id, text, chat_room_id) => {
     return {
         user_id,
         text,
-        chat_id,
+        chat_room_id,
         time: new Date().getTime()
     };
 };

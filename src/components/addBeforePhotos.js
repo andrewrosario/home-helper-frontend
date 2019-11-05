@@ -16,7 +16,7 @@ const AddBeforePhotos = (props) => {
 }
 
 function mapStateToProps(state) {
-    return { project: state.UserReducer.currentUser.user.novice_projects }
+    return { project: state.UserReducer.currentUser.novice_projects }
 }
 
 export default connect(mapStateToProps)(AddBeforePhotos);

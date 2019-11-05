@@ -1,8 +1,7 @@
-export function fetchProject(id, closeMenu) {
-
+export function fetchProject(project, closeMenu) {
     return (dispatch) => {
         dispatch({type: 'START_FETCH_PROJECT'})
-        fetch(`${process.env.REACT_APP_API_URL}/projects/${id}`, {
+        fetch(`${process.env.REACT_APP_API_URL}/projects/${project.id}`, {
             headers: {
             'Content-Type': 'application/json',
             Accept: 'application/json',
@@ -11,7 +10,7 @@ export function fetchProject(id, closeMenu) {
         .then(resp => resp.json())
         .then(data => {
             dispatch({type: "FINISH_FETCH_PROJECT", data})
-            closeMenu()
+            closeMenu && closeMenu()
         })
     }
 }

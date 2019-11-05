@@ -13,14 +13,13 @@ class ChatContainer extends Component {
             response: false,
             endpoint: "http://127.0.0.1:8000",
             message: {
-                text: '',
-                chat_id: 0
+                text: ''
             }
         };
     }
 
     sendChatMessage = (socket, event) => {
-        event.preventDefault()
+        event.preventDefault(this.props.project.chat_room.id)
         fetch(`${process.env.REACT_APP_API_URL}/messages`, {
             method: 'POST',
             headers: {
@@ -29,16 +28,16 @@ class ChatContainer extends Component {
             },
             body: JSON.stringify({
                 ...this.state.message,
-                user_id: this.props.user.id
+                user_id: this.props.user.id,
+                chat_room_id: this.props.project.chat_room.id
             })
         })
         .then(resp => resp.json())
         .then(data => {
             socket.emit("sendMessage", data);
             this.setState({
-                currentMessage: {
-                    ...this.state.message,
-                    text: ''
+                message: {
+                    text: '',
                 } 
             })
         });

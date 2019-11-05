@@ -11,10 +11,6 @@ import ProjectNewForm from './projectNewForm'
 import { logout } from '../actions/logout'
 import { fetchProject } from '../actions/fetchProject'
 import SelectExpert from '../components/selectExpert'
-import socketIOClient from "socket.io-client";
-
-const endpoint = "http://127.0.0.1:8000"
-const socket = socketIOClient(endpoint);
 
 class NoviceDashboard extends React.PureComponent {
     constructor(props) {
@@ -43,9 +39,8 @@ class NoviceDashboard extends React.PureComponent {
         this.closeMenu()
     }
 
-    handleProjectClick = (id) => {
-        this.props.project && socket.emit('leave', `chat_id_${this.props.project.chat_id}`)
-        this.props.fetchProject(id, this.closeMenu.bind(this))
+    handleProjectClick = (project) => {
+        this.props.fetchProject(project, this.closeMenu.bind(this))
     }
 
     render() {
@@ -58,7 +53,7 @@ class NoviceDashboard extends React.PureComponent {
                 <Menu isOpen={this.state.menuOpen} onStateChange={(state) => this.handleStateChange(state)}>
                     <a className="menu-item" href="/">Home</a>
                     <p>Projects</p>
-                    {this.props.novice_projects.map( (project, index)=> <p key={index} className='menu-item' onClick={() => this.handleProjectClick(project.id)}>{project.title}</p>)}
+                    {this.props.novice_projects.map( (project, index)=> <p key={index} className='menu-item' onClick={() => this.handleProjectClick(project)}>{project.title}</p>)}
                     <br></br>
                     <p className='menu-item' onClick={() => this.toggleModal('newProject')}>Create New Project</p>
                     <p className='menu-item' onClick={this.props.logout}>Logout</p>
@@ -72,7 +67,7 @@ class NoviceDashboard extends React.PureComponent {
                                 <MaterialsContainer projectId={id} materials={materials}/>
                             </div>
                             <div className='row mt-3'>
-                               <TaskContainer projectId={id} tasks={tasks} />
+                               <TaskContainer />
                             </div>
                         </div>
                         <div className='col-4 border-left border-dark'>

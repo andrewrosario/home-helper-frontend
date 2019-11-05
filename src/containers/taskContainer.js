@@ -2,25 +2,35 @@ import React from 'react';
 import TaskListItem from '../components/taskListItem'
 import TaskNewForm from '../components/taskNewForm'
 import TaskEditForm from '../components/taskEditForm'
-import { Table } from 'react-bootstrap';
+import { Table } from 'react-bootstrap'
+import socketIOClient from "socket.io-client";
+import { connect } from 'react-redux'
+import { fetchProject } from '../actions/fetchProject'
+
+const endpoint = "http://127.0.0.1:8000"
+const socket = socketIOClient(endpoint)
 
 class TaskContainer extends React.PureComponent {
     constructor(props) {
         super(props)
         this.state = { 
-            project_id: props.projectId,
-            tasks: props.tasks,
             showNewModal: false,
             showEditModal: false
          }
+    }
+
+    componentDidMount() {
+        socket.on('connect', () => {})
+        socket.on("updateTask", data => {
+
+        })
+        socket.emit('room', `task_id_${this.props.project.id}`)
     }
 
     componentDidUpdate() {
         if(this.props.projectId !== this.state.project_id) {
             this.setState({
                 ...this.state,
-                tasks: this.props.tasks,
-                project_id: this.props.projectId,
                 editTask: null,
                 newTask: false
             })
@@ -28,7 +38,7 @@ class TaskContainer extends React.PureComponent {
     }
 
     fetchPostPatch = (text, time, isComplete, method, path) => {
-        const projectId = this.state.project_id
+        const projectId = this.props.project.id
         fetch(`${process.env.REACT_APP_API_URL}/${path}`, {
             method: `${method}`,
             headers: {
@@ -49,7 +59,6 @@ class TaskContainer extends React.PureComponent {
         .then(tasks => {
             this.setState({
                 ...this.state,
-                tasks: tasks,
                 showNewModal: false,
                 newTask: false,
                 showEditModal: false,
@@ -72,7 +81,6 @@ class TaskContainer extends React.PureComponent {
             .then(tasks => {
                 this.setState({
                     ...this.state,
-                    tasks: tasks,
                     showNewModal: false,
                     newTask: false,
                     showEditModal: false,
@@ -143,5 +151,11 @@ class TaskContainer extends React.PureComponent {
          );
     }
 }
+
+function mapStateToProps(state){
+    return {
+        project: state.ProjectReducer.currentProject
+    }
+}
  
-export default TaskContainer;
+export default connect(mapStateToProps, { fetchProject })(TaskContainer);
