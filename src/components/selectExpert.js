@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { Modal} from 'react-bootstrap'
 import ExpertCard from './expertCard'
 import { connect } from 'react-redux'
-import updateProject from '../actions/updateProject'
 
 class SelectExpert extends Component {
     state = {
@@ -47,4 +46,4 @@ function mapStateToProps(state){
     }
 }
  
-export default connect(mapStateToProps, { updateProject })(SelectExpert)
+export default connect(mapStateToProps)(SelectExpert)

@@ -9,6 +9,7 @@ export default function updateUser(id) {
         }})
         .then(resp => resp.json())
         .then(data => {
+            console.log('updateUser Data', data)
             dispatch({ type: "LOGIN", data})
         })
     } 

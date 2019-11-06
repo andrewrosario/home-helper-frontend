@@ -119,8 +119,8 @@ class MaterialsContainer extends Component {
                     <tr>
                         <th>Description</th>
                         <th>Amount</th>
-                        <th>Cost</th>
-                        <th>Edit</th>
+                        <th width='2%'>Cost</th>
+                        <th width='2%'>Edit</th>
                     </tr>
                 </thead>
                 {this.props.materials && this.props.materials.map( material => <MaterialListItem  

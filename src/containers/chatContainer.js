@@ -55,7 +55,7 @@ class ChatContainer extends Component {
     render() { 
         return ( 
             <div id='chat'>
-                <div id='messages-window' className='h-100'>
+                <div id='messages-window' className='mt-1 h-100'>
                     <MessagesContainer />
                     <form className='mt-1' onSubmit={(e) => {this.sendChatMessage(socket, e)}}>
                         <input 

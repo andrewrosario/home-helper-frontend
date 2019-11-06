@@ -17,11 +17,21 @@ import history from '../history';
 class Dashboard extends React.PureComponent {
     constructor(props) {
         super(props)
-        const showModal = props.user.novice_projects.length ? false : true
         this.state = {
-            newProject: showModal,
+            newProject: false,
             menuOpen: false,
             selectExpert: false
+        }
+    }
+
+    componentDidMount() {
+        (this.props.user.novice_projects.length && this.props.expert) && this.setState({newProject: true})
+    }
+
+    componentDidUpdate() {
+        console.log('update')
+        if (this.props.expert) {
+            this.setState({newProject: false})
         }
     }
 
@@ -45,51 +55,67 @@ class Dashboard extends React.PureComponent {
         this.props.fetchProject(project, this.closeMenu.bind(this))
     }
 
+    handleModeSwitch = (type) => {
+        history.push(`/${type}-dashboard`)
+        this.closeMenu()
+    }
+
+    renderMenuProjectList = (projectType) => {
+        if(projectType === 'expertProjects') {
+            return this.props[projectType].map( (project, index)=> {
+                if(project.expert_status === 'accepted') {
+                    return <ProjectList key={index} project={project} handleProjectClick={this.handleProjectClick}/>
+                }
+            })
+        } else {
+            return this.props[projectType].map( (project, index)=> <ProjectList key={index} project={project} handleProjectClick={this.handleProjectClick}/>)
+        }
+    }
+
     render() {
-        if(this.props.project) {
-            var { id, tasks, materials, project_type_id } = this.props.project
+        const { user, project, expert } = this.props
+        let projectType
+
+        if(project) {
+            var { id, project_type_id } = this.props.project
         }
         
         if(this.props.expert) {
-            var projectType = 'expertProjects'
+            projectType = 'expertProjects'
         } else {
-            var projectType = 'noviceProjects'
+            projectType = 'noviceProjects'
         }
 
         return ( 
-            <div>
+            <>
                 <Menu isOpen={this.state.menuOpen} onStateChange={(state) => this.handleStateChange(state)}>
                     <a className="menu-item" href="/">Home</a>
-                    <p>Projects</p>
-                    {this.props[projectType].map( (project, index)=> <ProjectList key={index} project={project} handleProjectClick={this.handleProjectClick}/>)}
+                    <p id='projects'>Projects</p>
+                    {this.renderMenuProjectList(projectType)}
                     <br></br>
-                    <p className='menu-item' onClick={() => this.toggleModal('newProject')}>Create New Project</p>
-                    {this.props.expertProjects.length && <p className='menu-item' onClick={() => history.push('/expert-dashboard')}>Switch to Expert</p>}
+                    {!expert && <p className='menu-item' onClick={() => this.toggleModal('newProject')}>Create New Project</p>}
+                    {(user.expert_ins.length && !expert) && <p className='menu-item' onClick={() => this.handleModeSwitch('expert')}>Switch to Expert</p>}
+                    {expert && <p className='menu-item' onClick={() => this.handleModeSwitch('novice')}>Switch to Novice</p>}
                     <p className='menu-item' onClick={this.props.logout}>Logout</p>
-                    <img id='user-image' src={`${process.env.REACT_APP_API_URL}${this.props.user.image}`}></img>
+                    <img alt='current user' id='user-image' src={`${process.env.REACT_APP_API_URL}${this.props.user.image}`}></img>
                 </Menu>
-                { !this.props.project && <ProjectCardContainer projectType={projectType} /> }
-                { this.props.project && <div id='dashboard-container' className='container'>
-                    <div className='row'>
-                        <div className='col-8'>
-                            <div className='row border-bottom border-dark'>
-                                <MaterialsContainer />
-                            </div>
-                            <div className='row mt-3'>
-                               <TaskContainer />
-                            </div>
-                        </div>
-                        <div id='right-dashboard' className='col-4 border-left border-dark'>
-                            <div className='row'>
-                               <DetailsContainer expert={this.props.expert} toggleModal={this.toggleModal}/>
-                            </div>
-                            <div className= ''>
-                                <ChatContainer />
-                            </div>
-                        </div>
-                    </div>
-                </div> }
-
+                { !project && <ProjectCardContainer projectType={projectType} expert={expert} /> }
+                { project && <div id='dashboard-container' className='container'>
+                                            <div className='row'>
+                                                <div className='col-lg-8 col-sm-12'>
+                                                    <div className='row border-bottom border-dark'>
+                                                        <MaterialsContainer />
+                                                    </div>
+                                                    <div className='row mt-3'>
+                                                    <TaskContainer />
+                                                    </div>
+                                                </div>
+                                                <div id='right-dashboard' className='col-lg-4 col-sm-12 border-left border-dark'>
+                                                    <DetailsContainer expert={expert} toggleModal={this.toggleModal}/>
+                                                    <ChatContainer />
+                                                </div>
+                                            </div>
+                                        </div> }
                 <Modal show={this.state.newProject} onHide={() => this.toggleModal('newProject')}>
                     <Modal.Header closeButton>
                     {this.props[projectType].length > 0 ? <Modal.Title>Create a New Project</Modal.Title> : <Modal.Title>Welcome! Join our Community by Creating a Project</Modal.Title>}
@@ -105,7 +131,7 @@ class Dashboard extends React.PureComponent {
                         <SelectExpert projectTypeId={project_type_id} projectId={id} toggleModal={this.toggleModal.bind(this)} />
                     </div>
                 </Modal>
-            </div>
+            </>
          );
     }
 }
