@@ -29,8 +29,13 @@ io.on('connection', function(socket){
     socket.on('sendMessage', function(message) {
         io.sockets.in(`chat_id_${message.chat_room_id}`).emit('receiveMessage', chatMessage(message.user_id, message.text, message.chat_room_id));
     })
-    socket.on('updateTask', function(message) {
-        io.sockets.in(`task_id_${message.chat_room_id}`).emit('updateDashboard', 'update');
+    socket.on('sendUpdateTask', function(id) {
+        console.log('updateTask', id)
+        io.sockets.in(`task_id_${id}`).emit('receiveUpdateTask', 'update');
+    })
+    socket.on('sendUpdateMaterials', function(id) {
+        console.log('updateMaterials', id)
+        io.sockets.in(`materials_id_${id}`).emit('receiveUpdateMaterials', 'update');
     })
     socket.on('disconnect', function(){});
 });

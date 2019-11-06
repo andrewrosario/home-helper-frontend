@@ -34,6 +34,7 @@ class SelectExpert extends Component {
                                                                             projectId={this.props.projectId}
                                                                             method={'add'}
                                                                             toggleModal={this.props.toggleModal}
+                                                                            className='select-expert'
                                                                 />)}
             </Modal.Body>
          );

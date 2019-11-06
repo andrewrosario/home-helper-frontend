@@ -7,7 +7,7 @@ class DetailsContainer extends Component {
     state = {  }
 
     render() {
-        const { title, before_photos, description, expert, id } = this.props.currentProject
+        const { title, before_photos, description, expert, id } = this.props.project
         return ( 
             <div id='details' className='col-12 border-bottom border-dark container2'>
                 <h3>{title} Details</h3>
@@ -20,9 +20,9 @@ class DetailsContainer extends Component {
                 </div>
                 <h5 className='mt-2'>Project Description</h5>
                 {description}
-                <h5 className='mt-2'>Your Expert</h5>
-                {expert ? <ExpertCard expert={expert} projectId={id} method={'remove'}/> : <Button onClick={() => this.props.toggleModal('selectExpert')}>Find an Expert</Button>}
-
+                {this.props.expert ? <h5 className='mt-2'>Your Novice</h5> : <h5 className='mt-2'>Your Expert</h5>}
+                {!this.props.expert && (expert ? <ExpertCard expert={expert} projectId={id} method={'remove'}/> : <Button onClick={() => this.props.toggleModal('selectExpert')}>Find an Expert</Button>)}
+                {this.props.expert && <ExpertCard expert={this.props.project.novice} projectId={id} method={'remove'}/>}
             </div>
          );
     }
@@ -30,7 +30,7 @@ class DetailsContainer extends Component {
 
 function mapStateToProps(state){
     return {
-        currentProject: state.ProjectReducer.currentProject
+        project: state.ProjectReducer.currentProject
     }
 }
  

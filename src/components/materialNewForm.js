@@ -10,6 +10,7 @@ function MaterialNewForm(props) {
     
     return ( 
         <div className='row'>
+            {console.log(name)}
             <Modal show={props.show} onHide={props.handleNewClick}>
             <Modal.Header closeButton>
                 <Modal.Title>Add Task</Modal.Title>
@@ -20,7 +21,7 @@ function MaterialNewForm(props) {
                 <Form.Control placeholder='Units' className='new-task col-7' as='input' value={unit} onChange={(e) => setUnit(e.target.value)} />
                 <Form.Control placeholder='Link to Material (optional)' className='new-task col-7' as='input' value={link} onChange={(e) => setLink(e.target.value)} />
                 <Form.Control placeholder='Cost' className='new-task col-7' as='input' value={cost} onChange={(e) => setCost(e.target.value)} />
-                <Button className='form-button' onClick={() => props.handleDoneNewClick(name, amount, unit, link, cost)}>Done</Button>
+                <Button className='form-button' onClick={() => props.handleDoneNewClick({name, amount, amount_unit: unit, link, cost})}>Done</Button>
             </Modal.Body>
             </Modal>
         </div>

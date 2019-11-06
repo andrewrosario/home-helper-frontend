@@ -6,29 +6,26 @@ import { Table } from 'react-bootstrap'
 import socketIOClient from "socket.io-client";
 import { connect } from 'react-redux'
 import { fetchProject } from '../actions/fetchProject'
-
 const endpoint = "http://127.0.0.1:8000"
 const socket = socketIOClient(endpoint)
 
 class TaskContainer extends React.PureComponent {
-    constructor(props) {
-        super(props)
-        this.state = { 
+        state = { 
             showNewModal: false,
             showEditModal: false
          }
-    }
 
     componentDidMount() {
         socket.on('connect', () => {})
-        socket.on("updateTask", data => {
-
+        socket.on("receiveUpdateTask", data => {
+            console.log('receiveUpdateTask', data)
+            this.props.fetchProject(this.props.project)
         })
         socket.emit('room', `task_id_${this.props.project.id}`)
     }
 
-    componentDidUpdate() {
-        if(this.props.projectId !== this.state.project_id) {
+    componentDidUpdate(prevProps) {
+        if(prevProps.project.id !== this.props.project.id) {
             this.setState({
                 ...this.state,
                 editTask: null,
@@ -56,7 +53,8 @@ class TaskContainer extends React.PureComponent {
             })
         })
         .then(resp => resp.json())
-        .then(tasks => {
+        .then(() => {
+            socket.emit('sendUpdateTask', this.props.project.id)
             this.setState({
                 ...this.state,
                 showNewModal: false,
@@ -78,7 +76,8 @@ class TaskContainer extends React.PureComponent {
                 }
             })
             .then(resp => resp.json())
-            .then(tasks => {
+            .then( () => {
+                socket.emit('sendUpdateTask', this.props.project.id)
                 this.setState({
                     ...this.state,
                     showNewModal: false,
@@ -115,6 +114,8 @@ class TaskContainer extends React.PureComponent {
     }
 
     render() { 
+        
+        const { tasks } = this.props.project
         return ( 
             <div id='tasks' className='col-12'>
             <h3>Tasks</h3>
@@ -127,12 +128,12 @@ class TaskContainer extends React.PureComponent {
                         <th>Edit</th>
                     </tr>
                 </thead>
-                {this.state.tasks && this.state.tasks.map( task => <TaskListItem  
-                                                                        key={task.id} 
-                                                                        task={task} 
-                                                                        handleDoneEditClick={this.handleDoneEditClick} 
-                                                                        handleEditClick={this.handleEditClick}
-                                                                    />)}
+                {tasks && tasks.map( task => <TaskListItem  
+                                                key={task.id} 
+                                                task={task} 
+                                                handleDoneEditClick={this.handleDoneEditClick} 
+                                                handleEditClick={this.handleEditClick}
+                                            />)}
             </Table>
             {this.state.editTask && <TaskEditForm 
                                         task={this.state.editTask} 

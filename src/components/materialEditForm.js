@@ -50,7 +50,7 @@ function MaterialEditForm(props) {
                     value={cost} 
                     onChange={(e) => setCost(e.target.value)} 
                     />
-                <Button className='form-button' onClick={() => props.handleDoneEditClick(name, amount, unit, link, cost)}>Save</Button>
+                <Button className='form-button' onClick={() => props.handleDoneEditClick({name, amount, amount_unit: unit, link, cost})}>Save</Button>
                 <Button className='form-button float-right' onClick={props.handleDeleteClick}>Delete</Button>
             </Modal.Body>
             </Modal>

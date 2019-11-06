@@ -3,25 +3,32 @@ import { Table } from 'react-bootstrap';
 import MaterialListItem from '../components/materialListItem'
 import MaterialNewForm from '../components/materialNewForm'
 import MaterialEditForm from '../components/materialEditForm'
+import { connect } from 'react-redux'
+import socketIOClient from "socket.io-client"
+import { fetchProject } from '../actions/fetchProject'
+
+const endpoint = "http://127.0.0.1:8000"
+const socket = socketIOClient(endpoint)
+// process.env.REACT_APP_API_URL
 
 class MaterialsContainer extends Component {
-    constructor(props) {
-        super(props)
-        this.state = { 
-            project_id: props.projectId,
-            materials: props.materials,
-            showNewModal: false,
-            showEditModal: false,
-            focus: null
-         }
+    state = { 
+        showNewModal: false,
+        showEditModal: false,
+        focus: null
     }
 
-    componentDidUpdate() {
-        if(this.props.projectId !== this.state.project_id) {
+    componentDidMount() {
+        socket.on('connect', () => {})
+        socket.on("receiveUpdateMaterials", data => {
+            this.props.fetchProject(this.props.project)
+        })
+        socket.emit('room', `materials_id_${this.props.project.id}`)
+    }
+
+    componentDidUpdate(prevProps) {
+        if(prevProps.project.id !== this.props.project.id) {
             this.setState({
-                ...this.state,
-                materials: this.props.materials,
-                project_id: this.props.projectId,
                 showNewModal: false,
                 showEditModal: false,
                 focus: null,
@@ -29,8 +36,8 @@ class MaterialsContainer extends Component {
         }
     }
 
-    fetchPostPatch = (name, amount, unit, link, cost, method, path) => {
-        const projectId = this.state.project_id
+    fetchPostPatch = (materialsObj, method, path) => {
+        const projectId = this.props.project.id
         fetch(`${process.env.REACT_APP_API_URL}/${path}`, {
             method: `${method}`,
             headers: {
@@ -40,20 +47,16 @@ class MaterialsContainer extends Component {
             },
             body: JSON.stringify({
                 material: {
-                    name: name,
-                    amount: amount,
-                    amount_unit: unit,
-                    link: link,
-                    cost: cost,
+                    ...materialsObj,
                     project_id: projectId
                 }
             })
         })
         .then(resp => resp.json())
-        .then(materials => {
+        .then( () => {
+            socket.emit('sendUpdateMaterials', this.props.project.id)
             this.setState({
                 ...this.state,
-                materials: materials,
                 showNewModal: false,
                 showEditModal: false,
                 focus: null
@@ -68,8 +71,8 @@ class MaterialsContainer extends Component {
         })
     }
 
-    handleDoneNewClick = (name, amount, unit, link, cost) => {
-        this.fetchPostPatch(name, amount, unit, link, cost, 'POST', 'materials')
+    handleDoneNewClick = (materialsObj) => {
+        this.fetchPostPatch(materialsObj, 'POST', 'materials')
     }
 
     handleEditClick = (material) => {
@@ -80,8 +83,8 @@ class MaterialsContainer extends Component {
         })
     }
 
-    handleDoneEditTaskClick = (text, time) => {
-        this.fetchPostPatchTask(text, time, 'PATCH', `tasks/${this.state.editTask.id}`)
+    handleDoneEditClick = (materialsObj) => {
+        this.fetchPostPatch(materialsObj, 'PATCH', `materials/${this.state.focus.id}`)
     }
 
     handleDeleteClick = () => {
@@ -95,18 +98,17 @@ class MaterialsContainer extends Component {
                 }
             })
             .then(resp => resp.json())
-            .then(materials => {
+            .then( () => {
+                socket.emit('sendUpdateMaterials', this.props.project.id)
                 this.setState({
                     ...this.state,
-                    materials: materials,
                     showNewModal: false,
                     showEditModal: false,
                     focus: null
                 })
             })
-          }
+        }
     }
-
 
     render() { 
         return ( 
@@ -121,7 +123,7 @@ class MaterialsContainer extends Component {
                         <th>Edit</th>
                     </tr>
                 </thead>
-                {this.state.materials && this.state.materials.map( material => <MaterialListItem  
+                {this.props.materials && this.props.materials.map( material => <MaterialListItem  
                                                                                     key={material.id} 
                                                                                     material={material} 
                                                                                     handleEditClick={this.handleEditClick}
@@ -144,5 +146,12 @@ class MaterialsContainer extends Component {
          );
     }
 }
+
+function mapStateToProps(state) {
+    return {
+        project: state.ProjectReducer.currentProject,
+        materials: state.ProjectReducer.currentProject.materials
+    }
+}
  
-export default MaterialsContainer;
+export default connect(mapStateToProps, { fetchProject })(MaterialsContainer)

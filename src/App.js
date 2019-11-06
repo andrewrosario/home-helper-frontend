@@ -4,7 +4,7 @@ import './App.scss';
 import { Router, Switch, Route } from 'react-router-dom';
 import { connect } from 'react-redux'
 import history from './history';
-import NoviceDashboard from './containers/dashboard';
+import Dashboard from './containers/dashboard';
 import updateUser from './actions/updateUser'
 
 class App extends Component {
@@ -14,7 +14,9 @@ class App extends Component {
         <div className="App">
           <Switch>
             {this.props.currentUser ? history.push('/novice-dashboard') : <Route exact path='/' component={Welcome}/> }
-            <Route exact path='/novice-dashboard' component={NoviceDashboard}>
+            <Route exact path='/novice-dashboard' component={Dashboard}></Route>
+            <Route exact path='/expert-dashboard'>
+              <Dashboard expert={true}/>
             </Route>
           </Switch>
         </div>

@@ -1,4 +1,4 @@
-export default function UserReducer( state = { currentUser: null , requesting: false, showNewProject: false }, action) {
+export default function UserReducer( state = { currentUser: null , expertMode: false, requesting: false, showNewProject: false }, action) {
     const currentUser = action.user
     switch (action.type) {
         case 'START_CREATE_USER_REQUEST':
@@ -41,7 +41,6 @@ export default function UserReducer( state = { currentUser: null , requesting: f
                 showNewProject: false
             }
         case "FINISH_CREATE_PROJECT":
-            console.log("finish create project", action.user)
             return {
                 ...state,
                 currentUser: action.user,

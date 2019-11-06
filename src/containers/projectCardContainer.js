@@ -8,7 +8,7 @@ class ProjectCardContainer extends Component {
         return ( 
             <div className='container overflow-auto'>
                 <div className='row'>
-                    {this.props.projects.map( (project) => <ProjectCard key={project.id} project={project} />)}
+                    {this.props[this.props.projectType].map( (project) => <ProjectCard key={project.id} project={project} />)}
                 </div>
             </div>
          );
@@ -17,7 +17,8 @@ class ProjectCardContainer extends Component {
 
 function mapStateToProps(state){
     return {
-        projects: state.UserReducer.currentUser.novice_projects
+        noviceProjects: state.UserReducer.currentUser.novice_projects,
+        expertProjects: state.UserReducer.currentUser.expert_projects,
     }
 }
  

@@ -17,7 +17,6 @@ export function login(user) {
             })
         })
         .then(resp => {
-            console.log(resp)
             if (!resp.ok) {
                 throw Error(resp.statusText)
             } else {
@@ -25,7 +24,6 @@ export function login(user) {
             }
         })
         .then(user => {
-            console.log(user)
             localStorage.setItem("jwt", user.jwt)
             localStorage.setItem("userId", user.id);
             dispatch({ type: "LOGIN", user})
