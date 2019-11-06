@@ -13,6 +13,8 @@ import { fetchProject } from '../actions/fetchProject'
 import SelectExpert from '../components/selectExpert'
 import ProjectList from '../components/projectList'
 import history from '../history';
+import updateUser from '../actions/updateUser'
+import { clearCurrentProject } from '../actions/clearCurrentProject'
 
 class Dashboard extends React.PureComponent {
     constructor(props) {
@@ -29,7 +31,6 @@ class Dashboard extends React.PureComponent {
     }
 
     componentDidUpdate() {
-        console.log('update')
         if (this.props.expert) {
             this.setState({newProject: false})
         }
@@ -56,6 +57,8 @@ class Dashboard extends React.PureComponent {
     }
 
     handleModeSwitch = (type) => {
+        this.props.updateUser(this.props.user.id)
+        this.props.clearCurrentProject()
         history.push(`/${type}-dashboard`)
         this.closeMenu()
     }
@@ -70,6 +73,11 @@ class Dashboard extends React.PureComponent {
         } else {
             return this.props[projectType].map( (project, index)=> <ProjectList key={index} project={project} handleProjectClick={this.handleProjectClick}/>)
         }
+    }
+
+    handleHomeClick = () => {
+        this.props.clearCurrentProject()
+        this.closeMenu()
     }
 
     render() {
@@ -89,7 +97,7 @@ class Dashboard extends React.PureComponent {
         return ( 
             <>
                 <Menu isOpen={this.state.menuOpen} onStateChange={(state) => this.handleStateChange(state)}>
-                    <a className="menu-item" href="/">Home</a>
+                    <a className="menu-item" onClick={this.handleHomeClick}>Home</a>
                     <p id='projects'>Projects</p>
                     {this.renderMenuProjectList(projectType)}
                     <br></br>
@@ -127,9 +135,7 @@ class Dashboard extends React.PureComponent {
                     <Modal.Header closeButton>
                         Choose an Expert to Work With
                     </Modal.Header>
-                    <div id='scroll' className='row'>
-                        <SelectExpert projectTypeId={project_type_id} projectId={id} toggleModal={this.toggleModal.bind(this)} />
-                    </div>
+                    <SelectExpert projectTypeId={project_type_id} projectId={id} toggleModal={this.toggleModal.bind(this)} />
                 </Modal>
             </>
          );
@@ -145,4 +151,4 @@ function mapStateToProps(state){
     }
 }
  
-export default connect(mapStateToProps, { logout, fetchProject })(Dashboard);
+export default connect(mapStateToProps, { logout, fetchProject, updateUser, clearCurrentProject })(Dashboard);

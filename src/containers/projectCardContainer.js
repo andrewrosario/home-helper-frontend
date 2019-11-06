@@ -18,8 +18,18 @@ class ProjectCardContainer extends Component {
         this.setState({pendingProjects: projects})
     }
 
-    componentDidUpdate() {
-        console.log('update')
+    componentDidUpdate(prevProps) {
+        if(prevProps.expert_projects !== this.props.expert_projects) {
+            let projects = []
+            this.props.expert_projects.map( (project) => {
+                if(project.expert_status === 'pending') {
+                    projects.push(project)
+                }
+            })
+            this.setState({
+                pendingProjects: projects
+            })
+        }
     }
 
     renderProjectCards = (projectType) => {

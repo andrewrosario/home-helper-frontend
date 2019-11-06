@@ -27,36 +27,36 @@ const ProjectCard = (props) => {
     }
 
     const handleClick = (expert_id, status) => {
-        console.log('PROPS', props)
-        // props.updateProject(id, expert_id, status)
-        console.log('user', props.user)
+        props.updateProject(id, expert_id, status)
         props.updateUser(props.user.id)
     }
 
     return ( 
         <div className='project-card col-lg-3 col-sm-6'>
-            <Button 
-                                        variant='success' 
-                                        onClick={() => handleClick(expert_id, 'accepted')}>Accept
-                                    </Button>
-                <Card className='mt-2'>
-                    <Card.Img className="img-fluid" src={`./${projectType()}.jpg`} />
-                    <Card.Body>
-                    <Card.Title>{title}</Card.Title>
-                    <Card.Text>
-                        {description}
-                    </Card.Text>
-                    {props.modal ? <><Button 
-                                        variant='success' 
-                                        onClick={() => handleClick(expert_id, 'accepted')}>Accept
-                                    </Button>
-                                    <Button 
-                                        variant='danger' 
-                                        className='float-right' 
-                                        onClick={() => handleClick(null, 'rejected')}>Reject
-                                    </Button></> : <Button>View Project</Button>}
-                    </Card.Body>
-                </Card>
+            <Card className='mt-2'>
+                <Card.Img className="img-fluid" src={`./${projectType()}.jpg`} />
+                <Card.Body>
+                <Card.Title>{title}</Card.Title>
+                <Card.Text>
+                    {description}
+                </Card.Text>
+                {props.modal 
+                    ?   <>
+                            <Button 
+                                variant='success' 
+                                onClick={() => handleClick(expert_id, 'accepted')}>
+                                Accept
+                            </Button>
+                            <Button 
+                                variant='danger' 
+                                className='float-right' 
+                                onClick={() => handleClick(expert_id, 'rejected')}>
+                                Reject
+                            </Button>
+                        </> 
+                    : <Button>View Project</Button>}
+                </Card.Body>
+            </Card>
         </div>
      );
 }

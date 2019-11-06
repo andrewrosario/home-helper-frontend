@@ -27,14 +27,16 @@ class SelectExpert extends Component {
     render() { 
         return ( 
             <Modal.Body>
+                <div id='scroll'>
                     {this.state.experts.map( (expert, index) => <ExpertCard key={index} 
-                                                                            expert={expert} 
-                                                                            projectTypeId={this.props.projectTypeId} 
-                                                                            projectId={this.props.projectId}
-                                                                            method={'add'}
-                                                                            toggleModal={this.props.toggleModal}
-                                                                            className='select-expert'
-                                                                />)}
+                                                                                expert={expert} 
+                                                                                projectTypeId={this.props.projectTypeId} 
+                                                                                projectId={this.props.projectId}
+                                                                                method={'add'}
+                                                                                toggleModal={this.props.toggleModal}
+                                                                                className='select-expert'
+                                                                    />)}
+                </div>
             </Modal.Body>
          );
     }

@@ -40,6 +40,11 @@ export default function ProjectReducer( state = { currentProject: null , request
                 currentProject: null,
                 requesting: false
             }
+        case "CLEAR_CURRENT_PROJECT":
+            return {
+                ...state,
+                currentProject: null
+            }
         default:
             return state;
     }

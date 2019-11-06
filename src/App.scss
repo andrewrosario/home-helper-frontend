@@ -213,3 +213,46 @@ li {
   position: absolute;
   top: 10%
 }
+
+#details {
+  .card {
+    width: 50%;
+    margin-right: auto;
+    margin-left: auto;
+    img {
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+}
+
+.modal-content {
+  .modal-body {
+    padding-top: 0px;
+    #scroll {
+      overflow-x: scroll;
+      overflow-y: hidden;
+      white-space: nowrap;
+      .card {
+        width: 40%;
+        vertical-align: top;
+        margin-right: 10px;
+        height: 100%;
+        display: inline-block;
+        img {
+          width: 100%;
+        }
+      }
+    }
+  }
+}
+
+.scrolling-wrapper {
+  overflow-x: scroll;
+  overflow-y: hidden;
+  white-space: nowrap;
+
+  .card {
+    display: inline-block;
+  }
+}

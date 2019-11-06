@@ -20,10 +20,9 @@ export default function UserReducer( state = { currentUser: null , expertMode: f
                 requesting: true
             }
         case 'LOGIN':
-            console.log(action.data.user)
             return {
                 ...state,
-                currentUser: action.data.user,
+                currentUser: action.user,
                 requesting: false
             }
         case 'START_UPDATE_REQUEST':
