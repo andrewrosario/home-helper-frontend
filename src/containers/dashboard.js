@@ -1,72 +1,109 @@
 import React from 'react';
-import NavBar from './navbar'
-import { Modal } from 'react-bootstrap';
+import { Modal } from 'react-bootstrap'
 import { connect } from 'react-redux'
-import NewProject from './newProject';
+import TaskContainer from './taskContainer'
+import DetailsContainer from './detailsContainer'
+import MaterialsContainer from './materialsContainer'
+import ChatContainer from './chatContainer'
+import ProjectCardContainer from './projectCardContainer'
+import { slide as Menu } from 'react-burger-menu'
+import ProjectNewForm from './projectNewForm'
+import { logout } from '../actions/logout'
+import { fetchProject } from '../actions/fetchProject'
+import SelectExpert from '../components/selectExpert'
+import ProjectList from '../components/projectList'
+import history from '../history';
 
-class NoviceDashboard extends React.PureComponent {
+class Dashboard extends React.PureComponent {
     constructor(props) {
         super(props)
         const showModal = props.user.novice_projects.length ? false : true
         this.state = {
-            currentProject: props.user.novice_projects,
-            showCreateProject: showModal,
+            newProject: showModal,
+            menuOpen: false,
+            selectExpert: false
         }
     }
 
-    toggleCreateProject = () => {
+    handleStateChange (state) {
+        this.setState({menuOpen: state.isOpen})  
+    }
+
+    closeMenu () {
+        this.setState({menuOpen: false})
+    }
+
+    toggleModal = (modalType) => {
         this.setState({
             ...this.state,
-            showCreateProject: !this.state.showCreateProject
+            [modalType]: !this.state[modalType]
         })
+        this.closeMenu()
     }
 
-    handleProjectClick = (id) => {
-        fetch(`${process.env.REACT_APP_API_URL}/projects/${id}`, {
-            headers: {
-            'Content-Type': 'application/json',
-            Accept: 'application/json',
-            "Authorization": 'Bearer ' + localStorage.getItem("jwt")
-        }})
-        .then(resp => resp.json())
-        .then(data => {
-        })
+    handleProjectClick = (project) => {
+        this.props.fetchProject(project, this.closeMenu.bind(this))
     }
 
-    render() { 
+    render() {
+        if(this.props.project) {
+            var { id, tasks, materials, project_type_id } = this.props.project
+        }
+        
+        if(this.props.expert) {
+            var projectType = 'expertProjects'
+        } else {
+            var projectType = 'noviceProjects'
+        }
+
         return ( 
             <div>
-                <NavBar projects={this.props.user.novice_projects} toggleCreateProject={this.toggleCreateProject} handleProjectClick={this.handleProjectClick}/>
-                <div id='dashboard-container' className='container'>
-                    <div id='tasks-details' className='row'>
-                        <div id='tasks' className='col-8'>
-                        <h1>Tasks</h1>
-                            It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
+                <Menu isOpen={this.state.menuOpen} onStateChange={(state) => this.handleStateChange(state)}>
+                    <a className="menu-item" href="/">Home</a>
+                    <p>Projects</p>
+                    {this.props[projectType].map( (project, index)=> <ProjectList key={index} project={project} handleProjectClick={this.handleProjectClick}/>)}
+                    <br></br>
+                    <p className='menu-item' onClick={() => this.toggleModal('newProject')}>Create New Project</p>
+                    {this.props.expertProjects.length && <p className='menu-item' onClick={() => history.push('/expert-dashboard')}>Switch to Expert</p>}
+                    <p className='menu-item' onClick={this.props.logout}>Logout</p>
+                    <img id='user-image' src={`${process.env.REACT_APP_API_URL}${this.props.user.image}`}></img>
+                </Menu>
+                { !this.props.project && <ProjectCardContainer projectType={projectType} /> }
+                { this.props.project && <div id='dashboard-container' className='container'>
+                    <div className='row'>
+                        <div className='col-8'>
+                            <div className='row border-bottom border-dark'>
+                                <MaterialsContainer />
+                            </div>
+                            <div className='row mt-3'>
+                               <TaskContainer />
+                            </div>
                         </div>
-                        <div id='details' className='col-4'>
-                        <h1>Details</h1>
-                            It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
+                        <div id='right-dashboard' className='col-4 border-left border-dark'>
+                            <div className='row'>
+                               <DetailsContainer expert={this.props.expert} toggleModal={this.toggleModal}/>
+                            </div>
+                            <div className= ''>
+                                <ChatContainer />
+                            </div>
                         </div>
                     </div>
-                    <div id='materials-chat' className='row'>
-                        <div id='materials' className='col-8'>
-                            <h1>Materials</h1>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Amet massa vitae tortor condimentum lacinia quis vel eros. A erat nam at lectus urna duis convallis convallis tellus. Neque vitae tempus quam pellentesque nec nam aliquam sem. Mattis nunc sed blandit libero volutpat sed cras ornare. Laoreet id donec ultrices tincidunt arcu non sodales neque. Sit amet aliquam id diam maecenas ultricies mi. Semper risus in hendrerit gravida rutrum quisque non. Vel fringilla est ullamcorper eget nulla. Id ornare arcu odio ut. Sagittis id consectetur purus ut. Dictum at tempor commodo ullamcorper a lacus vestibulum sed arcu. Nunc sed velit dignissim sodales ut eu. Diam volutpat commodo sed egestas egestas fringilla phasellus. Fringilla urna porttitor rhoncus dolor purus non. Amet commodo nulla facilisi nullam vehicula ipsum a arcu. Consectetur purus ut faucibus pulvinar elementum integer enim neque. Risus sed vulputate odio ut enim blandit volutpat maecenas volutpat. Ipsum suspendisse ultrices gravida dictum.
-                        </div>
-                        <div id='chat' className='col-4'>
-                            <h1>Chat</h1>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Amet massa vitae tortor condimentum lacinia quis vel eros. A erat nam at lectus urna duis convallis convallis tellus. Neque vitae tempus quam pellentesque nec nam aliquam sem. Mattis nunc sed blandit libero volutpat sed cras ornare. Laoreet id donec ultrices tincidunt arcu non sodales neque. Sit amet aliquam id diam maecenas ultricies mi. Semper risus in hendrerit 
-                        </div>
-                    </div>
+                </div> }
 
-                </div>
-                <Modal show={this.state.showCreateProject} onHide={this.toggleCreateProject}>
+                <Modal show={this.state.newProject} onHide={() => this.toggleModal('newProject')}>
                     <Modal.Header closeButton>
-                    <Modal.Title>Create a New Project</Modal.Title>
+                    {this.props[projectType].length > 0 ? <Modal.Title>Create a New Project</Modal.Title> : <Modal.Title>Welcome! Join our Community by Creating a Project</Modal.Title>}
                     </Modal.Header>
-                    <Modal.Body>
-                        <NewProject  toggleCreateProject={this.toggleCreateProject}/>
-                    </Modal.Body>
+                    <ProjectNewForm closeProjectModal={() => this.toggleModal('newProject')} />
+                </Modal>
+
+                <Modal show={this.state.selectExpert} onHide={() => this.toggleModal('selectExpert')}>
+                    <Modal.Header closeButton>
+                        Choose an Expert to Work With
+                    </Modal.Header>
+                    <div id='scroll' className='row'>
+                        <SelectExpert projectTypeId={project_type_id} projectId={id} toggleModal={this.toggleModal.bind(this)} />
+                    </div>
                 </Modal>
             </div>
          );
@@ -75,10 +112,11 @@ class NoviceDashboard extends React.PureComponent {
 
 function mapStateToProps(state){
     return {
-        user: state.LoginReducer.currentUser.user,
-        projects: state.LoginReducer.currentUser.user.projects
+        user: state.UserReducer.currentUser,
+        noviceProjects: state.UserReducer.currentUser.novice_projects,
+        expertProjects: state.UserReducer.currentUser.expert_projects,
+        project: state.ProjectReducer.currentProject
     }
 }
-  
  
-export default connect(mapStateToProps)(NoviceDashboard);
+export default connect(mapStateToProps, { logout, fetchProject })(Dashboard);

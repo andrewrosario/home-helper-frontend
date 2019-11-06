@@ -25,7 +25,7 @@ export function login(user) {
         })
         .then(user => {
             localStorage.setItem("jwt", user.jwt)
-            localStorage.setItem("userId", user.user.id);
+            localStorage.setItem("userId", user.id);
             dispatch({ type: "LOGIN", user})
             history.push('/novice-dashboard')
         })

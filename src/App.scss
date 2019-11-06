@@ -29,7 +29,6 @@
   position: fixed;
   top: 24%;
   right: 10%
-  
 }
 
 #motto {
@@ -131,4 +130,87 @@
 
 nav > p {
   cursor: pointer;
+}
+
+#submit-task {
+  margin-left: auto;
+  margin-right: auto
+}
+
+#tasks {
+  overflow: scroll;
+  height: 62vh
+}
+
+#details {
+  overflow: scroll;
+  height: 55vh;
+}
+
+#materials {
+  overflow: scroll;
+  height: 35vh;
+}
+
+.edit-button {
+  width: 20px;
+}
+
+#delete-task {
+  float: right
+}
+
+.project-card {
+  padding-left: 0px;
+  padding-right: 0px
+}
+
+.col-4 {
+  padding-right: 2px;
+  padding-top: 4px
+}
+
+.expert-card {
+  width: 75%;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.expert-card-image {
+  width: 50%
+}
+
+#chat {
+  width: 100%
+}
+
+#incoming-messages {
+  height: 35vh;
+}
+
+ul {
+  list-style-type: none;
+}
+
+li {
+  padding: 5px 10px;
+  margin-top: 5px;
+  margin-bottom: 5px
+}
+
+#dashboard-container {
+  background-color: white;
+}
+
+#right-dashboard {
+  padding-right: 15px
+}
+
+#user-image {
+  width: 50%;
+  border-radius: 98%;
+  top: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  position: sticky
 }

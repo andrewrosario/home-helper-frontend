@@ -1,7 +1,7 @@
-export default function updateUser(id) {
+export function fetchProject(project, closeMenu) {
     return (dispatch) => {
-        dispatch({type: 'START_UPDATE_REQUEST'})
-        fetch(`${process.env.REACT_APP_API_URL}/users/${id}`, {
+        dispatch({type: 'START_FETCH_PROJECT'})
+        fetch(`${process.env.REACT_APP_API_URL}/projects/${project.id}`, {
             headers: {
             'Content-Type': 'application/json',
             Accept: 'application/json',
@@ -9,7 +9,8 @@ export default function updateUser(id) {
         }})
         .then(resp => resp.json())
         .then(data => {
-            dispatch({ type: "LOGIN", data})
+            dispatch({type: "FINISH_FETCH_PROJECT", data})
+            closeMenu && closeMenu()
         })
-    } 
+    }
 }

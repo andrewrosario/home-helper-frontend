@@ -1,5 +1,18 @@
-export default function loginReducer( state = { currentUser: null , requesting: false, showNewProject: false }, action) {
+export default function UserReducer( state = { currentUser: null , expertMode: false, requesting: false, showNewProject: false }, action) {
+    const currentUser = action.user
     switch (action.type) {
+        case 'START_CREATE_USER_REQUEST':
+            return {
+                ...state,
+                currentUser: state.currentUser,
+                requesting: true
+            }
+        case 'CREATE_NEW_USER': 
+            return {
+                ...state,
+                currentUser: currentUser,
+                requesting: false
+            }
         case 'START_LOGIN_REQUEST':
             return {
                 ...state,
@@ -7,7 +20,6 @@ export default function loginReducer( state = { currentUser: null , requesting: 
                 requesting: true
             }
         case 'LOGIN':
-            const currentUser = action.user
             return {
                 ...state,
                 currentUser,
@@ -25,6 +37,7 @@ export default function loginReducer( state = { currentUser: null , requesting: 
             return {
                 ...state,
                 currentUser: null,
+                currentProject: null,
                 showNewProject: false
             }
         case "FINISH_CREATE_PROJECT":

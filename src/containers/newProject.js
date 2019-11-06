@@ -1,61 +1,46 @@
-import React, { Component } from 'react';
-import { Form, Button } from 'react-bootstrap';
+import React, { useState, useRef } from 'react'
+import { Form, Button, Modal} from 'react-bootstrap'
 import { connect } from 'react-redux'
-import { createNewProject} from '../actions/createNewProject'
 
-class NewProject extends Component {
-    state = {  
-        project: {
-            user: this.props.user.id,
-            name: '',
-            description: '',
-            type: ''
-        } 
-    }
+function NewProject(props) {
+    const [validated, setValidated] = useState(false)
+    const form = useRef(null)
+    const projectTypes = ['Paint', 'Plumbing', 'Electrical', 'Carpentry', 'Flooring', 'Landscaping']
 
-    handleFormChange = event => {
-        this.setState({
-            ...this.state,
-            project: {
-                ...this.state.project,
-                [event.target.name]: event.target.value
-            }
-        })
-    }
-
-    submitHandler = (e) => {
-        e.preventDefault()
-        this.props.createNewProject(this.state.project)
-        this.props.toggleCreateProject()
-    }
-
-    render() { 
-            return (
-                <div>
-                    <Form onSubmit={(e) => this.submitHandler(e)}>
-                        <Form.Control type='text' name='name' placeholder='Project Name' onChange={this.handleFormChange} />
-                        <Form.Control as='textarea' name='description' placeholder='Project Description' onChange={this.handleFormChange} />
-                        <Form.Control as='select' name='type' onChange={this.handleFormChange}>
-                            <option value='1'>Project Type</option>
-                            <option value='2'>Paint</option>
-                            <option value='3'>Plubming</option>
-                            <option value='4'>Electrical</option>
-                            <option value='5'>Carpentry</option>
-                            <option value='6'>Flooring</option>
-                            <option value='7'>Landscaping</option>
-                        </Form.Control>
-                        <Button type="submit">
-                            Begin Planning
-                        </Button>
-                    </Form>
-                </div>
-            )
+    const handleSubmit = (event, type) => {
+        if (form.current.checkValidity() === false) {
+            event.preventDefault()
+            event.stopPropagation()
+        } else {
+            type === 'submit' ? props.submitHandler(event) : props.continue(event, 1)
         }
-    }
+        setValidated(true)
+    };
 
+    return (
+        <Modal.Body>
+            <Form noValidate validated={validated} ref={form}>
+                <Form.Group>
+                    <Form.Control required type='text' name='name' placeholder='Project Name' onChange={props.handleChange('name')} />
+                    <Form.Control required as='textarea' name='description' placeholder='Project Description' onChange={props.handleChange('description')} />
+                    <Form.Control required as='select' name='type' defaultValue='' onChange={props.handleChange('type')}>
+                        <option disabled value=''> -- select a project type -- </option>
+                        {projectTypes.map ( (type, index) => <option key={index} value={index + 1}>{type}</option>)}
+                    </Form.Control>
+                    <Button onClick={(event) => handleSubmit(event, 'continue')}>
+                        Add Before Pictures
+                    </Button>
+                    <Button className='float-right' onClick={(event) => handleSubmit(event, 'submit')}>
+                        Continue Without Photos
+                    </Button>
+                </Form.Group>
+            </Form>
+        </Modal.Body>
+    )
+}
 
 function mapStateToProps(state){
-    return {user: state.LoginReducer.currentUser.user}
+    return {user: state.UserReducer.currentUser.user}
 }
  
-export default connect(mapStateToProps, { createNewProject } ) (NewProject);
+export default connect(mapStateToProps ) (NewProject);
