@@ -1,4 +1,4 @@
-export default function updateProject(projectId, expertId) {
+export default function updateProject(projectId, expertId, expertStatus) {
     return (dispatch) => {
         dispatch({type: 'START_UPDATE_PROJECT'})
         let sentExpertId
@@ -15,7 +15,8 @@ export default function updateProject(projectId, expertId) {
             "Authorization": 'Bearer ' + localStorage.getItem("jwt")
             },
             body: JSON.stringify({
-                expert_id: sentExpertId
+                expert_id: sentExpertId,
+                expert_status: expertStatus
             })
         })
         .then(resp => resp.json())

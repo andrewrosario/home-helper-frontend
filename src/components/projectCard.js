@@ -1,8 +1,11 @@
 import React from 'react'
-import { MDBBtn, MDBCard, MDBCardBody, MDBCardImage, MDBCardTitle, MDBCardText, MDBCol } from 'mdbreact'
+import { Card, Button } from 'react-bootstrap'
+import { connect } from 'react-redux'
+import updateProject from '../actions/updateProject'
+import updateUser from '../actions/updateUser'
 
 const ProjectCard = (props) => {
-    const { description, title, project_type_id } = props.project
+    const { id, description, title, project_type_id, expert_id } = props.project
 
     const projectType = () => {
         switch(project_type_id) {
@@ -22,23 +25,44 @@ const ProjectCard = (props) => {
                 return 'painting';
         }
     }
-    
+
+    const handleClick = (expert_id, status) => {
+        props.updateProject(id, expert_id, status)
+        props.updateUser(props.user.id)
+    }
+
     return ( 
         <div className='project-card col-lg-3 col-sm-6'>
-            <MDBCol>
-                <MDBCard className='mt-2'>
-                    <MDBCardImage className="img-fluid" src={`./${projectType()}.jpg`} waves />
-                    <MDBCardBody>
-                    <MDBCardTitle>{title}</MDBCardTitle>
-                    <MDBCardText>
-                        {description}
-                    </MDBCardText>
-                    <MDBBtn href="#">View Project</MDBBtn>
-                    </MDBCardBody>
-                </MDBCard>
-            </MDBCol>
+            <Card className='mt-2'>
+                <Card.Img className="img-fluid" src={`./${projectType()}.jpg`} />
+                <Card.Body>
+                <Card.Title>{title}</Card.Title>
+                <Card.Text>
+                    {description}
+                </Card.Text>
+                {props.modal 
+                    ?   <>
+                            <Button 
+                                variant='success' 
+                                onClick={() => handleClick(expert_id, 'accepted')}>
+                                Accept
+                            </Button>
+                            <Button 
+                                variant='danger' 
+                                className='float-right' 
+                                onClick={() => handleClick(expert_id, 'rejected')}>
+                                Reject
+                            </Button>
+                        </> 
+                    : <Button>View Project</Button>}
+                </Card.Body>
+            </Card>
         </div>
      );
 }
+
+function mapStateToProps(state){
+    return {user: state.UserReducer.currentUser}
+}
  
-export default ProjectCard;
+export default connect(mapStateToProps, { updateProject, updateUser })(ProjectCard);

@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { Modal} from 'react-bootstrap'
 import ExpertCard from './expertCard'
 import { connect } from 'react-redux'
-import updateProject from '../actions/updateProject'
 
 class SelectExpert extends Component {
     state = {
@@ -28,14 +27,16 @@ class SelectExpert extends Component {
     render() { 
         return ( 
             <Modal.Body>
+                <div id='scroll'>
                     {this.state.experts.map( (expert, index) => <ExpertCard key={index} 
-                                                                            expert={expert} 
-                                                                            projectTypeId={this.props.projectTypeId} 
-                                                                            projectId={this.props.projectId}
-                                                                            method={'add'}
-                                                                            toggleModal={this.props.toggleModal}
-                                                                            className='select-expert'
-                                                                />)}
+                                                                                expert={expert} 
+                                                                                projectTypeId={this.props.projectTypeId} 
+                                                                                projectId={this.props.projectId}
+                                                                                method={'add'}
+                                                                                toggleModal={this.props.toggleModal}
+                                                                                className='select-expert'
+                                                                    />)}
+                </div>
             </Modal.Body>
          );
     }
@@ -47,4 +48,4 @@ function mapStateToProps(state){
     }
 }
  
-export default connect(mapStateToProps, { updateProject })(SelectExpert)
+export default connect(mapStateToProps)(SelectExpert)

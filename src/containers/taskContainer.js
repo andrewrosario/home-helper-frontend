@@ -122,10 +122,10 @@ class TaskContainer extends React.PureComponent {
             <Table>
                 <thead>
                     <tr>
-                        <th>Complete</th>
+                        <th width='1%'>Complete</th>
                         <th>Description</th>
-                        <th>Time Required</th>
-                        <th>Edit</th>
+                        <th width='15%'>Time</th>
+                        <th width='1%'>Edit</th>
                     </tr>
                 </thead>
                 {tasks && tasks.map( task => <TaskListItem  

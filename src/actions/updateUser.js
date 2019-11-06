@@ -8,8 +8,8 @@ export default function updateUser(id) {
             "Authorization": 'Bearer ' + localStorage.getItem("jwt")
         }})
         .then(resp => resp.json())
-        .then(data => {
-            dispatch({ type: "LOGIN", data})
+        .then(user => {
+            dispatch({ type: "LOGIN", user})
         })
     } 
 }
