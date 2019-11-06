@@ -5,7 +5,7 @@
   "dependencies": {
     "@trendmicro/react-sidenav": "^0.4.5",
     "bootstrap": "^4.3.1",
-    "express": "^4.15.2",
+    "express": "^4.17.1",
     "jquery": "^3.4.1",
     "mdbreact": "^4.22.0",
     "node-sass": "^4.13.0",
