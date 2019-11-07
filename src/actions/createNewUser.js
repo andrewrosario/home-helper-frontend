@@ -20,7 +20,6 @@ export function createNewUser(user) {
             }
         })
         .then(user => {
-            console.log(user)
             localStorage.setItem("jwt", user.jwt)
             localStorage.setItem("userId", user.id);
             dispatch({ type: "LOGIN", user})

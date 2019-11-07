@@ -22,7 +22,8 @@ class Dashboard extends React.PureComponent {
         this.state = {
             newProject: false,
             menuOpen: false,
-            selectExpert: false
+            selectExpert: false,
+            newComment: false
         }
     }
 

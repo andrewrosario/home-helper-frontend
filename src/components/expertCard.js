@@ -17,11 +17,10 @@ const ExpertCard = (props) => {
                 <Card.Img className="img-fluid expert-card-image" src={`${process.env.REACT_APP_API_URL}${image}`} />
                 {(props.project.expert_status === 'pending') && <Card.Img id='pending' className="img-fluid expert-card-image" src='./pending.png' />}
                 <Card.Body>
-                    <Card.Title></Card.Title>
                     <Card.Text className='text-center'>{name}</Card.Text>
-                    {!props.expert && (props.method === 'remove' 
+                    {props.method === 'remove' 
                         ? <Button onClick={() => handleClick(props.projectId, id, 'none')}>Remove Expert</Button> 
-                        : <Button onClick={() => handleClick(props.projectId, id, 'pending')}>Select this Expert</Button>)
+                        : <Button onClick={() => handleClick(props.projectId, id, 'pending')}>Select this Expert</Button>
                     }
                 </Card.Body>
             </Card>

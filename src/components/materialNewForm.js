@@ -10,8 +10,7 @@ function MaterialNewForm(props) {
     
     return ( 
         <div className='row'>
-            {console.log(name)}
-            <Modal show={props.show} onHide={props.handleNewClick}>
+            <Modal show={props.show} onHide={() => props.handleClick(null, 'New')}>
             <Modal.Header closeButton>
                 <Modal.Title>Add Task</Modal.Title>
             </Modal.Header>

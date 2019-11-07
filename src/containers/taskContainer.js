@@ -6,19 +6,23 @@ import { Table } from 'react-bootstrap'
 import socketIOClient from "socket.io-client";
 import { connect } from 'react-redux'
 import { fetchProject } from '../actions/fetchProject'
+import CommentNewForm from '../components/commentNewForm'
+import { newComment } from '../actions/newComment'
+import DisplayComments from '../components/displayComments'
+
 const endpoint = "http://127.0.0.1:8000"
 const socket = socketIOClient(endpoint)
 
 class TaskContainer extends React.PureComponent {
         state = { 
             showNewModal: false,
-            showEditModal: false
+            showEditModal: false,
+            showCommentModal: false
          }
 
     componentDidMount() {
         socket.on('connect', () => {})
         socket.on("receiveUpdateTask", data => {
-            console.log('receiveUpdateTask', data)
             this.props.fetchProject(this.props.project)
         })
         socket.emit('room', `task_id_${this.props.project.id}`)
@@ -28,7 +32,7 @@ class TaskContainer extends React.PureComponent {
         if(prevProps.project.id !== this.props.project.id) {
             this.setState({
                 ...this.state,
-                editTask: null,
+                focusTask: null,
                 newTask: false
             })
         }
@@ -60,7 +64,9 @@ class TaskContainer extends React.PureComponent {
                 showNewModal: false,
                 newTask: false,
                 showEditModal: false,
-                editTask: null
+                showCommentModal: false,
+                showDisplayModal: false,
+                focusTask: null
             })
         })
     }
@@ -83,7 +89,7 @@ class TaskContainer extends React.PureComponent {
                     showNewModal: false,
                     newTask: false,
                     showEditModal: false,
-                    editTask: null
+                    focusTask: null
                 })
             })
           }
@@ -105,16 +111,26 @@ class TaskContainer extends React.PureComponent {
         })
     }
 
-    handleEditClick = (task) => {
+    handleDoneCommentClick = (text) => {
+        const data = {text, commentOn: this.state.focusTask.id, userId: this.props.user.id}
+        this.props.newComment('task', data)
         this.setState({
             ...this.state,
-            editTask: task,
-            showEditModal: !this.state.showEditModal
+            focusTask: null,
+            showCommentModal: !this.state.showCommentModal
+        })
+        socket.emit('sendUpdateTask', this.props.project.id)
+    }
+
+    handleClick = (task, type) => {
+        this.setState({
+            ...this.state,
+            focusTask: task,
+            [`show${type}Modal`]: !this.state[`show${type}Modal`]
         })
     }
 
     render() { 
-        
         const { tasks } = this.props.project
         return ( 
             <div id='tasks' className='col-12'>
@@ -125,6 +141,7 @@ class TaskContainer extends React.PureComponent {
                         <th width='1%'>Complete</th>
                         <th>Description</th>
                         <th width='15%'>Time</th>
+                        <th>Comment</th>
                         <th width='1%'>Edit</th>
                     </tr>
                 </thead>
@@ -132,14 +149,15 @@ class TaskContainer extends React.PureComponent {
                                                 key={task.id} 
                                                 task={task} 
                                                 handleDoneEditClick={this.handleDoneEditClick} 
-                                                handleEditClick={this.handleEditClick}
+                                                handleClick={this.handleClick}
+                                                handleCommentClick={this.handleCommentClick}
                                             />)}
             </Table>
-            {this.state.editTask && <TaskEditForm 
-                                        task={this.state.editTask} 
+            {this.state.focusTask && <TaskEditForm 
+                                        task={this.state.focusTask} 
                                         show={this.state.showEditModal} 
                                         handleDoneEditClick={this.handleDoneEditClick}
-                                        handleEditClick={this.handleEditClick}
+                                        handleClick={this.handleClick}
                                         handleDeleteClick={this.handleDeleteClick}
                                         />}
             {this.state.newTask &&  <TaskNewForm 
@@ -147,6 +165,16 @@ class TaskContainer extends React.PureComponent {
                                         handleDoneEditClick={this.handleDoneNewClick} 
                                         handleNewClick={this.handleNewClick}
                                     />}
+            {this.state.focusTask &&    <CommentNewForm 
+                                            show={this.state.showCommentModal} 
+                                            handleDoneCommentClick={this.handleDoneCommentClick} 
+                                            handleClick={this.handleClick}
+                                        />}
+            {this.state.focusTask &&    <DisplayComments 
+                                            task={this.state.focusTask}
+                                            show={this.state.showDisplayModal} 
+                                            handleClick={this.handleClick}
+                                        />}              
             <button id='new-task' onClick={this.handleNewClick}>Add a Task</button>
             </div>
          );
@@ -155,8 +183,9 @@ class TaskContainer extends React.PureComponent {
 
 function mapStateToProps(state){
     return {
-        project: state.ProjectReducer.currentProject
+        project: state.ProjectReducer.currentProject,
+        user: state.UserReducer.currentUser
     }
 }
  
-export default connect(mapStateToProps, { fetchProject })(TaskContainer);
+export default connect(mapStateToProps, { fetchProject, newComment })(TaskContainer);

@@ -6,6 +6,9 @@ import MaterialEditForm from '../components/materialEditForm'
 import { connect } from 'react-redux'
 import socketIOClient from "socket.io-client"
 import { fetchProject } from '../actions/fetchProject'
+import CommentNewForm from '../components/commentNewForm'
+import { newComment } from '../actions/newComment'
+import DisplayComments from '../components/displayComments'
 
 const endpoint = "http://127.0.0.1:8000"
 const socket = socketIOClient(endpoint)
@@ -15,6 +18,8 @@ class MaterialsContainer extends Component {
     state = { 
         showNewModal: false,
         showEditModal: false,
+        showCommentModal: false,
+        showDisplayModal: false,
         focus: null
     }
 
@@ -59,15 +64,9 @@ class MaterialsContainer extends Component {
                 ...this.state,
                 showNewModal: false,
                 showEditModal: false,
+                showDiplayModal: false,
                 focus: null
             })
-        })
-    }
-
-    handleNewClick = () => {
-        this.setState({
-            ...this.state,
-            showNewModal: !this.state.showNewModal
         })
     }
 
@@ -75,13 +74,6 @@ class MaterialsContainer extends Component {
         this.fetchPostPatch(materialsObj, 'POST', 'materials')
     }
 
-    handleEditClick = (material) => {
-        this.setState({
-            ...this.state,
-            focus: material,
-            showEditModal: !this.state.showEditModal
-        })
-    }
 
     handleDoneEditClick = (materialsObj) => {
         this.fetchPostPatch(materialsObj, 'PATCH', `materials/${this.state.focus.id}`)
@@ -110,6 +102,25 @@ class MaterialsContainer extends Component {
         }
     }
 
+    handleClick = (material, type) => {
+        this.setState({
+            ...this.state,
+            focus: material,
+            [`show${type}Modal`]: !this.state[`show${type}Modal`]
+        })
+    }
+
+    handleDoneCommentClick = (text) => {
+        const data = {text, commentOn: this.state.focus.id, userId: this.props.user.id}
+        this.props.newComment('material', data)
+        this.setState({
+            ...this.state,
+            focus: null,
+            showCommentModal: !this.state.showCommentModal
+        })
+        socket.emit('sendUpdateMaterials', this.props.project.id)
+    }
+
     render() { 
         return ( 
             <div id='materials' className='col-12 mb-2 pb-2'>
@@ -120,28 +131,39 @@ class MaterialsContainer extends Component {
                         <th>Description</th>
                         <th>Amount</th>
                         <th width='2%'>Cost</th>
-                        <th width='2%'>Edit</th>
+                        <th>Comment</th>
+                        <th width='1%'>Edit</th>
                     </tr>
                 </thead>
                 {this.props.materials && this.props.materials.map( material => <MaterialListItem  
                                                                                     key={material.id} 
                                                                                     material={material} 
-                                                                                    handleEditClick={this.handleEditClick}
+                                                                                    handleClick={this.handleClick}
                                                                                 />)}
             </Table>
             {this.state.showEditModal &&    <MaterialEditForm 
                                                 material={this.state.focus} 
                                                 show={this.state.showEditModal} 
                                                 handleDoneEditClick={this.handleDoneEditClick} 
-                                                handleEditClick={this.handleEditClick}
+                                                handleClick={this.handleClick}
                                                 handleDeleteClick={this.handleDeleteClick}
                                             />}
             {this.state.showNewModal &&     <MaterialNewForm 
                                                 show={this.state.showNewModal} 
                                                 handleDoneNewClick={this.handleDoneNewClick} 
-                                                handleNewClick={this.handleNewClick}
+                                                handleClick={this.handleClick}
                                             />}
-            <button id='new-material' onClick={this.handleNewClick}>Add a Material</button>
+            {this.state.focus &&    <CommentNewForm 
+                                        show={this.state.showCommentModal} 
+                                        handleDoneCommentClick={this.handleDoneCommentClick} 
+                                        handleClick={this.handleClick}
+                                    />}
+            {this.state.focus &&    <DisplayComments 
+                                        task={this.state.focus}
+                                        show={this.state.showDisplayModal} 
+                                        handleClick={this.handleClick}
+                                    />}  
+            <button id='new-material' onClick={() => this.handleClick(null, 'New')}>Add a Material</button>
             </div>
          );
     }
@@ -150,8 +172,9 @@ class MaterialsContainer extends Component {
 function mapStateToProps(state) {
     return {
         project: state.ProjectReducer.currentProject,
-        materials: state.ProjectReducer.currentProject.materials
+        materials: state.ProjectReducer.currentProject.materials,
+        user: state.UserReducer.currentUser
     }
 }
  
-export default connect(mapStateToProps, { fetchProject })(MaterialsContainer)
+export default connect(mapStateToProps, { fetchProject, newComment })(MaterialsContainer)

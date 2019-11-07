@@ -10,7 +10,7 @@ function MaterialEditForm(props) {
     
     return ( 
         <div className='row'>
-            <Modal show={props.show} onHide={props.handleEditClick}>
+            <Modal show={props.show} onHide={() => props.handleClick(null, 'Edit')}>
             <Modal.Header closeButton>
                 <Modal.Title>Update Material</Modal.Title>
             </Modal.Header>

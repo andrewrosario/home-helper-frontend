@@ -34,13 +34,13 @@ class ProjectCardContainer extends Component {
 
     renderProjectCards = (projectType) => {
         if(projectType === 'expertProjects') {
-            return this.props[projectType].map( (project, index)=> {
+            return this.props[projectType].map( (project)=> {
                 if(project.expert_status === 'accepted') {
                     return <ProjectCard key={project.id} project={project} modal={false}/>
                 }
             })
         } else {
-            return this.props[projectType].map( (project, index)=> <ProjectCard key={project.id} project={project} modal={false}/>)
+            return this.props[projectType].map( (project)=> <ProjectCard key={project.id} project={project} modal={false}/>)
         }
     }
 
@@ -55,7 +55,6 @@ class ProjectCardContainer extends Component {
                         Your Expertise Has Been Requested
                     </Modal.Header>
                     <div id='scroll' className='row'>
-                        {console.log(this.state.pendingProjects)}
                         {this.state.pendingProjects.length && this.state.pendingProjects.map( (project) => <ProjectCard key={project.id} project={project} modal={true}/>)}
                     </div>
                 </Modal>

@@ -143,8 +143,24 @@ nav > p {
   height: 35%;
 }
 
-.edit-button {
+.edit-button, .comment-button {
   width: 20px;
+  float: left
+}
+
+.comment-button {
+  margin-left: 25%
+}
+
+.comment-count {
+  margin-top: -5px;
+  line-height: 25px;
+  margin-left: 15%;
+  width: 25px;
+  height: 25px;
+  border-radius: 100%;
+  color: white;
+  background-color: red;
 }
 
 #delete-task {
@@ -215,10 +231,20 @@ li {
 }
 
 #details {
+  h3 {
+    border-bottom: 1px solid lightgrey
+  }
   .card {
-    width: 50%;
+    width: 75%;
     margin-right: auto;
     margin-left: auto;
+    margin-bottom: 10px;
+    .card-text {
+      margin-bottom: 0px
+    }
+    .card-body {
+      padding-top: 0px;
+    }
     img {
       margin-left: auto;
       margin-right: auto;
@@ -251,8 +277,11 @@ li {
   overflow-x: scroll;
   overflow-y: hidden;
   white-space: nowrap;
-
   .card {
     display: inline-block;
   }
+}
+
+th {
+  padding: .25rem !important
 }
