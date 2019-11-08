@@ -136,7 +136,7 @@ class Dashboard extends React.PureComponent {
                     <Modal.Header closeButton>
                         Choose an Expert to Work With
                     </Modal.Header>
-                    <SelectExpert projectTypeId={project_type_id} projectId={id} toggleModal={this.toggleModal.bind(this)} />
+                    <SelectExpert projectTypeId={project_type_id} projectId={id} toggleModal={this.toggleModal} />
                 </Modal>
             </>
          );

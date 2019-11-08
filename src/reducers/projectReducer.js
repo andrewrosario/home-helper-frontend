@@ -52,7 +52,7 @@ export default function ProjectReducer( state = { currentProject: null , request
             }
         case 'FINISH_NEW_COMMENT':
             const pluralType = action.commentType + 's'
-            const index = state.currentProject[pluralType].findIndex(task => task.id === action.comment[`${action.commentType}_id`])
+            const index = state.currentProject[pluralType].findIndex(element => element.id === action.comment[`${action.commentType}_id`])
             let object = Object.assign( {}, state)
             let commentArray = object.currentProject[pluralType][index].comments
             commentArray.push(action.comment)

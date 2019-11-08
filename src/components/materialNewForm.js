@@ -15,11 +15,19 @@ function MaterialNewForm(props) {
                 <Modal.Title>Add Task</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <Form.Control placeholder='Material Description' value={name} className='new-task col-7' as='input' onChange={(e) => setName(e.target.value)}/>
-                <Form.Control placeholder='Amount' className='new-task col-7' as='input' value={amount} onChange={(e) => setAmount(e.target.value)} />
-                <Form.Control placeholder='Units' className='new-task col-7' as='input' value={unit} onChange={(e) => setUnit(e.target.value)} />
-                <Form.Control placeholder='Link to Material (optional)' className='new-task col-7' as='input' value={link} onChange={(e) => setLink(e.target.value)} />
-                <Form.Control placeholder='Cost' className='new-task col-7' as='input' value={cost} onChange={(e) => setCost(e.target.value)} />
+                <Form.Row>
+                    <Form.Control placeholder='Material Description' value={name} className='new-task col-12' as='input' onChange={(e) => setName(e.target.value)}/>
+                </Form.Row>
+                <Form.Row>
+                    <Form.Control placeholder='Amount' className='new-task col-6' as='input' value={amount} onChange={(e) => setAmount(e.target.value)} />
+                    <Form.Control placeholder='Units (pounds, feet, boxes, etc.)' className='new-task col-6' as='input' value={unit} onChange={(e) => setUnit(e.target.value)} />
+                </Form.Row>
+                <Form.Row>
+                    <Form.Control placeholder='Link to Material (optional)' className='new-task col-12' as='input' value={link} onChange={(e) => setLink(e.target.value)} />
+                </Form.Row>
+                <Form.Row>
+                    <Form.Control placeholder='Cost' className='new-task col-12' as='input' value={cost} onChange={(e) => setCost(e.target.value)} />
+                </Form.Row>
                 <Button className='form-button' onClick={() => props.handleDoneNewClick({name, amount, amount_unit: unit, link, cost})}>Done</Button>
             </Modal.Body>
             </Modal>

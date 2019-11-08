@@ -55,7 +55,8 @@ class ChatContainer extends Component {
     render() { 
         return ( 
             <div id='chat'>
-                <div id='messages-window' className='mt-1 h-100'>
+                {(!this.props.project.expert_id && this.props.project.expert_status !== 'accepted') && <div id='chat-overlay'><h5>Select an Expert to Enable Chat</h5></div>}
+                <div id='messages-window' className='mt-1'>
                     <MessagesContainer />
                     <form className='mt-1' onSubmit={(e) => {this.sendChatMessage(socket, e)}}>
                         <input 

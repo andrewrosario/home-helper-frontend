@@ -38,6 +38,8 @@ class MaterialsContainer extends Component {
                 showEditModal: false,
                 focus: null,
             })
+            socket.emit('leave', `materials_id_${prevProps.project.chat_room.id}`)
+            socket.emit('room', `materials_id_${this.props.project.chat_room.id}`)
         }
     }
 

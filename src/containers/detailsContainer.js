@@ -21,8 +21,8 @@ class DetailsContainer extends Component {
                 <h5 className='mt-2'>Project Description</h5>
                 {description}
                 {this.props.expert ? <h5 className='mt-2'>Your Novice</h5> : <h5 className='mt-2'>Your Expert</h5>}
-                {!this.props.expert && (expert ? <ExpertCard expert={expert} projectId={id} method={'remove'}/> : <Button onClick={() => this.props.toggleModal('selectExpert')}>Find an Expert</Button>)}
-                {this.props.expert && <ExpertCard expert={this.props.project.novice} projectId={id} method={'remove'}/>}
+                {!this.props.expert && (expert ? <ExpertCard toggleModal={this.props.toggleModal} expert={expert} projectId={id} method={'remove'}/> : <Button onClick={() => this.props.toggleModal('selectExpert')}>Find an Expert</Button>)}
+                {this.props.expert && <ExpertCard expertMode={this.props.expert} expert={this.props.project.novice} projectId={id} method={'remove'}/>}
             </div>
          );
     }

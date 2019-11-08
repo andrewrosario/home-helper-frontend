@@ -37,7 +37,7 @@ const ProjectCard = (props) => {
     }
 
     return ( 
-        <div className='project-card col-lg-3 col-sm-6'>
+        // <div className='project-card col-lg-3 col-sm-6'>
             <Card className='mt-2'>
                 <Card.Img className="img-fluid" src={`./${projectType()}.jpg`} />
                 <Card.Body>
@@ -62,7 +62,7 @@ const ProjectCard = (props) => {
                         : <Button onClick={() => handleViewProject(props.project)}>View Project</Button>}
                 </Card.Body>
             </Card>
-        </div>
+        // </div>
      );
 }
 

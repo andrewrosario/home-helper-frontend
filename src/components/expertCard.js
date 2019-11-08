@@ -8,9 +8,18 @@ const ExpertCard = (props) => {
 
     function handleClick(projectId, expertId, status) {
         props.updateProject(projectId, expertId, status)
-        props.toggleModal('selectExpert')
+        if(expertId !== null) {
+            props.toggleModal('selectExpert')
+        }
     }
 
+    function renderCardButton() {
+        if(!props.expertMode) {
+            return props.method === 'remove' 
+            ? <Button onClick={() => handleClick(props.projectId, null, 'none')}>Remove Expert</Button> 
+            : <Button onClick={() => handleClick(props.projectId, id, 'pending')}>Select this Expert</Button>
+        }
+    }
     return ( 
         <>
             <Card className='mt-2'>
@@ -18,10 +27,7 @@ const ExpertCard = (props) => {
                 {(props.project.expert_status === 'pending') && <Card.Img id='pending' className="img-fluid expert-card-image" src='./pending.png' />}
                 <Card.Body>
                     <Card.Text className='text-center'>{name}</Card.Text>
-                    {props.method === 'remove' 
-                        ? <Button onClick={() => handleClick(props.projectId, id, 'none')}>Remove Expert</Button> 
-                        : <Button onClick={() => handleClick(props.projectId, id, 'pending')}>Select this Expert</Button>
-                    }
+                        {renderCardButton()}
                 </Card.Body>
             </Card>
         </>

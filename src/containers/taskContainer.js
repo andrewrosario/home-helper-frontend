@@ -35,6 +35,8 @@ class TaskContainer extends React.PureComponent {
                 focusTask: null,
                 newTask: false
             })
+            socket.emit('leave', `task_id_${prevProps.project.chat_room.id}`)
+            socket.emit('room', `task_id_${this.props.project.chat_room.id}`)
         }
     }
 
@@ -83,6 +85,7 @@ class TaskContainer extends React.PureComponent {
             })
             .then(resp => resp.json())
             .then( () => {
+                console.log(this.props.project)
                 socket.emit('sendUpdateTask', this.props.project.id)
                 this.setState({
                     ...this.state,
