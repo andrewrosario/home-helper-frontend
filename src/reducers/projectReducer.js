@@ -60,6 +60,18 @@ export default function ProjectReducer( state = { currentProject: null , request
             return {
                 ...object
             }
+        case 'START_UPDATE_TASK':
+            return {
+                ...state,
+                requesting: true
+            }
+        case 'FINISH_UPDATE_TASK':
+            console.log('action', action.data) 
+            let taskState = Object.assign( {}, state)
+            taskState.currentProject.tasks = action.data
+            return {
+                ...taskState
+            }
         default:
             return state;
     }

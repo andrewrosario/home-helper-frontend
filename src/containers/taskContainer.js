@@ -1,14 +1,19 @@
 import React from 'react';
-import TaskListItem from '../components/taskListItem'
-import TaskNewForm from '../components/taskNewForm'
-import TaskEditForm from '../components/taskEditForm'
 import { Table } from 'react-bootstrap'
 import socketIOClient from "socket.io-client";
 import { connect } from 'react-redux'
-import { fetchProject } from '../actions/fetchProject'
+
+import CompleteProject from './completeProject';
+
+import TaskListItem from '../components/taskListItem'
+import TaskNewForm from '../components/taskNewForm'
+import TaskEditForm from '../components/taskEditForm'
 import CommentNewForm from '../components/commentNewForm'
-import { newComment } from '../actions/newComment'
 import DisplayComments from '../components/displayComments'
+
+import { fetchProject } from '../actions/fetchProject'
+import { newComment } from '../actions/newComment'
+import { updateTask } from '../actions/updateTask'
 
 const endpoint = "http://127.0.0.1:8000"
 const socket = socketIOClient(endpoint)
@@ -17,15 +22,20 @@ class TaskContainer extends React.PureComponent {
         state = { 
             showNewModal: false,
             showEditModal: false,
-            showCommentModal: false
+            showCommentModal: false,
+            showCompleteModal: false,
          }
 
     componentDidMount() {
         socket.on('connect', () => {})
-        socket.on("receiveUpdateTask", data => {
+        socket.on("receiveUpdateTask", () => {
             this.props.fetchProject(this.props.project)
         })
         socket.emit('room', `task_id_${this.props.project.id}`)
+        this.setState({
+            ...this.state,
+            projectComplete: this.checkProjectComplete()
+        })
     }
 
     componentDidUpdate(prevProps) {
@@ -33,43 +43,37 @@ class TaskContainer extends React.PureComponent {
             this.setState({
                 ...this.state,
                 focusTask: null,
-                newTask: false
+                newTask: false,
+                projectComplete: this.checkProjectComplete()
             })
             socket.emit('leave', `task_id_${prevProps.project.chat_room.id}`)
             socket.emit('room', `task_id_${this.props.project.chat_room.id}`)
         }
     }
 
-    fetchPostPatch = (text, time, isComplete, method, path) => {
-        const projectId = this.props.project.id
-        fetch(`${process.env.REACT_APP_API_URL}/${path}`, {
-            method: `${method}`,
-            headers: {
-                'Content-Type': 'application/json',
-                Accept: 'application/json',
-                "Authorization": 'Bearer ' + localStorage.getItem("jwt")
-            },
-            body: JSON.stringify({
-                task: {
-                    text: text,
-                    time_required: time,
-                    project_id: projectId,
-                    is_complete: isComplete
+    checkProjectComplete = () => {
+        if(this.props.project.tasks.length > 0) {
+            for(let i = 0; i < this.props.project.tasks.length; i++) {
+                if (!this.props.project.tasks[i].is_complete) {
+                    return false
                 }
-            })
-        })
-        .then(resp => resp.json())
-        .then(() => {
-            socket.emit('sendUpdateTask', this.props.project.id)
-            this.setState({
-                ...this.state,
-                showNewModal: false,
-                newTask: false,
-                showEditModal: false,
-                showCommentModal: false,
-                showDisplayModal: false,
-                focusTask: null
-            })
+            }
+            return true
+        }
+        return false
+    }
+
+    setStateAndSocket = () => {
+        socket.emit('sendUpdateTask', this.props.project.id)
+        this.setState({
+            ...this.state,
+            showNewModal: false,
+            newTask: false,
+            showEditModal: false,
+            showCommentModal: false,
+            showDisplayModal: false,
+            focusTask: null,
+            projectComplete: this.checkProjectComplete()
         })
     }
 
@@ -85,7 +89,6 @@ class TaskContainer extends React.PureComponent {
             })
             .then(resp => resp.json())
             .then( () => {
-                console.log(this.props.project)
                 socket.emit('sendUpdateTask', this.props.project.id)
                 this.setState({
                     ...this.state,
@@ -99,11 +102,11 @@ class TaskContainer extends React.PureComponent {
     }
 
     handleDoneNewClick = (text, time) => {
-        this.fetchPostPatch(text, time, false, 'POST', 'tasks')
+        this.props.updateTask({ project_id: this.props.project.id, text, time_required: time, is_complete: false }, 'POST', 'tasks', this.setStateAndSocket)
     }
 
     handleDoneEditClick = (id, text, time, isComplete) => {
-        this.fetchPostPatch(text, time, isComplete, 'PATCH', `tasks/${id}`)
+        this.props.updateTask({ project_id: this.props.project.id, text, time_required: time, is_complete: isComplete }, 'PATCH', `tasks/${id}`, this.setStateAndSocket)
     }
 
     handleNewClick = () => {
@@ -130,6 +133,13 @@ class TaskContainer extends React.PureComponent {
             ...this.state,
             focusTask: task,
             [`show${type}Modal`]: !this.state[`show${type}Modal`]
+        })
+    }
+
+    toggleComplete = () => {
+        this.setState({
+            ...this.state,
+            projectComplete: !this.state.projectComplete
         })
     }
 
@@ -177,7 +187,8 @@ class TaskContainer extends React.PureComponent {
                                             task={this.state.focusTask}
                                             show={this.state.showDisplayModal} 
                                             handleClick={this.handleClick}
-                                        />}              
+                                        />}
+            <CompleteProject show={this.state.projectComplete} toggleComplete={this.toggleComplete} handleHomeClick={this.props.handleHomeClick}/>
             <button id='new-task' onClick={this.handleNewClick}>Add a Task</button>
             </div>
          );
@@ -191,4 +202,4 @@ function mapStateToProps(state){
     }
 }
  
-export default connect(mapStateToProps, { fetchProject, newComment })(TaskContainer);
+export default connect(mapStateToProps, { fetchProject, newComment, updateTask })(TaskContainer);

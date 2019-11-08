@@ -1,4 +1,4 @@
-export function newComment(commentType, data) {
+export function newComment(commentType, data, socketUpdate) {
     const { text, userId, commentOn } = data
     return(dispatch) => {
         dispatch({type: 'START_NEW_COMMENT'})
@@ -20,6 +20,7 @@ export function newComment(commentType, data) {
         .then(resp => resp.json())
         .then(comment => {
             dispatch({type: "FINISH_NEW_COMMENT", comment, commentType: commentType})
+            socketUpdate()
         })
     }
 }

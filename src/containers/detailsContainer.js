@@ -11,7 +11,7 @@ class DetailsContainer extends Component {
         return ( 
             <div id='details' className='col-12 border-bottom border-dark container2'>
                 <h3>{title} Details</h3>
-                {before_photos && <h5>Before Photos</h5>}
+                {!!before_photos.length && <h5>Before Photos</h5>}
                 <div className='row'>
                     {before_photos && before_photos.map( (photo, index) => <img key={index} 
                                                                                 className='col-4' alt='before' 

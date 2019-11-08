@@ -18,7 +18,7 @@ class ProjectCardContainer extends Component {
         this.setState({pendingProjects: projects})
     }
 
-    componentDidUpdate(prevProps) {
+    componentDidUpdate() {
         if(this.props.expert) {
             let projects = []
             this.props.expertProjects.map( (project) => {
@@ -37,7 +37,7 @@ class ProjectCardContainer extends Component {
     renderProjectCards = (projectType) => {
         if(projectType === 'expertProjects') {
             return this.props[projectType].map( (project)=> {
-                if(project.expert_status === 'accepted') {
+                if(project.expert_status === 'accepted' && project.is_complete !== true) {
                     return (
                         <div key={project.id} className='project-card col-lg-3 col-sm-6'>
                             <ProjectCard project={project} modal={false}/>
@@ -47,11 +47,13 @@ class ProjectCardContainer extends Component {
             })
         } else {
             return this.props[projectType].map( (project)=> {
-                return (
-                    <div key={project.id} className='project-card col-lg-3 col-sm-6'>
-                        <ProjectCard project={project} modal={false}/>
-                    </div>
-                )
+                if(project.is_complete !== true) {
+                    return (
+                        <div key={project.id} className='project-card col-lg-3 col-sm-6'>
+                            <ProjectCard project={project} modal={false}/>
+                        </div>
+                    )
+                }
             })
         }
     }

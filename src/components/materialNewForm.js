@@ -12,7 +12,7 @@ function MaterialNewForm(props) {
         <div className='row'>
             <Modal show={props.show} onHide={() => props.handleClick(null, 'New')}>
             <Modal.Header closeButton>
-                <Modal.Title>Add Task</Modal.Title>
+                <Modal.Title>Add a Material</Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <Form.Row>

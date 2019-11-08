@@ -1,26 +1,30 @@
 import React from 'react';
 import { Modal } from 'react-bootstrap'
 import { connect } from 'react-redux'
+import { slide as Menu } from 'react-burger-menu'
+import history from '../history';
+
 import TaskContainer from './taskContainer'
 import DetailsContainer from './detailsContainer'
 import MaterialsContainer from './materialsContainer'
 import ChatContainer from './chatContainer'
-import ProjectCardContainer from './projectCardContainer'
-import { slide as Menu } from 'react-burger-menu'
 import ProjectNewForm from './projectNewForm'
-import { logout } from '../actions/logout'
-import { fetchProject } from '../actions/fetchProject'
+import ProjectCardContainer from './projectCardContainer'
+
 import SelectExpert from '../components/selectExpert'
 import ProjectList from '../components/projectList'
-import history from '../history';
+
+import { logout } from '../actions/logout'
+import { fetchProject } from '../actions/fetchProject'
 import updateUser from '../actions/updateUser'
 import { clearCurrentProject } from '../actions/clearCurrentProject'
 
 class Dashboard extends React.PureComponent {
     constructor(props) {
         super(props)
+        console.log(!props.user.novice_projects.length)
         this.state = {
-            newProject: false,
+            newProject: !props.user.novice_projects.length,
             menuOpen: false,
             selectExpert: false,
             newComment: false
@@ -34,6 +38,25 @@ class Dashboard extends React.PureComponent {
     componentDidUpdate() {
         if (this.props.expert) {
             this.setState({newProject: false})
+        }
+    }
+
+    projectTypeToWord = (projectTypeId) => {
+        switch(projectTypeId) {
+            case 1:
+                return ' Painting';
+            case 2:
+                return ' Plumbing';
+            case 3:
+                return 'n Electrical';
+            case 4:
+                return ' Carpentry';
+            case 5: 
+                return ' Flooring';
+            case 6:
+                return ' Landscaping';
+            default:
+                return ' Painting';
         }
     }
 
@@ -67,12 +90,16 @@ class Dashboard extends React.PureComponent {
     renderMenuProjectList = (projectType) => {
         if(projectType === 'expertProjects') {
             return this.props[projectType].map( (project, index)=> {
-                if(project.expert_status === 'accepted') {
+                if(project.expert_status === 'accepted' && project.is_complete !== true) {
                     return <ProjectList key={index} project={project} handleProjectClick={this.handleProjectClick}/>
                 }
             })
         } else {
-            return this.props[projectType].map( (project, index)=> <ProjectList key={index} project={project} handleProjectClick={this.handleProjectClick}/>)
+            return this.props[projectType].map( (project, index)=> {
+                if(project.is_complete !== true) {
+                    return <ProjectList key={index} project={project} handleProjectClick={this.handleProjectClick}/>
+                } 
+            })
         }
     }
 
@@ -99,7 +126,7 @@ class Dashboard extends React.PureComponent {
             <>
                 <Menu isOpen={this.state.menuOpen} onStateChange={(state) => this.handleStateChange(state)}>
                     <a className="menu-item" onClick={this.handleHomeClick}>Home</a>
-                    <p id='projects'>Projects</p>
+                    <h5 id='projects'>Projects</h5>
                     {this.renderMenuProjectList(projectType)}
                     <br></br>
                     {!expert && <p className='menu-item' onClick={() => this.toggleModal('newProject')}>Create New Project</p>}
@@ -116,7 +143,7 @@ class Dashboard extends React.PureComponent {
                                                         <MaterialsContainer />
                                                     </div>
                                                     <div className='row mt-3'>
-                                                    <TaskContainer />
+                                                    <TaskContainer handleHomeClick={this.handleHomeClick}/>
                                                     </div>
                                                 </div>
                                                 <div id='right-dashboard' className='col-lg-4 col-sm-12 border-left border-dark'>
@@ -134,7 +161,7 @@ class Dashboard extends React.PureComponent {
 
                 <Modal show={this.state.selectExpert} onHide={() => this.toggleModal('selectExpert')}>
                     <Modal.Header closeButton>
-                        Choose an Expert to Work With
+                        {`Choose a${this.projectTypeToWord(project_type_id)} Expert to Work With`}
                     </Modal.Header>
                     <SelectExpert projectTypeId={project_type_id} projectId={id} toggleModal={this.toggleModal} />
                 </Modal>

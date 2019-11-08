@@ -1,10 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux'
 import { Card, Button } from 'react-bootstrap'
+import Rating from 'react-rating'
 import updateProject from '../actions/updateProject'
 
 const ExpertCard = (props) => {
-    const { id, image, name } = props.expert
+    const { id, image, name, rating } = props.expert
 
     function handleClick(projectId, expertId, status) {
         props.updateProject(projectId, expertId, status)
@@ -16,8 +17,15 @@ const ExpertCard = (props) => {
     function renderCardButton() {
         if(!props.expertMode) {
             return props.method === 'remove' 
-            ? <Button onClick={() => handleClick(props.projectId, null, 'none')}>Remove Expert</Button> 
-            : <Button onClick={() => handleClick(props.projectId, id, 'pending')}>Select this Expert</Button>
+            ? <Button onClick={() => handleClick(props.projectId, null, 'none')}>Remove</Button> 
+            : <>
+                <div className='text-center'>
+                    <Rating initialRating={rating} emptySymbol="fa fa-star-o fa-1x" fullSymbol="fa fa-star fa-1x" readonly/>
+                </div>
+                <div>
+                    <Button onClick={() => handleClick(props.projectId, id, 'pending')}>Select this Expert</Button>
+                </div>
+            </>
         }
     }
     return ( 
@@ -26,8 +34,11 @@ const ExpertCard = (props) => {
                 <Card.Img className="img-fluid expert-card-image" src={`${process.env.REACT_APP_API_URL}${image}`} />
                 {(props.project.expert_status === 'pending') && <Card.Img id='pending' className="img-fluid expert-card-image" src='./pending.png' />}
                 <Card.Body>
-                    <Card.Text className='text-center'>{name}</Card.Text>
-                        {renderCardButton()}
+                    <Card.Text className='mb-0 text-center'>{name}</Card.Text>
+                    {!props.done ? renderCardButton() : <Rating 
+                    emptySymbol="fa fa-star-o fa-2x"
+                    fullSymbol="fa fa-star fa-2x"
+                    />}
                 </Card.Body>
             </Card>
         </>

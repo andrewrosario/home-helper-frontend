@@ -1,7 +1,7 @@
 import React from 'react';
 
 function MaterialListItem(props) {
-    const {id, name, amount, amount_unit, cost, comments} = props.material
+    const { name, amount, amount_unit, cost, comments} = props.material
 
     return ( 
         

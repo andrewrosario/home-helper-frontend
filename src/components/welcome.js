@@ -20,11 +20,10 @@ const  WelcomePage = () => {
         </div>
         <div id={'call-to-action'}>
             <img id={'motto'} src={process.env.PUBLIC_URL + '/motto.png'} alt='The smart way to DIY'></img>
+            <Button id={'get-started'} onClick={handleShow} className={'rounded-pill'}>Get Started</Button>
+            <Button id={'login'} onClick={handleShow} className={'rounded-pill'}>Log In</Button>
         </div>
-        <div id={'demo-image'}>
-        </div>
-        <Button id={'get-started'} onClick={handleShow} className={'rounded-pill'}>Get Started</Button>
-        <Button id={'login'} onClick={handleShow} className={'rounded-pill'}>Log In</Button>
+
         <Modal show={showSignUp} onHide={handleClose}>
             <Modal.Header closeButton>
                 <Modal.Title>Sign Up</Modal.Title>

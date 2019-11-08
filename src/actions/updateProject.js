@@ -21,6 +21,7 @@ export default function updateProject(projectId, expertId, expertStatus) {
         })
         .then(resp => resp.json())
         .then(data => {
+            console.log(data)
             dispatch({type: 'FINISH_UPDATE_PROJECT', data})
         })
     }

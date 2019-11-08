@@ -12,8 +12,8 @@ function TaskNewForm(props) {
                 <Modal.Title>Add Task</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <Form.Control placeholder='Task Description' value={text} className='new-task col-7' as='input' onChange={(e) => setText(e.target.value)}/>
-                <Form.Control placeholder='Time (in minutes)' className='new-task col-2' as='input' value={time} onChange={(e) => setTime(e.target.value)} />
+                <Form.Control placeholder='Task Description' value={text} className='new-task col-12' as='input' onChange={(e) => setText(e.target.value)}/>
+                <Form.Control placeholder='Time (in minutes)' className='new-task col-12' as='input' value={time} onChange={(e) => setTime(e.target.value)} />
                 <Button id='submit-task' onClick={() => props.handleDoneEditClick(text, time)}>Done</Button>
             </Modal.Body>
             </Modal>

@@ -21,21 +21,16 @@
   color: #09d3ac;
 }
 
-#demo-image {
-  width: 40%;
-  height: 30%;
-  display: inline-block;
-  background-color: white;
-  position: fixed;
-  top: 24%;
-  right: 10%
+#call-to-action {
+  align-content: right;
+  position: absolute;
+  top: 5%;
+  right: 1%;
 }
 
 #motto {
   width: 40%;
-  position: fixed;
-  top: 20%;
-  left: 10%;
+  float: right;
 }
 
 #get-started {
@@ -112,7 +107,7 @@
   background: rgba(0, 0, 0, 0.3);
 }
 
-nav > p {
+nav > a, p {
   cursor: pointer;
 }
 
@@ -226,7 +221,12 @@ li {
 }
 
 #projects {
-  border: none !important
+  border-bottom: 1px solid #d1d1d1
+}
+
+#projects:focus, #projects:hover {
+  outline: none;
+  color:#d1d1d1
 }
 
 #pending {
@@ -239,7 +239,7 @@ li {
     border-bottom: 1px solid lightgrey
   }
   .card {
-    width: 75%;
+    width: 50%;
     margin-right: auto;
     margin-left: auto;
     margin-bottom: 10px;
@@ -248,11 +248,17 @@ li {
     }
     .card-body {
       padding-top: 0px;
+      padding-bottom: 10px
     }
     img {
       margin-left: auto;
       margin-right: auto;
+      width: 100%;
     }
+  }
+  button {
+    padding-top: 0px;
+    padding-bottom: 0px
   }
 }
 
@@ -273,6 +279,11 @@ li {
           width: 100%;
         }
       }
+    }
+  }
+  .modal-footer {
+    form {
+      width: 100%;
     }
   }
 }
