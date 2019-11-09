@@ -4,7 +4,7 @@ import MaterialListItem from '../components/materialListItem'
 import MaterialNewForm from '../components/materialNewForm'
 import MaterialEditForm from '../components/materialEditForm'
 import { connect } from 'react-redux'
-import socketIOClient from "socket.io-client"
+import io from 'socket.io-client';
 import { fetchProject } from '../actions/fetchProject'
 import CommentNewForm from '../components/commentNewForm'
 import { newComment } from '../actions/newComment'

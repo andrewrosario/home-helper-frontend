@@ -1,6 +1,6 @@
 import React from 'react';
 import { Table } from 'react-bootstrap'
-import socketIOClient from "socket.io-client";
+import io from 'socket.io-client';
 import { connect } from 'react-redux'
 
 import CompleteProject from './completeProject';

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { MDBListGroup, MDBContainer } from "mdbreact"
 import { connect } from 'react-redux'
-import socketIOClient from "socket.io-client"
+import io from 'socket.io-client';
 import { fetchProject } from '../actions/fetchProject'
 
 // const endpoint = "http://127.0.0.1:8000"
