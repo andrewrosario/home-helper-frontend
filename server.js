@@ -6,11 +6,6 @@ let server = http.createServer(app);
 var io = require('socket.io')(server);
 const port = process.env.PORT || 8000;
 
-const router = express.Router()
-router.get('/', function(req, res){
-    res.send({response: "Hello"}).status(200);
-  });
-
 server.listen(port, function(){
     console.log('listening on', port);
 });
