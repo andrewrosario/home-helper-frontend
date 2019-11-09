@@ -6,9 +6,10 @@ let server = http.createServer(app);
 var io = require('socket.io')(server);
 const port = process.env.PORT || 8000;
 
-const INDEX = path.join(__dirname, '/public/index.html');
-server.use((req, res) => res.sendFile(INDEX) )
-
+const router = express.Router()
+router.get('/', function(req, res){
+    res.send({response: "Hello"}).status(200);
+  });
 
 server.listen(port, function(){
     console.log('listening on', port);
@@ -53,9 +54,3 @@ const chatMessage = (user_id, text, chat_room_id) => {
 };
 
 
-// router.get('/', function(req, res){
-//     res.send({response: "Hello"}).status(200);
-//   });
-
-// const router = express.Router()
-  
