@@ -189,7 +189,7 @@ class TaskContainer extends React.PureComponent {
                                             handleClick={this.handleClick}
                                         />}
             <CompleteProject show={this.state.projectComplete} toggleComplete={this.toggleComplete} handleHomeClick={this.props.handleHomeClick}/>
-            <button id='new-task' onClick={this.handleNewClick}>Add a Task</button>
+            <button id='new-task' className='btn-primary' onClick={this.handleNewClick}>Add a Task</button>
             </div>
          );
     }

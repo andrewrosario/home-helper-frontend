@@ -196,7 +196,7 @@ li {
   background-color: white;
   margin-top: 10px;
   margin-bottom: 10px;
-  box-shadow: 0 0.5rem 1rem;
+  box-shadow: 0 0.5rem 1rem gray;
   height: 95vh;
 }
 
@@ -304,6 +304,7 @@ th {
 .btn-primary {
   background-color: #7095B9;
   border-color: #7095B9;
+  border-radius: .25rem;
 }
 
 html, #root {
@@ -313,7 +314,7 @@ html, #root {
 .row .project-card {
   padding: 15px;
   .card {
-    box-shadow: 0px 0rem 1rem 0px;
+    box-shadow: 0px 0rem 1rem 0px gray;
   }
 }
 
@@ -325,4 +326,12 @@ html, #root {
       width: 100%;
     }
   }
+}
+
+.rounded-pill {
+  border-radius: .25rem !important;
+}
+
+.sign-up {
+  float: right
 }

@@ -47,6 +47,8 @@ class ProjectCardContainer extends Component {
             })
         } else {
             return this.props[projectType].map( (project)=> {
+                console.log(project)
+                console.log(project.is_complete)
                 if(project.is_complete !== true) {
                     return (
                         <div key={project.id} className='project-card col-lg-3 col-sm-6'>

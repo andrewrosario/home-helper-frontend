@@ -56,7 +56,7 @@ class NewUser extends Component {
                 <Form noValidate validated={this.state.validated} onSubmit={(event) => this.validateForm(event)}>
                     {['name', 'email', 'password', 'password_confirmation'].map( (name, index) => <Form.Control required key={index} type={name} name={name} placeholder={name} value={this.state.user[name]} onChange={this.handleFormChange}/>)}
                     <Form.Control type="file" name="image" onChange={this.handleAddFiles} />
-                    <Button variant="primary" type="submit">
+                    <Button className='sign-up' variant="primary" type="submit">
                         Submit
                     </Button>
                 </Form>

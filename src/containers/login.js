@@ -25,7 +25,7 @@ class NewUser extends Component {
             <div>
                 <Form onSubmit={(e) => this.submitHandler(e)}>
                     {['email', 'password'].map( (name, index) => <Form.Control key={index} type={name} name={name} placeholder={name} value={this.state[name]} onChange={this.handleFormChange}/>)}
-                    <Button variant="primary" type="submit">
+                    <Button className='sign-up' variant="primary" type="submit">
                         Submit
                     </Button>
                 </Form>

@@ -61,7 +61,6 @@ class MaterialsContainer extends Component {
         })
         .then(resp => resp.json())
         .then( () => {
-            console.log('fetch post path', this.props.project.id)
             socket.emit('sendUpdateMaterials', this.props.project.id)
             this.setState({
                 ...this.state,
@@ -169,7 +168,7 @@ class MaterialsContainer extends Component {
                                         show={this.state.showDisplayModal} 
                                         handleClick={this.handleClick}
                                     />}  
-            <button id='new-material' onClick={() => this.handleClick(null, 'New')}>Add a Material</button>
+            <button id='new-material' className='btn-primary' onClick={() => this.handleClick(null, 'New')}>Add a Material</button>
             </div>
          );
     }
