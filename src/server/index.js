@@ -1,9 +1,9 @@
 const express = require('express');
+const port = process.env.PORT || 8000;
 const server = express()
   .use((req, res) => res.sendFile(INDEX) )
-  .listen(PORT, () => console.log(`Listening on ${ PORT }`));
+  .listen(port, () => console.log(`Listening on ${ port }`));
 var io = require('socket.io')(server);
-const port = process.env.PORT || 8000;
 
 const INDEX = path.join(__dirname, '../../public/index.html');
 
