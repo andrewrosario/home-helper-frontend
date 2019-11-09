@@ -8,11 +8,9 @@ var io = require('socket.io')(server);
 
 const INDEX = path.join(__dirname, '../../public/index.html');
 
-
-
-server.listen(port, function(){
-    console.log('listening on', port);
-});
+// server.listen(port, function(){
+//     console.log('listening on', port);
+// });
 
 io.on('connection', function(socket){
     socket.on('leave',function(room){  
