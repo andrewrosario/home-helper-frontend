@@ -40,10 +40,6 @@ io.on('connection', function(socket){
     socket.on('disconnect', function(){});
 });
 
-server.listen(port, function(){
-    console.log('listening on', port);
-});
-
 const chatMessage = (user_id, text, chat_room_id) => {
     return {
         user_id,
