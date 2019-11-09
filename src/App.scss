@@ -29,23 +29,19 @@
 }
 
 #motto {
-  width: 40%;
+  width: 100%;
   float: right;
 }
 
 #get-started {
-  position: fixed;
-  top: 56%;
-  right: 10%;
   width: 40%;
   background-color: #8F1C3F;
   border-color: #8F1C3F;
 }
 
 #login {
-  position: fixed;
-  top: 62%;
-  right: 10%;
+  margin-left: 5%;
+  margin-right: 7%;
   width: 40%;
   background-color: #8F1C3F;
   border-color: #8F1C3F;
@@ -303,4 +299,30 @@ th {
 
 #messages-window {
   height: 90%
+}
+
+.btn-primary {
+  background-color: #7095B9;
+  border-color: #7095B9;
+}
+
+html, #root {
+  background-color: #c3b89f75;
+}
+
+.row .project-card {
+  padding: 15px;
+  .card {
+    box-shadow: 0px 0rem 1rem 0px;
+  }
+}
+
+.modal-footer {
+  .card {
+    margin-left: auto;
+    margin-right: auto;
+    img {
+      width: 100%;
+    }
+  }
 }

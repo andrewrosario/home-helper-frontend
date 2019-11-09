@@ -38,6 +38,7 @@ const ExpertCard = (props) => {
                     {!props.done ? renderCardButton() : <Rating 
                     emptySymbol="fa fa-star-o fa-2x"
                     fullSymbol="fa fa-star fa-2x"
+                    onClick={props.getRating}
                     />}
                 </Card.Body>
             </Card>

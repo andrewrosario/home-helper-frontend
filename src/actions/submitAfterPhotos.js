@@ -17,6 +17,7 @@ export function submitAfterPhotos(photos, projectId) {
         })
         .then(resp => resp.json())
         .then(data => {
+            console.log(data)
             dispatch({type: 'FINISH_UPDATE_PROJECT', data})
         })
     }
