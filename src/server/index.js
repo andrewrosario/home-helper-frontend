@@ -1,17 +1,9 @@
 const express = require('express');
 const port = process.env.PORT || 8000;
-const path = require('path');
 const server = express()
   .use(express.static(__dirname + '/../../build'))
   .listen(port, () => console.log(`Listening on ${ port }`));
 var io = require('socket.io')(server);
-
-// const INDEX = ;
-
-
-// server.listen(port, function(){
-//     console.log('listening on', port);
-// });
 
 io.on('connection', function(socket){
     socket.on('leave',function(room){  
