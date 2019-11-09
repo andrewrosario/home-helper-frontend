@@ -2,11 +2,11 @@ const express = require('express');
 const port = process.env.PORT || 8000;
 const path = require('path');
 const server = express()
-  .use((req, res) => res.sendFile(INDEX) )
+  .use(express.static(__dirname + '/../../build'))
   .listen(port, () => console.log(`Listening on ${ port }`));
 var io = require('socket.io')(server);
 
-const INDEX = express.static(__dirname + '/../../build');
+// const INDEX = ;
 
 
 // server.listen(port, function(){
