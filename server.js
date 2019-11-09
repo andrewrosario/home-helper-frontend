@@ -1,15 +1,15 @@
-var express = require('express');
-var app = express();
-var http = require('http')
-const router = express.Router()
+const express = require('express');
+const socketIO = require('socket.io');
+const path = require('path');
+const PORT = process.env.PORT || 3000;
 
-router.get('/', function(req, res){
-  res.send({response: "Hello"}).status(200);
-});
+const INDEX = path.join(__dirname, 'index.html');
 
-let server = http.createServer(app);
-var io = require('socket.io')(server);
-const port = process.env.PORT || 8000;
+const server = express()
+  .use((req, res) => res.sendFile(INDEX) )
+  .listen(PORT, () => console.log(`Listening on ${ PORT }`));
+
+const io = socketIO(server);
 
 io.on('connection', function(socket){
     socket.on('leave',function(room){  
