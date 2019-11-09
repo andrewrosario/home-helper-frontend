@@ -10,9 +10,11 @@ import CommentNewForm from '../components/commentNewForm'
 import { newComment } from '../actions/newComment'
 import DisplayComments from '../components/displayComments'
 
-const endpoint = "http://127.0.0.1:8000"
-const socket = socketIOClient(endpoint)
+// const endpoint = "http://127.0.0.1:8000"
+// const socket = socketIOClient(endpoint)
 // process.env.REACT_APP_API_URL
+
+var socket = io();
 
 class MaterialsContainer extends Component {
     state = { 
