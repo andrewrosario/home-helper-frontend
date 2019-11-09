@@ -6,7 +6,7 @@ const server = express()
   .listen(port, () => console.log(`Listening on ${ port }`));
 var io = require('socket.io')(server);
 
-const INDEX = path.join(express.static(__dirname + '/../../build'));
+const INDEX = express.static(__dirname + '/../../build');
 
 
 // server.listen(port, function(){
