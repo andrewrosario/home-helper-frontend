@@ -1,15 +1,15 @@
-const express = require('express');
-const socketIO = require('socket.io');
-const path = require('path');
-const PORT = process.env.PORT || 3000;
+var express = require('express');
+var app = express();
+var http = require('http')
+const router = express.Router()
 
-const INDEX = path.join(__dirname, '/public/index.html');
+router.get('/', function(req, res){
+  res.send({response: "Hello"}).status(200);
+});
 
-const server = express()
-  .use((req, res) => res.sendFile(INDEX) )
-  .listen(PORT, () => console.log(`Listening on ${ PORT }`));
-
-const io = socketIO(server);
+let server = http.createServer(app);
+var io = require('socket.io')(server);
+const port = process.env.PORT || 8000;
 
 io.on('connection', function(socket){
     socket.on('leave',function(room){  
@@ -40,6 +40,10 @@ io.on('connection', function(socket){
     socket.on('disconnect', function(){});
 });
 
+server.listen(port, function(){
+    console.log('listening on', port);
+});
+
 const chatMessage = (user_id, text, chat_room_id) => {
     return {
         user_id,
@@ -48,5 +52,3 @@ const chatMessage = (user_id, text, chat_room_id) => {
         time: new Date().getTime()
     };
 };
-
-
