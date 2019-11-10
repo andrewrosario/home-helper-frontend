@@ -3,8 +3,6 @@ import io from 'socket.io-client';
 import MessagesContainer from './messagesContainer'
 import { connect } from 'react-redux'
 
-// const endpoint = "http://127.0.0.1:8000"
-// const socket = socketIOClient(endpoint);
 
 var socket = io('https://diyhelper.herokuapp.com/');
 
@@ -13,7 +11,6 @@ class ChatContainer extends Component {
         super(props);
         this.state = {
             response: false,
-            endpoint: "http://127.0.0.1:8000",
             message: {
                 text: ''
             }

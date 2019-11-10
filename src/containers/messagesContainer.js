@@ -4,8 +4,6 @@ import { connect } from 'react-redux'
 import io from 'socket.io-client';
 import { fetchProject } from '../actions/fetchProject'
 
-// const endpoint = "http://127.0.0.1:8000"
-// const socket = socketIOClient(endpoint);
 var socket = io('https://diyhelper.herokuapp.com/');
 
 class MessagesContainer extends Component {
