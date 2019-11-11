@@ -3,7 +3,7 @@ var socket = io('https://diyhelper.herokuapp.com/');
 
 export function fetchProject(project, closeMenu) {
     return (dispatch, getState) => {
-        const { ProjectReducer } = getState()
+        const { ProjectReducer, UserReducer } = getState()
         console.log('getstate', getState())
         console.log('project', ProjectReducer)
         console.log('close menu', closeMenu)
@@ -24,7 +24,7 @@ export function fetchProject(project, closeMenu) {
             console.log('fetch project socket', socket)
             socket.emit('room', `chat_id_${data.chat_room.id}`)
             socket.emit('room', `task_id_${data.chat_room.id}`)
-            socket.emit('room', `materials_id_${data.chat_room.id}`)
+            UserReducer.socket.emit('room', `materials_id_${data.chat_room.id}`)
             dispatch({type: "FINISH_FETCH_PROJECT", data})
             closeMenu && closeMenu()
         })
