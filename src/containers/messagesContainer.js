@@ -4,6 +4,12 @@ import { connect } from 'react-redux'
 import { fetchProject } from '../actions/fetchProject'
 
 class MessagesContainer extends Component {
+    constructor(props) {
+        super(props)
+        state = {
+            messages: this.props.messages
+        }
+    }
     componentDidUpdate(prevProps) {
         console.log('messageContainerProps', this.props.project)
         if(prevProps.project.chat_room.messages.length !== this.props.project.chat_room.messages.length) {

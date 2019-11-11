@@ -54,7 +54,7 @@ class ChatContainer extends Component {
             <div id='chat'>
                 {(!this.props.project.expert_id && this.props.project.expert_status !== 'accepted') && <div id='chat-overlay'><h5>Select an Expert to Enable Chat</h5></div>}
                 <div id='messages-window' className='mt-1'>
-                    <MessagesContainer project={this.props.project} />
+                    <MessagesContainer project={this.props.project} messages={this.props.project.chat_room.messages} />
                     <form className='mt-1' onSubmit={(e) => {this.sendChatMessage(e)}}>
                         <input 
                             className='w-75' 
