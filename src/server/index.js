@@ -21,6 +21,7 @@ io.on('connection', function(socket){
         socket.join(room);
     })
     socket.on('sendMessage', function(message) {
+        console.log('sendMessage', message)
         io.sockets.in(`chat_id_${message.chat_room_id}`).emit('receiveMessage', chatMessage(message.user_id, message.text, message.chat_room_id));
     })
     socket.on('sendUpdateTask', function(id) {
