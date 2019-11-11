@@ -30,8 +30,8 @@ class MessagesContainer extends Component {
         <div id='incoming-messages' className='shadow p-3 mb-3 bg-white rounded overflow-auto'>
             <MDBContainer className='pt-1 pl-1 pr-1'>
                 <MDBListGroup className='w-100'>
-                    {/* {this.renderChatMessages(this.props.chatRoom.messages)} */}
-                    {this.props.chatRoom.messages.map( (message, key) => <li key={key} className={message.user_id === this.props.user.id ? 'chat-message w-50 shadow text-right blue lighten-2 rounded-pill ml-auto' : 'chat-message w-50 shadow mr-auto text-left purple lighten-3 rounded-pill'}>{message.text}</li>)}
+                    {this.renderChatMessages(this.props.chatRoom.messages)}
+                    {/* {this.props.chatRoom.messages.map( (message, key) => <li key={key} className={message.user_id === this.props.user.id ? 'chat-message w-50 shadow text-right blue lighten-2 rounded-pill ml-auto' : 'chat-message w-50 shadow mr-auto text-left purple lighten-3 rounded-pill'}>{message.text}</li>)} */}
                 </MDBListGroup>
             </MDBContainer>
         </div> );
