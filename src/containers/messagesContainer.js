@@ -8,6 +8,7 @@ var socket = io('https://diyhelper.herokuapp.com/');
 
 class MessagesContainer extends Component {
     componentDidMount() {
+        console.log('component did mount props', this.props.project)
         fetch(`${process.env.REACT_APP_API_URL}/chat_rooms/${this.props.project.id}`, {
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem("jwt")
@@ -20,7 +21,6 @@ class MessagesContainer extends Component {
                 console.log('socket on componenet did mount messages container', this.props.project)
                 this.props.fetchProject(this.props.project)
             })
-            socket.emit('room', `chat_id_${this.props.project.chat_room.id}`)
         })
         .catch(err => console.log(err))
     }
