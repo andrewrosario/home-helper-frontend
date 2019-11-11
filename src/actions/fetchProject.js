@@ -2,9 +2,9 @@ export function fetchProject(project, closeMenu) {
     return (dispatch, getState) => {
         const { ProjectReducer, UserReducer } = getState()
         if(ProjectReducer.currentProject) {
-            socket.emit('leave', `chat_id_${ProjectReducer.currentProject.chat_room.id}`)
-            socket.emit('leave', `task_id_${ProjectReducer.currentProject.chat_room.id}`)
-            socket.emit('leave', `materials_id_${ProjectReducer.currentProject.chat_room.id}`)
+            UserReducer.socket.emit('leave', `chat_id_${ProjectReducer.currentProject.chat_room.id}`)
+            UserReducer.socket.emit('leave', `task_id_${ProjectReducer.currentProject.chat_room.id}`)
+            UserReducer.socket.emit('leave', `materials_id_${ProjectReducer.currentProject.chat_room.id}`)
         }
         dispatch({type: 'START_FETCH_PROJECT'})
         fetch(`${process.env.REACT_APP_API_URL}/projects/${project.id}`, {
