@@ -9,6 +9,7 @@ import { enterChatRoom } from '../functions/enterChatRoom'
 const ProjectCard = (props) => {
     console.log('project card props.project', props.project)
     const { id, description, title, project_type_id, expert } = props.project
+    console.log('projectCard expert', expert)
 
     const projectType = () => {
         switch(project_type_id) {
@@ -52,13 +53,13 @@ const ProjectCard = (props) => {
                     ?   <>
                             <Button 
                                 variant='success' 
-                                onClick={() => handleClick(expert.id, 'accepted')}>
+                                onClick={() => handleClick(expert, 'accepted')}>
                                 Accept
                             </Button>
                             <Button 
                                 variant='danger' 
                                 className='float-right' 
-                                onClick={() => handleClick(expert.id, 'rejected')}>
+                                onClick={() => handleClick(expert, 'rejected')}>
                                 Reject
                             </Button>
                         </> 
