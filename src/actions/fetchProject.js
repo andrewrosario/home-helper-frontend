@@ -7,9 +7,11 @@ export function fetchProject(project, closeMenu) {
         console.log('getstate', getState())
         console.log('project', ProjectReducer)
         console.log('close menu', closeMenu)
-        socket.emit('leave', `chat_id_${ProjectReducer.currentProject.chat_room.id}`)
-        socket.emit('leave', `task_id_${ProjectReducer.currentProject.chat_room.id}`)
-        socket.emit('leave', `materials_id_${ProjectReducer.currentProject.chat_room.id}`)
+        if(ProjectReducer.currentProject) {
+            socket.emit('leave', `chat_id_${ProjectReducer.currentProject.chat_room.id}`)
+            socket.emit('leave', `task_id_${ProjectReducer.currentProject.chat_room.id}`)
+            socket.emit('leave', `materials_id_${ProjectReducer.currentProject.chat_room.id}`)
+        }
         dispatch({type: 'START_FETCH_PROJECT'})
         fetch(`${process.env.REACT_APP_API_URL}/projects/${project.id}`, {
             headers: {
