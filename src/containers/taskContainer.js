@@ -30,6 +30,7 @@ class TaskContainer extends React.PureComponent {
     }
 
     componentDidUpdate(prevProps) {
+        console.log('task container props', prevProps, this.props)
         if(prevProps.project.id !== this.props.project.id) {
             console.log('task container did update if', prevProps)
             this.setState({

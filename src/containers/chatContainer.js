@@ -12,9 +12,10 @@ class ChatContainer extends Component {
             }
         };
     }
-
-    updateScroll = () => {
-        var element = document.getElementById('incoming-messages');
+    
+    updateScroll = (element) => {
+        console.log('updateScroll')
+        var element = document.getElementById('incoming-messages')
         if(element) {
             element.scrollTop = element.scrollHeight;
         }
@@ -28,9 +29,8 @@ class ChatContainer extends Component {
         console.log('if', prevProps.chatRoom.messageCount, this.props.chatRoom.messageCount)
         console.log('if', prevProps.chatRoom.currentChatRoom.messages.length !== this.props.chatRoom.currentChatRoom.messages.length)
         console.log('chatContainer update', prevProps, this.props)
-        if(prevProps.chatRoom.currentChatRoom.messageCount !== this.props.chatRoom.currentChatRoom.messageCount) {
-            this.forceUpdate()
-            this.setState({})
+        if(prevProps.chatRoom.messageCount !== this.props.chatRoom.messageCount) {
+            this.updateScroll()
         }
     }
 
