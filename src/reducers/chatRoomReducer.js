@@ -5,31 +5,32 @@ export default function ChatRoomReducer( state = { currentChatRoom: null }, acti
             return {
                 currentChatRoom: novice_projects[novice_projects.length - 1].chat_room,
             }
-            case "FINISH_FETCH_PROJECT":
-                    return {
-                        currentChatRoom: action.data.chat_room,
-                    }
-            case "FINISH_UPDATE_PROJECT":
+        case "FINISH_FETCH_PROJECT":
                 return {
                     currentChatRoom: action.data.chat_room,
                 }
-            case "LOGOUT":
-                    return {
-                        currentChatRoom: null
-                    }
-            case "CLEAR_CURRENT_PROJECT":
-                    return {
-                        currentChatRoom: null
-                    }
-            case 'RECEIVE_CHAT_MESSAGE':
-                console.log('reducer receive chat message', action)
-                let chatState = Object.assign( {}, state)
-                let allMessages = chatState.currentChatRoom.messages
-                allMessages.push(action.message)
-                chatState.currentChatRoom.messages = allMessages
+        case "FINISH_UPDATE_PROJECT":
+            return {
+                currentChatRoom: action.data.chat_room,
+            }
+        case "LOGOUT":
                 return {
-                    ...chatState
+                    currentChatRoom: null
                 }
+        case "CLEAR_CURRENT_PROJECT":
+                return {
+                    currentChatRoom: null
+                }
+        // case 'RECEIVE_CHAT_MESSAGE':
+        //     console.log('reducer receive chat message', action)
+        //     let chatState = Object.assign( {}, state)
+        //     console.log("chatState", chatState)
+        //     let allMessages = chatState.currentChatRoom.messages
+        //     allMessages.push(action.message)
+        //     chatState.currentChatRoom.messages = allMessages
+        //     return {
+        //         ...chatState
+        //     }
         default:
             return state;
     }
