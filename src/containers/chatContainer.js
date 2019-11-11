@@ -14,7 +14,7 @@ class ChatContainer extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        console.log('chatContainer update')
+        console.log('chatContainer update', prevProps, this.props)
         if(prevProps.project.chat_room.messages.length !== this.props.project.chat_room.messages.length) {
             this.forceUpdate()
             this.setState({})
