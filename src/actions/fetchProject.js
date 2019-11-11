@@ -21,6 +21,7 @@ export function fetchProject(project, closeMenu) {
         }})
         .then(resp => resp.json())
         .then(data => {
+            console.log('fetch project socket', socket)
             socket.emit('room', `chat_id_${data.chat_room.id}`)
             socket.emit('room', `task_id_${data.chat_room.id}`)
             socket.emit('room', `materials_id_${data.chat_room.id}`)
