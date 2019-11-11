@@ -61,7 +61,7 @@ class ChatContainer extends Component {
 
     updateScroll = () => {
         var element = document.getElementById('incoming-messages');
-        element.scrollTop = element.scrollHeight;
+        // element.scrollTop = element.scrollHeight;
     }
 
     renderChatMessages = (messages) => {
