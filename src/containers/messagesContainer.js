@@ -16,7 +16,6 @@ class MessagesContainer extends Component {
         })
         .then(resp => resp.json())
         .then( () => {
-            socket.on('connect', () => {})
             socket.on("receiveMessage", data => {
                 console.log('socket on componenet did mount messages container', this.props.project)
                 this.props.fetchProject(this.props.project)

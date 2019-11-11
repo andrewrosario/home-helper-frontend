@@ -1,4 +1,6 @@
 import history from "../history";
+import io from 'socket.io-client';
+var socket = io('https://diyhelper.herokuapp.com/');
 
 export function login(user) {
     return (dispatch) => {
@@ -26,6 +28,7 @@ export function login(user) {
         .then(user => {
             localStorage.setItem("jwt", user.jwt)
             localStorage.setItem("userId", user.id);
+            socket.on('connect', () => {})
             dispatch({ type: "LOGIN", user})
             history.push('/novice-dashboard')
         })

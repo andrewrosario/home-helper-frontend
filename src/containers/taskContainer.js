@@ -26,7 +26,6 @@ class TaskContainer extends React.PureComponent {
          }
 
     componentDidMount() {
-        socket.on('connect', () => {})
         socket.on("receiveUpdateTask", () => {
             console.log('socket on componenet did mount task contianer', this.props.project)
             this.props.fetchProject(this.props.project)
