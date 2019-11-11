@@ -5,7 +5,7 @@ export function fetchProject(project, closeMenu) {
     return (dispatch, getState) => {
         const { ProjectReducer } = getState()
         console.log('getstate', getState())
-        console.log('project', project)
+        console.log('project', ProjectReducer)
         console.log('close menu', closeMenu)
         socket.emit('leave', `chat_id_${ProjectReducer.currentProject.chat_room.id}`)
         socket.emit('leave', `task_id_${ProjectReducer.currentProject.chat_room.id}`)
