@@ -4,6 +4,9 @@ import { connect } from 'react-redux'
 import { slide as Menu } from 'react-burger-menu'
 import history from '../history';
 
+import leaveChatRoom from '../functions/leaveChatRoom'
+import enterChatRoom from '../functions/enterChatRoom'
+
 import TaskContainer from './taskContainer'
 import DetailsContainer from './detailsContainer'
 import MaterialsContainer from './materialsContainer'
@@ -22,7 +25,6 @@ import { clearCurrentProject } from '../actions/clearCurrentProject'
 class Dashboard extends React.PureComponent {
     constructor(props) {
         super(props)
-        console.log(!props.user.novice_projects.length)
         this.state = {
             newProject: !props.user.novice_projects.length,
             menuOpen: false,
@@ -77,15 +79,13 @@ class Dashboard extends React.PureComponent {
     }
 
     handleProjectClick = (project) => {
+        this.props.project && leaveChatRoom(this.props.socket, this.props.project.chat_room)
         this.props.fetchProject(project, this.closeMenu.bind(this))
+        enterChatRoom(this.props.socket, project.chat_room)
     }
 
     handleModeSwitch = (type) => {
-        if(this.props.project) {
-            this.props.socket.emit('leave', `chat_id_${this.props.project.chat_room.id}`)
-            this.props.socket.emit('leave', `task_id_${this.props.project.chat_room.id}`)
-            this.props.socket.emit('leave', `materials_id_${this.props.project.chat_room.id}`)
-        }
+        this.props.project && leaveChatRoom(this.props.socket, this.props.project.chat_room)
         this.props.updateUser(this.props.user.id)
         this.props.clearCurrentProject()
         history.push(`/${type}-dashboard`)
@@ -109,6 +109,7 @@ class Dashboard extends React.PureComponent {
     }
 
     handleHomeClick = () => {
+        this.props.project && leaveChatRoom(this.props.socket, this.props.project.chat_room)
         this.props.clearCurrentProject()
         this.closeMenu()
     }
