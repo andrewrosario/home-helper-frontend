@@ -33,7 +33,7 @@ class MessagesContainer extends Component {
 function mapStateToProps(state){
     return {
         user: state.UserReducer.currentUser,
-        project: state.ProjectReducer.currentProject,
+        // project: state.ProjectReducer.currentProject,
         socket: state.UserReducer.socket
     }
 }
