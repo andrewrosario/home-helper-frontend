@@ -66,21 +66,21 @@ export default function ProjectReducer( state = { currentProject: null , request
                 requesting: true
             }
         case 'FINISH_UPDATE_TASK':
-            let newState = Object.assign( {}, state)
-            newState.currentProject.tasks = action.data
+            newState = Object.assign( {}, state)
+            let newState.currentProject.tasks = action.data
             return {
                 ...newState
             }
         case 'UPDATE_MATERIALS':
             console.log('materials in reducer', action.materials) 
-            let newState = Object.assign( {}, state)
+            newState = Object.assign( {}, state)
             newState.currentProject.materials = action.materials
             return {
                 ...newState
             }
         case 'RECEIVE_CHAT_MESSAGE':
             console.log('reducer receive chat message', action.message)
-            let newState = Object.assign( {}, state)
+            newState = Object.assign( {}, state)
             newState.currentProject.chat_room.messages.push(action.message)
             return {
                 ...newState
