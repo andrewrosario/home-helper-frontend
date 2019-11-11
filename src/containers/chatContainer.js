@@ -14,7 +14,7 @@ class ChatContainer extends Component {
         };
     }
 
-    componentDidUpdate(prevProps) {
+    shouldComponentUpdate(prevProps) {
         console.log('if', prevProps.chatRoom.messages.length, this.props.chatRoom.messages.length)
         console.log('if', prevProps.chatRoom.messages.length !== this.props.chatRoom.messages.length)
         console.log('chatContainer update', prevProps, this.props)
