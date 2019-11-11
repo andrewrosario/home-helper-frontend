@@ -21,16 +21,13 @@ export default function ChatRoomReducer( state = { currentChatRoom: null }, acti
                 return {
                     currentChatRoom: null
                 }
-        // case 'RECEIVE_CHAT_MESSAGE':
-        //     console.log('reducer receive chat message', action)
-        //     let chatState = Object.assign( {}, state)
-        //     console.log("chatState", chatState)
-        //     let allMessages = chatState.currentChatRoom.messages
-        //     allMessages.push(action.message)
-        //     chatState.currentChatRoom.messages = allMessages
-        //     return {
-        //         ...chatState
-        //     }
+        case 'RECEIVE_CHAT_MESSAGE':
+            console.log('reducer receive chat message', action)
+            let chatState = Object.assign( {}, state)
+            console.log("chatState", chatState)
+            return {
+                ...chatState
+            }
         default:
             return state;
     }
