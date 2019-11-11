@@ -56,7 +56,7 @@ class MaterialsContainer extends Component {
         })
         .then(resp => resp.json())
         .then( () => {
-            console.log('materials socket', socket)
+            console.log('materials socket', this.props.socket)
             this.props.socket.emit('sendUpdateMaterials', this.props.project.id)
             this.setState({
                 ...this.state,
