@@ -26,11 +26,11 @@ io.on('connection', function(socket){
     })
     socket.on('sendUpdateTask', function(id) {
         console.log('updateTask', id)
-        io.sockets.in(`task_id_${id}`).emit('receiveUpdateTask', 'update');
+        io.sockets.in(`task_id_${id}`).emit('receiveUpdateTask', id);
     })
     socket.on('sendUpdateMaterials', function(id) {
         console.log('updateMaterials', id)
-        io.sockets.in(`materials_id_${id}`).emit('receiveUpdateMaterials', 'update');
+        io.sockets.in(`materials_id_${id}`).emit('receiveUpdateMaterials', id);
     })
     socket.on('disconnect', function(){});
 });
