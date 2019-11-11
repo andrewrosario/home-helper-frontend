@@ -35,10 +35,10 @@ export function login(user) {
                 console.log('receive update materials', materials)
                 dispatch({type: 'UPDATE_MATERIALS', materials})
             })
-            socket.on("receiveMessage", data => {
-                console.log('receive update message', data.chat_room_id)
+            socket.on("receiveMessage", message => {
+                console.log('receive update message', message.chat_room_id)
                 fetchProject(data.chat_room_id)
-                dispatch({type: 'RECEIVE_CHAT_MESSAGE'})
+                dispatch({type: 'RECEIVE_CHAT_MESSAGE', message})
             })
             socket.on("receiveUpdateTask", (tasks) => {
                 console.log('receive update task', tasks)
