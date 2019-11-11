@@ -76,7 +76,7 @@ class ChatContainer extends Component {
                     <div id='incoming-messages' className='shadow p-3 mb-3 bg-white rounded overflow-auto'>
                         <MDBContainer className='pt-1 pl-1 pr-1'>
                             <MDBListGroup className='w-100'>
-                                {this.renderChatMessages(this.props.chatRoom.messages)}
+                                {this.renderChatMessages(this.props.chatRoom.currentChatRoom.messages)}
                             </MDBListGroup>
                         </MDBContainer>
                     </div>
