@@ -13,6 +13,17 @@ class ChatContainer extends Component {
         };
     }
 
+    updateScroll = () => {
+        var element = document.getElementById('incoming-messages');
+        if(element) {
+            element.scrollTop = element.scrollHeight;
+        }
+    }
+
+    componentDidMount() {
+        this.updateScroll()
+    }
+
     componentDidUpdate(prevProps) {
         console.log('if', prevProps.chatRoom.messageCount, this.props.chatRoom.messageCount)
         console.log('if', prevProps.chatRoom.currentChatRoom.messages.length !== this.props.chatRoom.currentChatRoom.messages.length)
@@ -47,6 +58,7 @@ class ChatContainer extends Component {
                     text: '',
                 } 
             })
+            this.updateScroll()
         });
     };
 
@@ -58,11 +70,6 @@ class ChatContainer extends Component {
             } 
         });
     };
-
-    updateScroll = () => {
-        var element = document.getElementById('incoming-messages');
-        // element.scrollTop = element.scrollHeight;
-    }
 
     renderChatMessages = (messages) => {
         console.log('messages container messages', messages)
@@ -81,7 +88,6 @@ class ChatContainer extends Component {
                         <MDBContainer className='pt-1 pl-1 pr-1'>
                             <MDBListGroup className='w-100'>
                                 {this.renderChatMessages(this.props.chatRoom.currentChatRoom.messages)}
-                                {this.updateScroll()}
                             </MDBListGroup>
                         </MDBContainer>
                     </div>

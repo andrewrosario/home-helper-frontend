@@ -40,7 +40,7 @@ export function login(user) {
             })
             socket.on("receiveUpdateTask", (tasks) => {
                 console.log('receive update task', tasks)
-                dispatch({type: 'FINISH_UPDATE_TASKS', tasks})
+                dispatch({type: 'FINISH_UPDATE_TASK', tasks})
             })
             
             dispatch({ type: "LOGIN", info})
