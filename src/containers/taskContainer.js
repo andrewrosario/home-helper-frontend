@@ -58,7 +58,7 @@ class TaskContainer extends React.PureComponent {
     }
 
     setStateAndSocket = () => {
-        this.props.socket.emit('sendUpdate', this.props.project.id)
+        this.props.socket.emit('sendUpdateTask', this.props.project.id)
         console.log('setStateandSocket', this.props.project.id)
         this.setState({
             ...this.state,
@@ -84,7 +84,7 @@ class TaskContainer extends React.PureComponent {
             })
             .then(resp => resp.json())
             .then( () => {
-                this.props.socket.emit('sendUpdate', this.props.project.id)
+                this.props.socket.emit('sendUpdateTask', this.props.project.id)
                 this.setState({
                     ...this.state,
                     showNewModal: false,
@@ -120,7 +120,7 @@ class TaskContainer extends React.PureComponent {
             focusTask: null,
             showCommentModal: !this.state.showCommentModal
         })
-        this.props.socket.emit('sendUpdate', this.props.project.id)
+        this.props.socket.emit('sendUpdateTask', this.props.project.id)
     }
 
     handleClick = (task, type) => {

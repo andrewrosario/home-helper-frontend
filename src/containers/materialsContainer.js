@@ -55,7 +55,7 @@ class MaterialsContainer extends Component {
         .then(resp => resp.json())
         .then( () => {
             console.log('socket emit materials container', this.props.project.id)
-            this.props.socket.emit('sendUpdate', this.props.project.id)
+            this.props.socket.emit('sendUpdateMaterials', this.props.project.id)
             this.setState({
                 ...this.state,
                 showNewModal: false,
@@ -87,7 +87,7 @@ class MaterialsContainer extends Component {
             })
             .then(resp => resp.json())
             .then( () => {
-                this.props.socket.emit('sendUpdate', this.props.project.id)
+                this.props.socket.emit('sendUpdateMaterials', this.props.project.id)
                 this.setState({
                     ...this.state,
                     showNewModal: false,
@@ -99,7 +99,7 @@ class MaterialsContainer extends Component {
     }
 
     socketUpdate = () => {
-        this.props.socket.emit('sendUpdate', this.props.project.id)
+        this.props.socket.emit('sendUpdateMaterials', this.props.project.id)
     }
 
     handleClick = (material, type) => {
