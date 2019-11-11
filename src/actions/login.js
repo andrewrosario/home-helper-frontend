@@ -33,15 +33,15 @@ export function login(user) {
             socket.on('connect', () => {})
             socket.on("receiveUpdateMaterials", id => {
                 console.log('receive update materials', id)
-                this.props.fetchProject(id)
+                fetchProject(id)
             })
             socket.on("receiveMessage", data => {
                 console.log('receive update message', data.chat_room_id)
-                this.props.fetchProject(data.chat_room_id)
+                fetchProject(data.chat_room_id)
             })
-            socket.on("receiveUpdateTask", () => {
+            socket.on("receiveUpdateTask", (id) => {
                 console.log('receive update task', id)
-                this.props.fetchProject(id)
+                fetchProject(id)
             })
             
             dispatch({ type: "LOGIN", info})
