@@ -1,3 +1,6 @@
+import io from 'socket.io-client';
+var socket = io('https://diyhelper.herokuapp.com/');
+
 export function fetchProject(project, closeMenu) {
     return (dispatch, getState) => {
         console.log('getstate', getState())
