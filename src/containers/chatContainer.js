@@ -13,15 +13,15 @@ class ChatContainer extends Component {
         };
     }
 
-    componentDidUpdate(prevProps) {
-        console.log('if', prevProps.project.chat_room.messages.length, this.props.project.chat_room.messages.length)
-        console.log('if', prevProps.project.chat_room.messages.length !== this.props.project.chat_room.messages.length)
-        console.log('chatContainer update', prevProps, this.props)
-        if(prevProps.project.chat_room.messages.length !== this.props.project.chat_room.messages.length) {
-            this.forceUpdate()
-            this.setState({})
-        }
-    }
+    // componentDidUpdate(prevProps) {
+    //     console.log('if', prevProps.project.chat_room.messages.length, this.props.project.chat_room.messages.length)
+    //     console.log('if', prevProps.project.chat_room.messages.length !== this.props.project.chat_room.messages.length)
+    //     console.log('chatContainer update', prevProps, this.props)
+    //     if(prevProps.project.chat_room.messages.length !== this.props.project.chat_room.messages.length) {
+    //         this.forceUpdate()
+    //         this.setState({})
+    //     }
+    // }
 
     sendChatMessage = (event) => {
         const chatRoomId = this.props.project.chat_room.id
@@ -64,7 +64,7 @@ class ChatContainer extends Component {
             <div id='chat'>
                 {(!this.props.project.expert_id && this.props.project.expert_status !== 'accepted') && <div id='chat-overlay'><h5>Select an Expert to Enable Chat</h5></div>}
                 <div id='messages-window' className='mt-1'>
-                    <MessagesContainer project={this.props.project} messages={this.props.project.chat_room.messages} />
+                    <MessagesContainer messages={this.props.chatRoom.messages} />
                     <form className='mt-1' onSubmit={(e) => {this.sendChatMessage(e)}}>
                         <input 
                             className='w-75' 
@@ -85,7 +85,8 @@ function mapStateToProps(state){
     return {
         user: state.UserReducer.currentUser,
         project: state.ProjectReducer.currentProject,
-        socket: state.UserReducer.socket
+        socket: state.UserReducer.socket,
+        chatRoom: state.ChatRoomReducer.currentChatRoom
     }
 }
  

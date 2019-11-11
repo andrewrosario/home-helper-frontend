@@ -10,13 +10,13 @@ class MessagesContainer extends Component {
             messages: this.props.messages
         }
     }
-    componentDidUpdate(prevProps) {
-        console.log('messageContainerProps', this.props.project)
-        if(prevProps.project.chat_room.messages.length !== this.props.project.chat_room.messages.length) {
-            this.forceUpdate()
-            this.setState({})
-        }
-    }
+    // componentDidUpdate(prevProps) {
+    //     console.log('messageContainerProps', this.props.project)
+    //     if(prevProps.project.chat_room.messages.length !== this.props.project.chat_room.messages.length) {
+    //         this.forceUpdate()
+    //         this.setState({})
+    //     }
+    // }
 
     renderChatMessages = (messages) => {
         return messages.map( (message, key) => {
