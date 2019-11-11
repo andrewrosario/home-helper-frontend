@@ -21,7 +21,7 @@ io.on('connection', function(socket){
         socket.join(room);
     })
     socket.on('sendMessage', function(message, id) {
-        console.log('index sendMessage')
+        console.log('index sendMessage', message)
         io.sockets.in(`chat_id_${id}`).emit('receiveMessage', message);
     })
     socket.on('sendUpdateTask', function(tasks, id) {
@@ -29,7 +29,7 @@ io.on('connection', function(socket){
         io.sockets.in(`task_id_${id}`).emit('receiveUpdateTask', tasks);
     })
     socket.on('sendUpdateMaterials', function(materials, id) {
-        console.log('index update materials', materials, id)
+        console.log('index update materials')
         io.sockets.in(`materials_id_${id}`).emit('receiveUpdateMaterials', materials);
     })
     socket.on('disconnect', function(){});

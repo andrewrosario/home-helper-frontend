@@ -30,6 +30,7 @@ class ChatContainer extends Component {
         })
         .then(resp => resp.json())
         .then(data => {
+            console.log('send chat message data', data)
             this.props.socket.emit("sendMessage", data, chatRoomId);
             this.setState({
                 message: {
