@@ -18,13 +18,13 @@ class MaterialsContainer extends Component {
         focus: null
     }
 
-    // componentDidMount() {
-    //     this.props.socket.on("receiveUpdateMaterials", data => {
-    //         console.log('socket receive materials container data', data)
-    //         console.log('socket receive materials container this.props.project', this.props.project)
-    //         this.props.fetchProject(this.props.project)
-    //     })
-    // }
+    componentDidMount() {
+        this.props.socket.on("receiveUpdateMaterials", project => {
+            console.log('socket receive materials container data', id)
+            console.log('socket receive materials container this.props.project', this.props.project)
+            this.props.fetchProject(project)
+        })
+    }
 
     componentDidUpdate(prevProps) {
         if(prevProps.project.id !== this.props.project.id) {
@@ -53,7 +53,8 @@ class MaterialsContainer extends Component {
             })
         })
         .then(resp => resp.json())
-        .then( () => {
+        .then( (data) => {
+            console.log('POSTPATH', data)
             console.log('socket emit materials container', this.props.project.id)
             this.props.socket.emit('sendUpdateMaterials', this.props.project.id)
             this.setState({
