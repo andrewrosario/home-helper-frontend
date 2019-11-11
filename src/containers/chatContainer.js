@@ -15,6 +15,9 @@ class ChatContainer extends Component {
 
     componentDidUpdate() {
         console.log('chatContainer update')
+        this.setState({
+            ...this.state
+        })
     }
 
     sendChatMessage = (event) => {
