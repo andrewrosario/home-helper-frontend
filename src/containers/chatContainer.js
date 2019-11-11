@@ -18,7 +18,8 @@ class ChatContainer extends Component {
     }
 
     sendChatMessage = (socket, event) => {
-        event.preventDefault(this.props.project.chat_room.id)
+        console.log('chat container, socket, event', socket, event)
+        event.preventDefault()
         fetch(`${process.env.REACT_APP_API_URL}/messages`, {
             method: 'POST',
             headers: {
