@@ -4,8 +4,8 @@ import { connect } from 'react-redux'
 import { slide as Menu } from 'react-burger-menu'
 import history from '../history';
 
-import leaveChatRoom from '../functions/leaveChatRoom'
-import enterChatRoom from '../functions/enterChatRoom'
+import { leaveChatRoom } from '../functions/leaveChatRoom'
+import { enterChatRoom } from '../functions/enterChatRoom'
 
 import TaskContainer from './taskContainer'
 import DetailsContainer from './detailsContainer'
