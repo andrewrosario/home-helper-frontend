@@ -18,16 +18,6 @@ class MaterialsContainer extends Component {
         focus: null
     }
 
-    componentDidUpdate(prevProps) {
-        if(prevProps.project.id !== this.props.project.id) {
-            this.setState({
-                showNewModal: false,
-                showEditModal: false,
-                focus: null,
-            })
-        }
-    }
-
     fetchPostPatch = (materialsObj, method, path) => {
         const projectId = this.props.project.id
         fetch(`${process.env.REACT_APP_API_URL}/${path}`, {
@@ -79,6 +69,7 @@ class MaterialsContainer extends Component {
             })
             .then(resp => resp.json())
             .then(materials => {
+                console.log('materials handle delete click', materials, this.props.project.id)
                 this.props.socket.emit('sendUpdateMaterials', materials, this.props.project.id)
                 this.setState({
                     ...this.state,

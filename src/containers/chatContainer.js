@@ -59,6 +59,11 @@ class ChatContainer extends Component {
         });
     };
 
+    updateScroll = () => {
+        var element = document.getElementById('incoming-messages');
+        element.scrollTop = element.scrollHeight;
+    }
+
     renderChatMessages = (messages) => {
         console.log('messages container messages', messages)
         return messages.map( (message, key) => {
@@ -76,6 +81,7 @@ class ChatContainer extends Component {
                         <MDBContainer className='pt-1 pl-1 pr-1'>
                             <MDBListGroup className='w-100'>
                                 {this.renderChatMessages(this.props.chatRoom.currentChatRoom.messages)}
+                                {this.updateScroll()}
                             </MDBListGroup>
                         </MDBContainer>
                     </div>

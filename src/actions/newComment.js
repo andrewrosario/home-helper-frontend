@@ -20,7 +20,7 @@ export function newComment(commentType, data, socketUpdate) {
         .then(resp => resp.json())
         .then(comment => {
             dispatch({type: "FINISH_NEW_COMMENT", comment, commentType: commentType})
-            socketUpdate()
+            socketUpdate && socketUpdate()
         })
     }
 }

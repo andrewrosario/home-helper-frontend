@@ -71,7 +71,7 @@ class TaskContainer extends React.PureComponent {
 
     handleDeleteClick = () => {
         if (window.confirm("Do you really want to delete this task?")) { 
-            fetch(`${process.env.REACT_APP_API_URL}/tasks/${this.state.editTask.id}`, {
+            fetch(`${process.env.REACT_APP_API_URL}/tasks/${this.state.focusTask.id}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
