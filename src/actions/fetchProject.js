@@ -1,6 +1,6 @@
 export function fetchProject(project, closeMenu) {
     return (dispatch, getState) => {
-        // console.log('getstate', getState())
+        console.log('getstate', getState())
         console.log('project', project)
         console.log('close menu', closeMenu)
         dispatch({type: 'START_FETCH_PROJECT'})
