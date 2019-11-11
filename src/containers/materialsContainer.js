@@ -10,10 +10,6 @@ import CommentNewForm from '../components/commentNewForm'
 import { newComment } from '../actions/newComment'
 import DisplayComments from '../components/displayComments'
 
-// const endpoint = "http://127.0.0.1:8000"
-// const socket = socketIOClient(endpoint)
-// process.env.REACT_APP_API_URL
-
 var socket = io('https://diyhelper.herokuapp.com/');
 
 class MaterialsContainer extends Component {
@@ -31,7 +27,6 @@ class MaterialsContainer extends Component {
             console.log('component did mount socket on materials container', this.props.project)
             this.props.fetchProject(this.props.project)
         })
-        socket.emit('room', `materials_id_${this.props.project.id}`)
     }
 
     componentDidUpdate(prevProps) {
@@ -41,8 +36,6 @@ class MaterialsContainer extends Component {
                 showEditModal: false,
                 focus: null,
             })
-            socket.emit('leave', `materials_id_${prevProps.project.chat_room.id}`)
-            socket.emit('room', `materials_id_${this.props.project.chat_room.id}`)
         }
     }
 

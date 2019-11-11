@@ -25,13 +25,6 @@ class MessagesContainer extends Component {
         .catch(err => console.log(err))
     }
 
-    componentDidUpdate(prevProps) {
-        if(prevProps.project.id !== this.props.project.id) {
-            socket.emit('leave', `chat_id_${prevProps.project.chat_room.id}`)
-            socket.emit('room', `chat_id_${this.props.project.chat_room.id}`)
-        }
-    }
-
     renderChatMessages = () => {
         return this.props.project.chat_room.messages.map( (message, key) => {
             return <li key={key} className={message.user_id === this.props.user.id ? 'chat-message w-50 shadow text-right blue lighten-2 rounded-pill ml-auto' : 'chat-message w-50 shadow mr-auto text-left purple lighten-3 rounded-pill'}>{message.text}</li>
