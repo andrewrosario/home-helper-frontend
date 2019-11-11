@@ -20,7 +20,8 @@ class MaterialsContainer extends Component {
 
     componentDidMount() {
         this.props.socket.on("receiveUpdateMaterials", data => {
-            console.log('socket receive materials container', this.props.project)
+            console.log('socket receive materials container data', data)
+            console.log('socket receive materials container this.props.project', this.props.project)
             this.props.fetchProject(this.props.project)
         })
     }
