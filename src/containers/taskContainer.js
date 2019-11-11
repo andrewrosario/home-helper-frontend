@@ -23,7 +23,7 @@ class TaskContainer extends React.PureComponent {
          }
 
     componentDidMount() {
-        socket.on("receiveUpdateTask", () => {
+        this.props.socket.on("receiveUpdateTask", () => {
             this.props.fetchProject(this.props.project)
         })
         this.setState({
