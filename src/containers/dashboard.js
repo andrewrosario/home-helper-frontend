@@ -81,6 +81,11 @@ class Dashboard extends React.PureComponent {
     }
 
     handleModeSwitch = (type) => {
+        if(currentProject) {
+            this.props.socket.emit('leave', `chat_id_${this.props.project.chat_room.id}`)
+            this.props.socket.emit('leave', `task_id_${this.props.project.chat_room.id}`)
+            this.props.socket.emit('leave', `materials_id_${this.props.project.chat_room.id}`)
+        }
         this.props.updateUser(this.props.user.id)
         this.props.clearCurrentProject()
         history.push(`/${type}-dashboard`)
@@ -175,7 +180,8 @@ function mapStateToProps(state){
         user: state.UserReducer.currentUser,
         noviceProjects: state.UserReducer.currentUser.novice_projects,
         expertProjects: state.UserReducer.currentUser.expert_projects,
-        project: state.ProjectReducer.currentProject
+        project: state.ProjectReducer.currentProject,
+        socket: state.UserReducer.socket
     }
 }
  
