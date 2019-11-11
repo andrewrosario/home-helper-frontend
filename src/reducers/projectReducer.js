@@ -79,7 +79,7 @@ export default function ProjectReducer( state = { currentProject: null , request
                 ...materialsState
             }
         case 'RECEIVE_CHAT_MESSAGE':
-            console.log('reducer receive chat message', action.message)
+            console.log('reducer receive chat message', action)
             let chatState = Object.assign( {}, state)
             chatState.currentProject.chat_room.messages.push(action.message)
             return {

@@ -40,9 +40,9 @@ export function login(user) {
                 fetchProject(data.chat_room_id)
                 dispatch({type: 'RECEIVE_CHAT_MESSAGE'})
             })
-            socket.on("receiveUpdateTask", (id) => {
-                console.log('receive update task', id)
-                fetchProject(id)
+            socket.on("receiveUpdateTask", (tasks) => {
+                console.log('receive update task', tasks)
+                dispatch({type: 'FINISH_UPDATE_TASKS', materials})
             })
             
             dispatch({ type: "LOGIN", info})

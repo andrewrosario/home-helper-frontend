@@ -29,7 +29,7 @@ io.on('connection', function(socket){
         io.sockets.in(`task_id_${id}`).emit('receiveUpdateTask', tasks);
     })
     socket.on('sendUpdateMaterials', function(materials, id) {
-        console.log('index update materials')
+        console.log('index update materials', materials, id)
         io.sockets.in(`materials_id_${id}`).emit('receiveUpdateMaterials', materials);
     })
     socket.on('disconnect', function(){});
