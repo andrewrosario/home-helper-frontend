@@ -38,6 +38,7 @@ class ProjectCardContainer extends Component {
         if(projectType === 'expertProjects') {
             return this.props[projectType].map( (project)=> {
                 if(project.expert_status === 'accepted' && project.is_complete !== true) {
+                    console.log('project card container project in map', project)
                     return (
                         <div key={project.id} className='project-card col-lg-3 col-sm-6'>
                             <ProjectCard project={project} modal={false}/>
