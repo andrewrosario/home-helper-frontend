@@ -81,6 +81,7 @@ class Dashboard extends React.PureComponent {
     handleProjectClick = (project) => {
         this.props.project && leaveChatRoom(this.props.socket, this.props.project.chat_room)
         this.props.fetchProject(project, this.closeMenu.bind(this))
+        console.log('dashboard handle project click chat_room', console.log(project.chat_room))
         enterChatRoom(this.props.socket, project.chat_room)
     }
 

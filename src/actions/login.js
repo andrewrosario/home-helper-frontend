@@ -1,6 +1,5 @@
 import history from "../history";
 import io from 'socket.io-client';
-import {fetchProject} from './fetchProject'
 var socket = io('https://diyhelper.herokuapp.com/');
 
 export function login(user) {
