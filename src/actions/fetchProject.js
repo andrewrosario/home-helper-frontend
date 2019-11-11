@@ -1,12 +1,6 @@
-import io from 'socket.io-client';
-var socket = io('https://diyhelper.herokuapp.com/');
-
 export function fetchProject(project, closeMenu) {
     return (dispatch, getState) => {
         const { ProjectReducer, UserReducer } = getState()
-        console.log('getstate', getState())
-        console.log('project', ProjectReducer)
-        console.log('close menu', closeMenu)
         if(ProjectReducer.currentProject) {
             socket.emit('leave', `chat_id_${ProjectReducer.currentProject.chat_room.id}`)
             socket.emit('leave', `task_id_${ProjectReducer.currentProject.chat_room.id}`)
@@ -21,9 +15,8 @@ export function fetchProject(project, closeMenu) {
         }})
         .then(resp => resp.json())
         .then(data => {
-            console.log('fetch project socket', socket)
-            socket.emit('room', `chat_id_${data.chat_room.id}`)
-            socket.emit('room', `task_id_${data.chat_room.id}`)
+            UserReducer.socket.emit('room', `chat_id_${data.chat_room.id}`)
+            UserReducer.socket.emit('room', `task_id_${data.chat_room.id}`)
             UserReducer.socket.emit('room', `materials_id_${data.chat_room.id}`)
             dispatch({type: "FINISH_FETCH_PROJECT", data})
             closeMenu && closeMenu()

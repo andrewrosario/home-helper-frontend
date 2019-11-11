@@ -4,13 +4,10 @@ import MaterialListItem from '../components/materialListItem'
 import MaterialNewForm from '../components/materialNewForm'
 import MaterialEditForm from '../components/materialEditForm'
 import { connect } from 'react-redux'
-import io from 'socket.io-client';
 import { fetchProject } from '../actions/fetchProject'
 import CommentNewForm from '../components/commentNewForm'
 import { newComment } from '../actions/newComment'
 import DisplayComments from '../components/displayComments'
-
-
 
 class MaterialsContainer extends Component {
     state = { 
@@ -23,7 +20,6 @@ class MaterialsContainer extends Component {
 
     componentDidMount() {
         this.props.socket.on("receiveUpdateMaterials", data => {
-            console.log('component did mount socket on materials container', this.props.project)
             this.props.fetchProject(this.props.project)
         })
     }
@@ -56,7 +52,6 @@ class MaterialsContainer extends Component {
         })
         .then(resp => resp.json())
         .then( () => {
-            console.log('materials socket', this.props.socket)
             this.props.socket.emit('sendUpdateMaterials', this.props.project.id)
             this.setState({
                 ...this.state,

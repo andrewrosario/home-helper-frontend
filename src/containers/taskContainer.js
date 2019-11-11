@@ -1,6 +1,5 @@
 import React from 'react';
 import { Table } from 'react-bootstrap'
-import io from 'socket.io-client';
 import { connect } from 'react-redux'
 
 import CompleteProject from './completeProject';
@@ -27,7 +26,6 @@ class TaskContainer extends React.PureComponent {
 
     componentDidMount() {
         socket.on("receiveUpdateTask", () => {
-            console.log('socket on componenet did mount task contianer', this.props.project)
             this.props.fetchProject(this.props.project)
         })
         this.setState({
@@ -60,7 +58,7 @@ class TaskContainer extends React.PureComponent {
     }
 
     setStateAndSocket = () => {
-        socket.emit('sendUpdateTask', this.props.project.id)
+        this.props.socket.emit('sendUpdateTask', this.props.project.id)
         this.setState({
             ...this.state,
             showNewModal: false,
@@ -85,7 +83,7 @@ class TaskContainer extends React.PureComponent {
             })
             .then(resp => resp.json())
             .then( () => {
-                socket.emit('sendUpdateTask', this.props.project.id)
+                this.props.socket.emit('sendUpdateTask', this.props.project.id)
                 this.setState({
                     ...this.state,
                     showNewModal: false,
@@ -121,7 +119,7 @@ class TaskContainer extends React.PureComponent {
             focusTask: null,
             showCommentModal: !this.state.showCommentModal
         })
-        socket.emit('sendUpdateTask', this.props.project.id)
+        this.props.socket.emit('sendUpdateTask', this.props.project.id)
     }
 
     handleClick = (task, type) => {
@@ -194,7 +192,8 @@ class TaskContainer extends React.PureComponent {
 function mapStateToProps(state){
     return {
         project: state.ProjectReducer.currentProject,
-        user: state.UserReducer.currentUser
+        user: state.UserReducer.currentUser,
+        socket: state.UserReducer.socket
     }
 }
  

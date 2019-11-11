@@ -1,14 +1,10 @@
 import React, { Component } from 'react';
 import { MDBListGroup, MDBContainer } from "mdbreact"
 import { connect } from 'react-redux'
-import io from 'socket.io-client';
 import { fetchProject } from '../actions/fetchProject'
-
-var socket = io('https://diyhelper.herokuapp.com/');
 
 class MessagesContainer extends Component {
     componentDidMount() {
-        console.log('component did mount props', this.props.project)
         fetch(`${process.env.REACT_APP_API_URL}/chat_rooms/${this.props.project.id}`, {
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem("jwt")
@@ -16,8 +12,7 @@ class MessagesContainer extends Component {
         })
         .then(resp => resp.json())
         .then( () => {
-            socket.on("receiveMessage", data => {
-                console.log('socket on componenet did mount messages container', this.props.project)
+            this.props.socket.on("receiveMessage", data => {
                 this.props.fetchProject(this.props.project)
             })
         })
@@ -45,7 +40,8 @@ class MessagesContainer extends Component {
 function mapStateToProps(state){
     return {
         user: state.UserReducer.currentUser,
-        project: state.ProjectReducer.currentProject
+        project: state.ProjectReducer.currentProject,
+        socket: state.UserReducer.socket
     }
 }
  

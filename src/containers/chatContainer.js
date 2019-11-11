@@ -1,10 +1,6 @@
 import React, { Component } from 'react'
-import io from 'socket.io-client';
 import MessagesContainer from './messagesContainer'
 import { connect } from 'react-redux'
-
-
-var socket = io('https://diyhelper.herokuapp.com/');
 
 class ChatContainer extends Component {
     constructor(props) {
@@ -18,7 +14,6 @@ class ChatContainer extends Component {
     }
 
     sendChatMessage = (event) => {
-        console.log('chat container, socket, event', socket, event)
         event.preventDefault()
         fetch(`${process.env.REACT_APP_API_URL}/messages`, {
             method: 'POST',
@@ -34,7 +29,7 @@ class ChatContainer extends Component {
         })
         .then(resp => resp.json())
         .then(data => {
-            socket.emit("sendMessage", data);
+            this.props.socket.emit("sendMessage", data);
             this.setState({
                 message: {
                     text: '',
@@ -77,7 +72,8 @@ class ChatContainer extends Component {
 function mapStateToProps(state){
     return {
         user: state.UserReducer.currentUser,
-        project: state.ProjectReducer.currentProject
+        project: state.ProjectReducer.currentProject,
+        socket: state.UserReducer.socket
     }
 }
  

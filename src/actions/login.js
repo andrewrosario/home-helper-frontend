@@ -27,7 +27,6 @@ export function login(user) {
         })
         .then(user => {
             const info = { user, socket }
-            console.log('info', info)
             localStorage.setItem("jwt", user.jwt)
             localStorage.setItem("userId", user.id);
             socket.on('connect', () => {})

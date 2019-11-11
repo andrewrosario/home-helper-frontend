@@ -77,7 +77,6 @@ class Dashboard extends React.PureComponent {
     }
 
     handleProjectClick = (project) => {
-        console.log('handle project click in dashboard', project)
         this.props.fetchProject(project, this.closeMenu.bind(this))
     }
 
