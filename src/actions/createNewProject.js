@@ -17,7 +17,7 @@ export function createNewProject(project) {
         const { ProjectReducer, UserReducer } = getState()
         const novice_projects = UserReducer.currentUser.novice_projects
         console.log('createNewProject getState', ProjectReducer, UserReducer )
-        leaveChatRoom(UserReducer.socket, ProjectReducer.currentProject.chat_room)
+        ProjectReducer.currentProject && leaveChatRoom(UserReducer.socket, ProjectReducer.currentProject.chat_room)
         dispatch({type: 'START_CREATE_PROJECT_REQUEST'}, project)
         fetch(`${process.env.REACT_APP_API_URL}/projects`, {
             method: 'POST',
