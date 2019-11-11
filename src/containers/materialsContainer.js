@@ -10,8 +10,6 @@ import CommentNewForm from '../components/commentNewForm'
 import { newComment } from '../actions/newComment'
 import DisplayComments from '../components/displayComments'
 
-var socket = io('https://diyhelper.herokuapp.com/');
-
 class MaterialsContainer extends Component {
     state = { 
         showNewModal: false,

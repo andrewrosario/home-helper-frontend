@@ -26,10 +26,12 @@ export function login(user) {
             }
         })
         .then(user => {
+            const info = { user, socket }
+            console.log('info', info)
             localStorage.setItem("jwt", user.jwt)
             localStorage.setItem("userId", user.id);
             socket.on('connect', () => {})
-            dispatch({ type: "LOGIN", user})
+            dispatch({ type: "LOGIN", info})
             history.push('/novice-dashboard')
         })
         .catch(error => console.log(error))

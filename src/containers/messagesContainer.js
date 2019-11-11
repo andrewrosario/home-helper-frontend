@@ -4,8 +4,6 @@ import { connect } from 'react-redux'
 import io from 'socket.io-client';
 import { fetchProject } from '../actions/fetchProject'
 
-var socket = io('https://diyhelper.herokuapp.com/');
-
 class MessagesContainer extends Component {
     componentDidMount() {
         console.log('component did mount props', this.props.project)
