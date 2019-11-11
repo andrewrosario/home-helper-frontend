@@ -67,7 +67,7 @@ export default function ProjectReducer( state = { currentProject: null , request
             }
         case 'FINISH_UPDATE_TASK':
             newState = Object.assign( {}, state)
-            let newState.currentProject.tasks = action.data
+            newState.currentProject.tasks = action.data
             return {
                 ...newState
             }
