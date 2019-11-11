@@ -22,7 +22,7 @@ export default function UserReducer( state = { currentUser: null , expertMode: f
         case 'LOGIN':
             return {
                 ...state,
-                currentUser: action.user,
+                currentUser: action.info.user,
                 requesting: false
             }
         case 'START_UPDATE_REQUEST':
