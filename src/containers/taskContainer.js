@@ -14,8 +14,6 @@ import { fetchProject } from '../actions/fetchProject'
 import { newComment } from '../actions/newComment'
 import { updateTask } from '../actions/updateTask'
 
-var socket = io('https://diyhelper.herokuapp.com/');
-
 class TaskContainer extends React.PureComponent {
         state = { 
             showNewModal: false,
