@@ -1,4 +1,4 @@
-export default function ProjectReducer( state = { currentProject: null , requesting: false }, action) {
+export default function ProjectReducer( state = { taskCount: 0, currentProject: null , requesting: false }, action) {
     switch (action.type) {
         case 'START_CREATE_PROJECT_REQUEST':
             return {
@@ -68,6 +68,7 @@ export default function ProjectReducer( state = { currentProject: null , request
         case 'FINISH_UPDATE_TASK':
             let taskState = Object.assign( {}, state)
             taskState.currentProject.tasks = action.tasks
+            taskState.taskCount = taskState.currentProject.tasks.length
             console.log('finish update task, taskState', taskState)
             console.log('finish update task, action', action)
             return {
