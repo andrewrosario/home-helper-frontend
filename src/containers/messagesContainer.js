@@ -17,6 +17,7 @@ class MessagesContainer extends Component {
         .then( () => {
             socket.on('connect', () => {})
             socket.on("receiveMessage", data => {
+                console.log('socket on componenet did mount messages container', this.props.project)
                 this.props.fetchProject(this.props.project)
             })
             socket.emit('room', `chat_id_${this.props.project.chat_room.id}`)

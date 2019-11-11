@@ -33,6 +33,7 @@ const ProjectCard = (props) => {
     }
 
     const handleViewProject = (project) => {
+        console.log('handle view in projectCard', project)
         props.fetchProject(project)
     }
 
