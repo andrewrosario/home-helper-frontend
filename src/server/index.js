@@ -24,13 +24,13 @@ io.on('connection', function(socket){
         console.log('sendMessage', message)
         io.sockets.in(`chat_id_${message.chat_room_id}`).emit('receiveMessage', chatMessage(message.user_id, message.text, message.chat_room_id));
     })
-    socket.on('sendUpdateTask', function(materials, id) {
-        console.log('updateTask', materials, id)
-        io.sockets.in(`task_id_${id}`).emit('receiveUpdateTask', materials);
+    socket.on('sendUpdateTask', function(tasks, id) {
+        console.log('updateTask', tasks, id)
+        io.sockets.in(`task_id_${id}`).emit('receiveUpdateTask', tasks);
     })
-    socket.on('sendUpdateMaterials', function(id) {
-        console.log('updateMaterials', id)
-        io.sockets.in(`materials_id_${id}`).emit('receiveUpdateMaterials', id);
+    socket.on('sendUpdateMaterials', function(materials, id) {
+        console.log('updateMaterials', materials, id)
+        io.sockets.in(`materials_id_${id}`).emit('receiveUpdateMaterials', materials);
     })
     socket.on('disconnect', function(){});
 });
