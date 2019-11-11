@@ -20,6 +20,7 @@ class MaterialsContainer extends Component {
 
     componentDidMount() {
         this.props.socket.on("receiveUpdateMaterials", data => {
+            console.log('socket on materials container', this.props.project)
             this.props.fetchProject(this.props.project)
         })
     }
@@ -52,6 +53,7 @@ class MaterialsContainer extends Component {
         })
         .then(resp => resp.json())
         .then( () => {
+            console.log('socket emit materials container', this.props.project.id)
             this.props.socket.emit('sendUpdateMaterials', this.props.project.id)
             this.setState({
                 ...this.state,
