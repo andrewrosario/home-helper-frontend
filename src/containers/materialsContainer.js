@@ -10,7 +10,7 @@ import CommentNewForm from '../components/commentNewForm'
 import { newComment } from '../actions/newComment'
 import DisplayComments from '../components/displayComments'
 
-var socket = io('https://diyhelper.herokuapp.com/');
+
 
 class MaterialsContainer extends Component {
     state = { 
@@ -22,7 +22,7 @@ class MaterialsContainer extends Component {
     }
 
     componentDidMount() {
-        socket.on("receiveUpdateMaterials", data => {
+        this.props.socket.on("receiveUpdateMaterials", data => {
             console.log('component did mount socket on materials container', this.props.project)
             this.props.fetchProject(this.props.project)
         })
@@ -57,7 +57,7 @@ class MaterialsContainer extends Component {
         .then(resp => resp.json())
         .then( () => {
             console.log('materials socket', socket)
-            socket.emit('sendUpdateMaterials', this.props.project.id)
+            this.props.socket.emit('sendUpdateMaterials', this.props.project.id)
             this.setState({
                 ...this.state,
                 showNewModal: false,
@@ -89,7 +89,7 @@ class MaterialsContainer extends Component {
             })
             .then(resp => resp.json())
             .then( () => {
-                socket.emit('sendUpdateMaterials', this.props.project.id)
+                this.props.socket.emit('sendUpdateMaterials', this.props.project.id)
                 this.setState({
                     ...this.state,
                     showNewModal: false,
@@ -101,7 +101,7 @@ class MaterialsContainer extends Component {
     }
 
     socketUpdate = () => {
-        socket.emit('sendUpdateMaterials', this.props.project.id)
+        this.props.socket.emit('sendUpdateMaterials', this.props.project.id)
     }
 
     handleClick = (material, type) => {
@@ -174,7 +174,8 @@ function mapStateToProps(state) {
     return {
         project: state.ProjectReducer.currentProject,
         materials: state.ProjectReducer.currentProject.materials,
-        user: state.UserReducer.currentUser
+        user: state.UserReducer.currentUser,
+        socket: state.UserReducer.socket
     }
 }
  
