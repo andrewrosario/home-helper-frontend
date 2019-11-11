@@ -1,4 +1,4 @@
-export default function ChatRoomReducer( state = { currentChatRoom: null }, action) {
+export default function ChatRoomReducer( state = { currentChatRoom: null, messageCount: 0 }, action) {
     switch (action.type) {
         case "FINISH_CREATE_PROJECT":
             const { novice_projects } = action.user
@@ -8,22 +8,27 @@ export default function ChatRoomReducer( state = { currentChatRoom: null }, acti
         case "FINISH_FETCH_PROJECT":
                 return {
                     currentChatRoom: action.data.chat_room,
+                    messageCount: action.data.chat_room.messages.length
                 }
         case "FINISH_UPDATE_PROJECT":
             return {
                 currentChatRoom: action.data.chat_room,
+                messageCount: action.data.chat_room.messages.length
             }
         case "LOGOUT":
                 return {
-                    currentChatRoom: null
+                    currentChatRoom: null,
+                    messageCount: 0
                 }
         case "CLEAR_CURRENT_PROJECT":
                 return {
-                    currentChatRoom: null
+                    currentChatRoom: null,
+                    messageCount: 0
                 }
         case 'RECEIVE_CHAT_MESSAGE':
             console.log('reducer receive chat message', action)
             let chatState = Object.assign( {}, state)
+            chatState.messageCount = chatState.chat_room.messages.length
             console.log("chatState", chatState)
             return {
                 ...chatState
