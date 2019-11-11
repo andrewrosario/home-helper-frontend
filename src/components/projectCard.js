@@ -8,7 +8,7 @@ import { enterChatRoom } from '../functions/enterChatRoom'
 
 const ProjectCard = (props) => {
     console.log('project card props.project', props.project)
-    const { id, description, title, project_type_id, expert_id } = props.project
+    const { id, description, title, project_type_id, expert } = props.project
 
     const projectType = () => {
         switch(project_type_id) {
@@ -29,8 +29,8 @@ const ProjectCard = (props) => {
         }
     }
 
-    const handleClick = (expert_id, status) => {
-        props.updateProject(id, expert_id, status)
+    const handleClick = (expert, status) => {
+        props.updateProject(id, expert.id, status)
         props.updateUser(props.user.id)
     }
 
