@@ -32,7 +32,7 @@ export function login(user) {
             localStorage.setItem("userId", user.id);
             socket.on('connect', () => {})
             socket.on("receiveUpdateMaterials", materials => {
-                // console.log('receive update materials', id)
+                console.log('receive update materials', materials)
                 // fetchProject(id)
                 dispatch({type: 'UPDATE_MATERIALS', materials})
             })
