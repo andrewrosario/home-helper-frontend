@@ -28,7 +28,7 @@ export default function ChatRoomReducer( state = { currentChatRoom: null, messag
         case 'RECEIVE_CHAT_MESSAGE':
             console.log('reducer receive chat message', action)
             let chatState = Object.assign( {}, state)
-            chatState.messageCount = chatState.currentChat.chat_room.messages.length
+            chatState.messageCount = chatState.currentChatRoom.chat_room.messages.length
             console.log("chatState", chatState)
             return {
                 ...chatState
