@@ -7,6 +7,7 @@ import { fetchProject } from '../actions/fetchProject'
 import { enterChatRoom } from '../functions/enterChatRoom'
 
 const ProjectCard = (props) => {
+    console.log('project card props.project', props.project)
     const { id, description, title, project_type_id, expert_id } = props.project
 
     const projectType = () => {

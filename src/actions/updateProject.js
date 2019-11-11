@@ -1,4 +1,5 @@
 export default function updateProject(projectId, expertId, expertStatus) {
+    console.log('update project arguements', projectId, expertId, expertStatus)
     return (dispatch) => {
         dispatch({type: 'START_UPDATE_PROJECT'})
         let sentExpertId
