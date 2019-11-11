@@ -31,9 +31,10 @@ export function login(user) {
             localStorage.setItem("jwt", user.jwt)
             localStorage.setItem("userId", user.id);
             socket.on('connect', () => {})
-            socket.on("receiveUpdateMaterials", id => {
-                console.log('receive update materials', id)
-                fetchProject(id)
+            socket.on("receiveUpdateMaterials", materials => {
+                // console.log('receive update materials', id)
+                // fetchProject(id)
+                dispatch({type: 'UPDATE_MATERIALS', materials})
             })
             socket.on("receiveMessage", data => {
                 console.log('receive update message', data.chat_room_id)

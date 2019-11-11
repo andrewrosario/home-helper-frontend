@@ -66,11 +66,17 @@ export default function ProjectReducer( state = { currentProject: null , request
                 requesting: true
             }
         case 'FINISH_UPDATE_TASK':
-            console.log('action', action.data) 
             let taskState = Object.assign( {}, state)
             taskState.currentProject.tasks = action.data
             return {
                 ...taskState
+            }
+        case 'UPDATE_MATERIALS':
+            console.log('materials in reducer', action.materials) 
+            let materialState = Object.assign( {}, state)
+            taskState.currentProject.materials = action.materials
+            return {
+                ...materialState
             }
         default:
             return state;
