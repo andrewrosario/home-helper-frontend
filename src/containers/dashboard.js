@@ -81,7 +81,7 @@ class Dashboard extends React.PureComponent {
     }
 
     handleModeSwitch = (type) => {
-        if(currentProject) {
+        if(this.props.project) {
             this.props.socket.emit('leave', `chat_id_${this.props.project.chat_room.id}`)
             this.props.socket.emit('leave', `task_id_${this.props.project.chat_room.id}`)
             this.props.socket.emit('leave', `materials_id_${this.props.project.chat_room.id}`)
