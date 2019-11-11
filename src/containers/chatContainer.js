@@ -17,7 +17,7 @@ class ChatContainer extends Component {
         };
     }
 
-    sendChatMessage = (socket, event) => {
+    sendChatMessage = (event) => {
         console.log('chat container, socket, event', socket, event)
         event.preventDefault()
         fetch(`${process.env.REACT_APP_API_URL}/messages`, {
@@ -58,7 +58,7 @@ class ChatContainer extends Component {
                 {(!this.props.project.expert_id && this.props.project.expert_status !== 'accepted') && <div id='chat-overlay'><h5>Select an Expert to Enable Chat</h5></div>}
                 <div id='messages-window' className='mt-1'>
                     <MessagesContainer />
-                    <form className='mt-1' onSubmit={(e) => {this.sendChatMessage(socket, e)}}>
+                    <form className='mt-1' onSubmit={(e) => {this.sendChatMessage(e)}}>
                         <input 
                             className='w-75' 
                             type='text' 
