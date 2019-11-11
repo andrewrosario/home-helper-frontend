@@ -14,15 +14,15 @@ class ChatContainer extends Component {
         };
     }
 
-    // componentDidUpdate(prevProps) {
-    //     console.log('if', prevProps.project.chat_room.messages.length, this.props.project.chat_room.messages.length)
-    //     console.log('if', prevProps.project.chat_room.messages.length !== this.props.project.chat_room.messages.length)
-    //     console.log('chatContainer update', prevProps, this.props)
-    //     if(prevProps.project.chat_room.messages.length !== this.props.project.chat_room.messages.length) {
-    //         this.forceUpdate()
-    //         this.setState({})
-    //     }
-    // }
+    componentDidUpdate(prevProps) {
+        console.log('if', prevProps.chatRoom.messages.length, this.props.chatRoom.messages.length)
+        console.log('if', prevProps.chatRoom.messages.length !== this.props.chatRoom.messages.length)
+        console.log('chatContainer update', prevProps, this.props)
+        if(prevProps.chatRoom.messages.length !== this.props.chatRoom.messages.length) {
+            this.forceUpdate()
+            this.setState({})
+        }
+    }
 
     sendChatMessage = (event) => {
         const chatRoomId = this.props.project.chat_room.id
@@ -73,12 +73,10 @@ class ChatContainer extends Component {
             <div id='chat'>
                 {(!this.props.project.expert_id && this.props.project.expert_status !== 'accepted') && <div id='chat-overlay'><h5>Select an Expert to Enable Chat</h5></div>}
                 <div id='messages-window' className='mt-1'>
-                    {/* <MessagesContainer messages={this.props.chatRoom.messages} /> */}
                     <div id='incoming-messages' className='shadow p-3 mb-3 bg-white rounded overflow-auto'>
                         <MDBContainer className='pt-1 pl-1 pr-1'>
                             <MDBListGroup className='w-100'>
                                 {this.renderChatMessages(this.props.chatRoom.messages)}
-                                {/* {this.props.chatRoom.messages.map( (message, key) => <li key={key} className={message.user_id === this.props.user.id ? 'chat-message w-50 shadow text-right blue lighten-2 rounded-pill ml-auto' : 'chat-message w-50 shadow mr-auto text-left purple lighten-3 rounded-pill'}>{message.text}</li>)} */}
                             </MDBListGroup>
                         </MDBContainer>
                     </div>
