@@ -6,7 +6,7 @@ import { fetchProject } from '../actions/fetchProject'
 class MessagesContainer extends Component {
     constructor(props) {
         super(props)
-        state = {
+        this.state = {
             messages: this.props.messages
         }
     }
