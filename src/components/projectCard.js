@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import updateProject from '../actions/updateProject'
 import updateUser from '../actions/updateUser'
 import { fetchProject } from '../actions/fetchProject'
+import { enterChatRoom } from '../functions/enterChatRoom'
 
 const ProjectCard = (props) => {
     const { id, description, title, project_type_id, expert_id } = props.project
@@ -33,6 +34,7 @@ const ProjectCard = (props) => {
     }
 
     const handleViewProject = (project) => {
+        enterChatRoom(props.socket, project.chat_room)
         props.fetchProject(project)
     }
 
@@ -65,7 +67,10 @@ const ProjectCard = (props) => {
 }
 
 function mapStateToProps(state){
-    return {user: state.UserReducer.currentUser}
+    return {
+        user: state.UserReducer.currentUser,
+        socket: state.UserReducer.socket
+    }
 }
  
 export default connect(mapStateToProps, { updateProject, updateUser, fetchProject })(ProjectCard);
