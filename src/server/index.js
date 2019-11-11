@@ -20,28 +20,19 @@ io.on('connection', function(socket){
         console.log('join room', room)
         socket.join(room);
     })
-    socket.on('sendMessage', function(message) {
-        console.log('sendMessage', message)
-        io.sockets.in(`chat_id_${message.chat_room_id}`).emit('receiveMessage', chatMessage(message.user_id, message.text, message.chat_room_id));
+    socket.on('sendMessage', function(message, id) {
+        console.log('index sendMessage')
+        io.sockets.in(`chat_id_${id}`).emit('receiveMessage', message);
     })
     socket.on('sendUpdateTask', function(tasks, id) {
-        console.log('updateTask', tasks, id)
+        console.log('index updateTask', id)
         io.sockets.in(`task_id_${id}`).emit('receiveUpdateTask', tasks);
     })
     socket.on('sendUpdateMaterials', function(materials, id) {
-        console.log('updateMaterials', materials, id)
+        console.log('index update materials')
         io.sockets.in(`materials_id_${id}`).emit('receiveUpdateMaterials', materials);
     })
     socket.on('disconnect', function(){});
-});
-
-const chatMessage = (user_id, text, chat_room_id) => {
-    return {
-        user_id,
-        text,
-        chat_room_id,
-        time: new Date().getTime()
-    };
-};
+})
 
 

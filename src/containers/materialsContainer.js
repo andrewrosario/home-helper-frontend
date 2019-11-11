@@ -18,13 +18,6 @@ class MaterialsContainer extends Component {
         focus: null
     }
 
-    // componentDidMount() {
-    //     this.props.socket.on("receiveUpdateMaterials", project => {
-    //         console.log('socket receive materials container data', project)
-    //         this.props.fetchProject(project)
-    //     })
-    // }
-
     componentDidUpdate(prevProps) {
         if(prevProps.project.id !== this.props.project.id) {
             this.setState({
@@ -52,10 +45,9 @@ class MaterialsContainer extends Component {
             })
         })
         .then(resp => resp.json())
-        .then( (data) => {
-            console.log('POSTPATH', data)
-            console.log('socket emit materials container')
-            this.props.socket.emit('sendUpdateMaterials', data, this.props.project.id)
+        .then(materials => {
+            console.log('socket emit materials container', data)
+            this.props.socket.emit('sendUpdateMaterials', materials, this.props.project.id)
             this.setState({
                 ...this.state,
                 showNewModal: false,
@@ -86,8 +78,8 @@ class MaterialsContainer extends Component {
                 }
             })
             .then(resp => resp.json())
-            .then( () => {
-                this.props.socket.emit('sendUpdateMaterials', this.props.project.id)
+            .then(materials => {
+                this.props.socket.emit('sendUpdateMaterials', materials, this.props.project.id)
                 this.setState({
                     ...this.state,
                     showNewModal: false,
@@ -98,8 +90,8 @@ class MaterialsContainer extends Component {
         }
     }
 
-    socketUpdate = () => {
-        this.props.socket.emit('sendUpdateMaterials', this.props.project.id)
+    materialsSocketUpdate = (materials) => {
+        this.props.socket.emit('sendUpdateMaterials', materials, this.props.project.id)
     }
 
     handleClick = (material, type) => {
@@ -112,7 +104,7 @@ class MaterialsContainer extends Component {
 
     handleDoneCommentClick = (text) => {
         const data = {text, commentOn: this.state.focus.id, userId: this.props.user.id}
-        this.props.newComment('material', data, this.socketUpdate)
+        this.props.newComment('material', data, this.materialSocketUpdate)
         this.setState({
             ...this.state,
             focus: null,

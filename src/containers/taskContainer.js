@@ -23,10 +23,6 @@ class TaskContainer extends React.PureComponent {
          }
 
     componentDidMount() {
-        // this.props.socket.on("receiveUpdateTask", () => {
-        //     console.log('receive update task', this.props.project)
-        //     this.props.fetchProject(this.props.project)
-        // })
         this.setState({
             ...this.state,
             projectComplete: this.checkProjectComplete()
@@ -57,9 +53,10 @@ class TaskContainer extends React.PureComponent {
         return false
     }
 
-    setStateAndSocket = () => {
-        this.props.socket.emit('sendUpdateTask', this.props.project.id)
-        console.log('setStateandSocket', this.props.project.id)
+    setStateAndSocket = (tasks) => {
+        const projectId = this.props.project.id
+        this.props.socket.emit('sendUpdateTask', tasks, projectId)
+        console.log('setStateandSocket', projectId)
         this.setState({
             ...this.state,
             showNewModal: false,
@@ -83,8 +80,8 @@ class TaskContainer extends React.PureComponent {
                 }
             })
             .then(resp => resp.json())
-            .then( () => {
-                this.props.socket.emit('sendUpdateTask', this.props.project.id)
+            .then(tasks => {
+                this.props.socket.emit('sendUpdateTask', tasks, this.props.project.id)
                 this.setState({
                     ...this.state,
                     showNewModal: false,
@@ -113,14 +110,13 @@ class TaskContainer extends React.PureComponent {
     }
 
     handleDoneCommentClick = (text) => {
-        const data = {text, commentOn: this.state.focusTask.id, userId: this.props.user.id}
+        const data = {text, commentOn: this.state.focusTask.id, userId: this.props.user.id, projectId: this.props.project.id}
         this.props.newComment('task', data)
         this.setState({
             ...this.state,
             focusTask: null,
             showCommentModal: !this.state.showCommentModal
         })
-        this.props.socket.emit('sendUpdateTask', this.props.project.id)
     }
 
     handleClick = (task, type) => {

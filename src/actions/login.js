@@ -33,12 +33,12 @@ export function login(user) {
             socket.on('connect', () => {})
             socket.on("receiveUpdateMaterials", materials => {
                 console.log('receive update materials', materials)
-                // fetchProject(id)
                 dispatch({type: 'UPDATE_MATERIALS', materials})
             })
             socket.on("receiveMessage", data => {
                 console.log('receive update message', data.chat_room_id)
                 fetchProject(data.chat_room_id)
+                dispatch({type: 'RECEIVE_CHAT_MESSAGE'})
             })
             socket.on("receiveUpdateTask", (id) => {
                 console.log('receive update task', id)

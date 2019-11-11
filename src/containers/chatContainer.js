@@ -14,6 +14,7 @@ class ChatContainer extends Component {
     }
 
     sendChatMessage = (event) => {
+        const chatRoomId = this.props.project.chat_room.id
         event.preventDefault()
         fetch(`${process.env.REACT_APP_API_URL}/messages`, {
             method: 'POST',
@@ -24,12 +25,12 @@ class ChatContainer extends Component {
             body: JSON.stringify({
                 ...this.state.message,
                 user_id: this.props.user.id,
-                chat_room_id: this.props.project.chat_room.id
+                chat_room_id: chatRoomId
             })
         })
         .then(resp => resp.json())
         .then(data => {
-            this.props.socket.emit("sendMessage", data);
+            this.props.socket.emit("sendMessage", data, chatRoomId);
             this.setState({
                 message: {
                     text: '',

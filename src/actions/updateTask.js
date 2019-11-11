@@ -11,9 +11,9 @@ export function updateTask(taskObj, method, path, setStateAndSocket) {
             body: JSON.stringify(taskObj)
         })
         .then(resp => resp.json())
-        .then(data => {
-            dispatch({type: 'FINISH_UPDATE_TASK', data})
-            setStateAndSocket()
+        .then(tasks => {
+            dispatch({type: 'FINISH_UPDATE_TASK', tasks})
+            setStateAndSocket(tasks)
         })
     }
 }
