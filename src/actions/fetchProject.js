@@ -1,6 +1,6 @@
 export function fetchProject(project, closeMenu) {
     return (dispatch) => {
-        console.log('fetch project', project.id)
+        console.log('!!fetch project', project.id)
         dispatch({type: 'START_FETCH_PROJECT'})
         fetch(`${process.env.REACT_APP_API_URL}/projects/${project.id}`, {
             headers: {
