@@ -55,7 +55,7 @@ class MaterialsContainer extends Component {
         .then( (data) => {
             console.log('POSTPATH', data)
             console.log('socket emit materials container')
-            this.props.socket.emit('sendUpdateMaterials', data)
+            this.props.socket.emit('sendUpdateMaterials', data, this.props.project.id)
             this.setState({
                 ...this.state,
                 showNewModal: false,
