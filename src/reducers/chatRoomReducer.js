@@ -3,15 +3,15 @@ export default function ChatRoomReducer( state = { currentChatRoom: null }, acti
         case "FINISH_CREATE_PROJECT":
             const { novice_projects } = action.user
             return {
-                currentChatRoom: novice_projects[novice_projects.length - 1].chat_room.id,
+                currentChatRoom: novice_projects[novice_projects.length - 1].chat_room,
             }
             case "FINISH_FETCH_PROJECT":
                     return {
-                        currentChatRoom: action.data.chat_room.id,
+                        currentChatRoom: action.data.chat_room,
                     }
             case "FINISH_UPDATE_PROJECT":
                 return {
-                    currentChatRoom: action.data.chat_room.id,
+                    currentChatRoom: action.data.chat_room,
                 }
             case "LOGOUT":
                     return {
