@@ -13,6 +13,10 @@ class ChatContainer extends Component {
         };
     }
 
+    componentDidUpdate() {
+        console.log('chatContainer update')
+    }
+
     sendChatMessage = (event) => {
         const chatRoomId = this.props.project.chat_room.id
         event.preventDefault()
