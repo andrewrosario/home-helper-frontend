@@ -15,7 +15,7 @@ class ChatContainer extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        console.log('if', prevProps.chatRoom.messages.length, this.props.chatRoom.messages.length)
+        console.log('if', prevProps.chatRoom.messageCount, this.props.chatRoom.messageCount)
         console.log('if', prevProps.chatRoom.messages.length !== this.props.chatRoom.messages.length)
         console.log('chatContainer update', prevProps, this.props)
         if(prevProps.chatRoom.messages.length !== this.props.chatRoom.messages.length) {
@@ -101,7 +101,7 @@ function mapStateToProps(state){
         user: state.UserReducer.currentUser,
         project: state.ProjectReducer.currentProject,
         socket: state.UserReducer.socket,
-        chatRoom: state.ChatRoomReducer.currentChatRoom
+        chatRoom: state.ChatRoomReducer
     }
 }
  
