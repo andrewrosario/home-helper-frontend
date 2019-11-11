@@ -16,7 +16,6 @@ export function fetchProject(project, closeMenu) {
         .then(resp => resp.json())
         .then(data => {
             dispatch({type: "FINISH_FETCH_PROJECT", data})
-            socket.emit('room', `chat_id_${project.chat_room.id}`)
             closeMenu && closeMenu()
         })
     }
