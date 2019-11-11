@@ -35,7 +35,10 @@ export function createNewProject(project) {
         })
         .then(user => {
             dispatch({ type: "FINISH_CREATE_PROJECT", user})
-            enterChatRoom(UserReducer.socket, UserReducer.currentUser.novice_projects[novice_projects.length - 1].id)
+            enterChatRoom(UserReducer.currentUser.socket, user.novice_projects[user.novice_projects.length - 1])
+            console.log('then in createNewProject, user', user)
+            console.log('then is createNewProject, currentUser.novice_projects', user.novice_projects)
+            
         })
         .catch(error => console.log(error))
     }

@@ -42,6 +42,8 @@ export default function UserReducer( state = { currentUser: null , expertMode: f
                 showNewProject: false
             }
         case "FINISH_CREATE_PROJECT":
+            const { novice_projects } = action.user
+            
             return {
                 ...state,
                 currentUser: action.user,
