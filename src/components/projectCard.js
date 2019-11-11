@@ -52,13 +52,13 @@ const ProjectCard = (props) => {
                     ?   <>
                             <Button 
                                 variant='success' 
-                                onClick={() => handleClick(expert_id, 'accepted')}>
+                                onClick={() => handleClick(expert.id, 'accepted')}>
                                 Accept
                             </Button>
                             <Button 
                                 variant='danger' 
                                 className='float-right' 
-                                onClick={() => handleClick(expert_id, 'rejected')}>
+                                onClick={() => handleClick(expert.id, 'rejected')}>
                                 Reject
                             </Button>
                         </> 
