@@ -13,11 +13,12 @@ class ChatContainer extends Component {
         };
     }
 
-    componentDidUpdate() {
+    componentDidUpdate(prevProps) {
         console.log('chatContainer update')
-        this.setState({
-            ...this.state
-        })
+        if(prevProps.project.chat_room.messages.length !== this.props.project.chat_room.messages.length) {
+            this.forceUpdate()
+            this.setState({})
+        }
     }
 
     sendChatMessage = (event) => {
