@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import MessagesContainer from './messagesContainer'
 import { connect } from 'react-redux'
+import { MDBListGroup, MDBContainer } from "mdbreact"
 
 class ChatContainer extends Component {
     constructor(props) {
@@ -59,12 +60,28 @@ class ChatContainer extends Component {
         });
     };
 
+    renderChatMessages = (messages) => {
+        console.log('messages container messages', messages)
+        return messages.map( (message, key) => {
+            return <li key={key} className={message.user_id === this.props.user.id ? 'chat-message w-50 shadow text-right blue lighten-2 rounded-pill ml-auto' : 'chat-message w-50 shadow mr-auto text-left purple lighten-3 rounded-pill'}>{message.text}</li>
+        });
+    };
+
+
     render() { 
         return ( 
             <div id='chat'>
                 {(!this.props.project.expert_id && this.props.project.expert_status !== 'accepted') && <div id='chat-overlay'><h5>Select an Expert to Enable Chat</h5></div>}
                 <div id='messages-window' className='mt-1'>
-                    <MessagesContainer messages={this.props.chatRoom.messages} />
+                    {/* <MessagesContainer messages={this.props.chatRoom.messages} /> */}
+                    <div id='incoming-messages' className='shadow p-3 mb-3 bg-white rounded overflow-auto'>
+                        <MDBContainer className='pt-1 pl-1 pr-1'>
+                            <MDBListGroup className='w-100'>
+                                {this.renderChatMessages(this.props.chatRoom.messages)}
+                                {/* {this.props.chatRoom.messages.map( (message, key) => <li key={key} className={message.user_id === this.props.user.id ? 'chat-message w-50 shadow text-right blue lighten-2 rounded-pill ml-auto' : 'chat-message w-50 shadow mr-auto text-left purple lighten-3 rounded-pill'}>{message.text}</li>)} */}
+                            </MDBListGroup>
+                        </MDBContainer>
+                    </div>
                     <form className='mt-1' onSubmit={(e) => {this.sendChatMessage(e)}}>
                         <input 
                             className='w-75' 
