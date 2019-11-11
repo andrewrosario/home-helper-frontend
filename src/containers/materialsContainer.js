@@ -18,12 +18,12 @@ class MaterialsContainer extends Component {
         focus: null
     }
 
-    componentDidMount() {
-        this.props.socket.on("receiveUpdateMaterials", project => {
-            console.log('socket receive materials container data', project)
-            this.props.fetchProject(project)
-        })
-    }
+    // componentDidMount() {
+    //     this.props.socket.on("receiveUpdateMaterials", project => {
+    //         console.log('socket receive materials container data', project)
+    //         this.props.fetchProject(project)
+    //     })
+    // }
 
     componentDidUpdate(prevProps) {
         if(prevProps.project.id !== this.props.project.id) {
