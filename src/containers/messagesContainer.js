@@ -13,6 +13,7 @@ class MessagesContainer extends Component {
         .then(resp => resp.json())
         .then( () => {
             this.props.socket.on("receiveMessage", data => {
+                console.log('message receive socket', this.props.project)
                 this.props.fetchProject(this.props.project)
             })
         })

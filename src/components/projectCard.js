@@ -34,6 +34,7 @@ const ProjectCard = (props) => {
     }
 
     const handleViewProject = (project) => {
+        console.log('handle view project', project)
         enterChatRoom(props.socket, project.chat_room)
         props.fetchProject(project)
     }
