@@ -30,7 +30,7 @@ class TaskContainer extends React.PureComponent {
     }
 
     componentDidUpdate(prevProps) {
-        console.log('task container props', prevProps, this.props)
+        console.log('task container props', prevProps.taskCount, this.props.taskCount)
         if(prevProps.project.id !== this.props.project.id) {
             console.log('task container did update if', prevProps)
             this.setState({
@@ -191,7 +191,8 @@ function mapStateToProps(state){
     return {
         project: state.ProjectReducer.currentProject,
         user: state.UserReducer.currentUser,
-        socket: state.UserReducer.socket
+        socket: state.UserReducer.socket,
+        taskCount: state.ProjectReducer.taskCount
     }
 }
  
