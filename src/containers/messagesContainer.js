@@ -4,6 +4,12 @@ import { connect } from 'react-redux'
 import { fetchProject } from '../actions/fetchProject'
 
 class MessagesContainer extends Component {
+    componentDidUpdate(prevProps) {
+        if(prevProps.project.chat_room.messages.length !== this.props.project.chat_room.messages.length) {
+            this.forceUpdate()
+        }
+    }
+
     renderChatMessages = () => {
         return this.props.project.chat_room.messages.map( (message, key) => {
             return <li key={key} className={message.user_id === this.props.user.id ? 'chat-message w-50 shadow text-right blue lighten-2 rounded-pill ml-auto' : 'chat-message w-50 shadow mr-auto text-left purple lighten-3 rounded-pill'}>{message.text}</li>
