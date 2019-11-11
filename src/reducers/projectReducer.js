@@ -83,7 +83,9 @@ export default function ProjectReducer( state = { currentProject: null , request
         case 'RECEIVE_CHAT_MESSAGE':
             console.log('reducer receive chat message', action)
             let chatState = Object.assign( {}, state)
-            chatState.currentProject.chat_room.messages.push(action.message)
+            let allMessages = chatState.currentProject.chat_room.messages
+            allMessages.push(action.message)
+            chatState.currentProject.chat_room.messages = allMessages
             return {
                 ...chatState
             }

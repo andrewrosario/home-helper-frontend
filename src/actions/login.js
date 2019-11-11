@@ -36,7 +36,6 @@ export function login(user) {
             })
             socket.on("receiveMessage", message => {
                 console.log('receive update message', message.chat_room_id)
-                // fetchProject(message.chat_room_id)
                 dispatch({type: 'RECEIVE_CHAT_MESSAGE', message})
             })
             socket.on("receiveUpdateTask", (tasks) => {
