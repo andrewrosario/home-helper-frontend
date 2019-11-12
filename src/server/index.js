@@ -1,18 +1,20 @@
 const express = require('express');
 const port = process.env.PORT || 8000;
 const server = express()
-  .use(express.static(__dirname + '/../../build'))
-  .listen(port, () => console.log(`Listening on ${ port }`));
+    .use(express.static(__dirname + '/../../build'))
+    .listen(port, () => console.log(`Listening on ${ port }`));
+server.get('*', function(req, res) {
+    res.sendFile(path.join(__dirname, '../../public/index.html'), function(err) {
+        console.log(path.join(__dirname, '../../public/index.html'))
+        if (err) {
+        res.status(500).send(err)
+        }
+    })
+});
 var io = require('socket.io')(server);
 
 
-server.get('*', function(req, res) {
-    res.sendFile(path.join(__dirname, '../../public/index.html'), function(err) {
-      if (err) {
-        res.status(500).send(err)
-      }
-    })
-  });
+
 
 io.on('connection', function(socket){
     socket.on('leave',function(room){  
