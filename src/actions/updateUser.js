@@ -10,8 +10,7 @@ export default function updateUser(id) {
         }})
         .then(resp => resp.json())
         .then(user => {
-            const info = { user, socket: SocketReducer.socket }
-            dispatch({ type: "LOGIN", info})
+            dispatch({ type: "LOGIN", user})
         })
     } 
 }
