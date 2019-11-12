@@ -20,10 +20,11 @@ export default function UserReducer( state = { currentUser: null , expertMode: f
                 requesting: true
             }
         case 'LOGIN':
+            localStorage.setItem("socket", action.info.socket)
+            console.log('socket on Login', localStorage)
             return {
                 ...state,
                 currentUser: action.info.user,
-                socket: action.info.socket,
                 requesting: false
             }
         case 'START_UPDATE_REQUEST':
