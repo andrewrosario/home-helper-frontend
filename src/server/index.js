@@ -1,7 +1,9 @@
-const express = require('express')();
+const express = require('express');
 const port = process.env.PORT || 8000;
-const server = express();
-server.use(express.static(__dirname + '/../../build'));
+const server = express()
+
+// server.use(express.static(__dirname + '/../../build'))
+    
 server.get('*', function(req, res) {
     console.log('res in server.get', res)
     res.sendFile(path.join(__dirname, '../../public/index.html'), function(err) {
