@@ -10,6 +10,7 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 import './index.scss';
 import App from './App';
 import { loadState, saveState } from './localStorage'
+import throttle from 'lodash.throttle';
 
 const persistedState = loadState();
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -20,12 +21,10 @@ const store = createStore(rootReducer, persistedState, composeEnhancers(
 console.log('persisted state', persistedState)
 console.log('store', store)
 
-store.subscribe(() => {
-  saveState({
-    UserReducer: store.getState().UserReducer
-  });
-  console.log('subscribe save state', store.getState().UserReducer)
-});
+store.subscribe(throttle(() => {
+  saveState({UserReducer: store.getState().UserReducer});
+  console.log('subscribe save state', store.getState())
+}, 1000));
 
 // Higher order component design pattern
 ReactDOM.render(
