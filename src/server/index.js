@@ -6,7 +6,7 @@ const server = express()
     
 server.get('*', function(req, res) {
     console.log('res in server.get', res)
-    res.sendFile(path.join(__dirname, '../../public/index.html'), function(err) {
+    res.sendFile(express.static(__dirname + '/../../build'), function(err) {
         console.log(path.join(__dirname, '../../public/index.html'));
         if (err) {
         res.status(500).send(err);
