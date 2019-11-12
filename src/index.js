@@ -22,7 +22,9 @@ console.log('persisted state', persistedState)
 console.log('store', store)
 
 store.subscribe(throttle(() => {
-  saveState({UserReducer: store.getState().UserReducer});
+  saveState({UserReducer: {
+              currentUser: store.getState().UserReducer.currentUser
+            }});
   console.log('subscribe save state', store.getState())
 }, 1000));
 
