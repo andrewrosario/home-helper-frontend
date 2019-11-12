@@ -1,5 +1,3 @@
-import { updateScroll } from '../functions/updateScroll'
-
 export default function ChatRoomReducer( state = { currentChatRoom: null, messageCount: 0 }, action) {
     switch (action.type) {
         case "FINISH_CREATE_PROJECT":
