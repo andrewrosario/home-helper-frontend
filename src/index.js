@@ -18,14 +18,10 @@ const store = createStore(rootReducer, persistedState, composeEnhancers(
     applyMiddleware(thunk)
 ));
 
-console.log('persisted state', persistedState)
-console.log('store', store)
-
 store.subscribe(throttle(() => {
   saveState({UserReducer: {
               currentUser: store.getState().UserReducer.currentUser
             }});
-  console.log('subscribe save state', store.getState())
 }, 1000));
 
 // Higher order component design pattern

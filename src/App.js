@@ -28,6 +28,7 @@ class App extends Component {
         console.log('receive update task', tasks)
         dispatchTask(tasks)
     })
+    console.log('open socket', socket)
     openSocket(socket)
   }
 
