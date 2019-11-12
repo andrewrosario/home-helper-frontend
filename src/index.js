@@ -29,6 +29,9 @@ const store = createStore(rootReducer, persistedState, composeEnhancers(
     applyMiddleware(thunk)
 ));
 
+const store = createStore(pReducer);
+const persistor = persistStore(store);
+
 console.log('persisted state', persistedState)
 console.log('store', store)
 
@@ -41,7 +44,7 @@ store.subscribe(() => {
 // Higher order component design pattern
 ReactDOM.render(
     <Provider store={store}>
-      <PersistGate loading={<LoadingView />} persistor={persistor}>
+      <PersistGate loading={} persistor={persistor}>
         <App />
       </PersistGate>
     </Provider>
