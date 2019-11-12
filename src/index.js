@@ -7,7 +7,6 @@ import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import { PersistGate } from 'redux-persist/lib/integration/react';
 import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
-import rootReducer from './reducers';
 import { Provider } from 'react-redux'
 import rootReducer from './reducers/index'
 import thunk from 'redux-thunk';
