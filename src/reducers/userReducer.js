@@ -21,7 +21,8 @@ export default function UserReducer( state = { currentUser: null , expertMode: f
             }
         case 'LOGIN':
             localStorage.setItem("socket", action.info.socket)
-            console.log('socket on Login', action.info.socket)
+            const ioSocket = JSON.stringify(action.info.socket)
+            console.log('socket on Login', ioSocket)
             return {
                 ...state,
                 currentUser: action.info.user,
