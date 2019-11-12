@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 import history from './history';
 import Dashboard from './containers/dashboard';
 import updateUser from './actions/updateUser'
-import { openSocket } from './actions/openSocket'
+import openSocket from './actions/openSocket'
 import io from 'socket.io-client';
 import { dispatchMaterial } from './actions/dispatchMaterial'
 import { dispatchMessage } from './actions/dispatchMessage'
