@@ -4,6 +4,7 @@ const server = express()
     .use(express.static(__dirname + '/../../build'))
     .listen(port, () => console.log(`Listening on ${ port }`));
 server.get('*', function(req, res) {
+    console.log('res in server.get', res)
     res.sendFile(path.join(__dirname, '../../public/index.html'), function(err) {
         console.log(path.join(__dirname, '../../public/index.html'));
         if (err) {
