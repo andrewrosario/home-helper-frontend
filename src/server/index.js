@@ -2,7 +2,7 @@ const express = require('express');
 const port = process.env.PORT || 8000;
 const server = express()
   .use(express.static(__dirname + '/../../build'), (req, res, next) => next())
-  .get('*', function(req, res) {res.sendFile(express.static(__dirname + '/../../build'))})
+  .get('*', function(req, res) {res.sendFile('/../../build/index.html')})
   .listen(port, () => console.log(`Listening on ${ port }`));
 var io = require('socket.io')(server);
 // var app = express()
