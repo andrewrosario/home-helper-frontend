@@ -39,6 +39,7 @@ store.subscribe(() => {
   saveState({
     UserReducer: store.getState().UserReducer
   });
+  console.log('subscribe store', store.getState().UserReducer)
 });
 
 // Higher order component design pattern
