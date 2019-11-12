@@ -5,9 +5,9 @@ const server = express()
     .listen(port, () => console.log(`Listening on ${ port }`));
 server.get('*', function(req, res) {
     res.sendFile(path.join(__dirname, '../../public/index.html'), function(err) {
-        console.log(path.join(__dirname, '../../public/index.html'))
+        console.log(path.join(__dirname, '../../public/index.html'));
         if (err) {
-        res.status(500).send(err)
+        res.status(500).send(err);
         }
     })
 });
