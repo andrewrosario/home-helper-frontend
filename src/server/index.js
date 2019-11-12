@@ -5,6 +5,14 @@ const server = express()
   .listen(port, () => console.log(`Listening on ${ port }`));
 var io = require('socket.io')(server);
 
+app.get('/*', function(req, res) {
+    res.sendFile(path.join(__dirname, '../../public/index.html'), function(err) {
+      if (err) {
+        res.status(500).send(err)
+      }
+    })
+  })
+
 io.on('connection', function(socket){
     socket.on('leave',function(room){  
         try{
