@@ -5,9 +5,6 @@ const server = express()
   .get('*', function(req, res) {res.sendFile('index.html', {root: __dirname + '/../../build'})})
   .listen(port, () => console.log(`Listening on ${ port }`));
 var io = require('socket.io')(server);
-// var app = express()
-
-server
 
 io.on('connection', function(socket){
     socket.on('leave',function(room){  

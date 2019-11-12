@@ -17,6 +17,9 @@ const store = createStore(rootReducer, persistedState, composeEnhancers(
     applyMiddleware(thunk)
 ));
 
+console.log('persisted state', persistedState)
+console.log('store', store)
+
 store.subscribe(() => {
   saveState({
     UserReducer: store.getState().UserReducer
