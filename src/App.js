@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 import history from './history';
 import Dashboard from './containers/dashboard';
 import updateUser from './actions/updateUser'
-import openSocket from './actions/openSocket'
+import { openSocket } from './actions/openSocket'
 import io from 'socket.io-client';
 import { dispatchMaterial } from './actions/dispatchMaterial'
 import { dispatchMessage } from './actions/dispatchMessage'
@@ -18,18 +18,18 @@ class App extends Component {
     socket.on('connect', () => {})
     socket.on("receiveUpdateMaterials", materials => {
         console.log('receive update materials', materials)
-        dispatchMaterial(materials)
+        this.props.dispatchMaterial(materials)
     })
     socket.on("receiveMessage", message => {
         console.log('receive update message', message.chat_room_id)
-        dispatchMessage(message)
+        this.props.dispatchMessage(message)
     })
     socket.on("receiveUpdateTask", (tasks) => {
         console.log('receive update task', tasks)
-        dispatchTask(tasks)
+        this.props.dispatchTask(tasks)
     })
     console.log('open socket', socket)
-    openSocket(socket)
+    this.props.openSocket(socket)
   }
 
   render() {
@@ -55,4 +55,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps, { updateUser })(App);
+export default connect(mapStateToProps, { updateUser, openSocket, dispatchMaterial, dispatchMessage, dispatchTask })(App);
