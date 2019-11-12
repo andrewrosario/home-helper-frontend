@@ -72,7 +72,7 @@ const ProjectCard = (props) => {
 function mapStateToProps(state){
     return {
         user: state.UserReducer.currentUser,
-        socket: state.UserReducer.socket
+        socket: state.SocketReducer.socket
     }
 }
  

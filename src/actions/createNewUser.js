@@ -1,6 +1,4 @@
 import history from "../history";
-import io from 'socket.io-client';
-var socket = io('https://diyhelper.herokuapp.com/');
 
 export function createNewUser(user) {
     const formData = new FormData()
@@ -22,10 +20,10 @@ export function createNewUser(user) {
             }
         })
         .then(user => {
-            const info = { user, socket }
+            const info = user
             localStorage.setItem("jwt", user.jwt)
             localStorage.setItem("userId", user.id);
-            dispatch({ type: "LOGIN", info})
+            dispatch({ type: "LOGIN", user})
             history.push('/novice-dashboard')
         })
         .catch(error => console.log(error))

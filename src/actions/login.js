@@ -1,6 +1,4 @@
 import history from "../history";
-import io from 'socket.io-client';
-var socket = io('https://diyhelper.herokuapp.com/');
 
 export function login(user) {
     return (dispatch) => {
@@ -26,24 +24,9 @@ export function login(user) {
             }
         })
         .then(user => {
-            const info = { user, socket }
             localStorage.setItem("jwt", user.jwt)
             localStorage.setItem("userId", user.id);
-            socket.on('connect', () => {})
-            socket.on("receiveUpdateMaterials", materials => {
-                console.log('receive update materials', materials)
-                dispatch({type: 'UPDATE_MATERIALS', materials})
-            })
-            socket.on("receiveMessage", message => {
-                console.log('receive update message', message.chat_room_id)
-                dispatch({type: 'RECEIVE_CHAT_MESSAGE', message})
-            })
-            socket.on("receiveUpdateTask", (tasks) => {
-                console.log('receive update task', tasks)
-                dispatch({type: 'FINISH_UPDATE_TASK', tasks})
-            })
-            
-            dispatch({ type: "LOGIN", info})
+            dispatch({ type: "LOGIN", user})
             history.push('/novice-dashboard')
         })
         .catch(error => console.log(error))

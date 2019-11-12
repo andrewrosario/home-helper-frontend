@@ -191,7 +191,7 @@ function mapStateToProps(state){
     return {
         project: state.ProjectReducer.currentProject,
         user: state.UserReducer.currentUser,
-        socket: state.UserReducer.socket,
+        socket: state.SocketReducer.socket,
         taskCount: state.ProjectReducer.taskCount
     }
 }

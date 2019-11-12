@@ -6,8 +6,31 @@ import { connect } from 'react-redux'
 import history from './history';
 import Dashboard from './containers/dashboard';
 import updateUser from './actions/updateUser'
+import { openSocket } from './actions/openSocket'
+import io from 'socket.io-client';
+import { dispatchMaterial } from './actions/dispatchMaterial'
+import { dispatchMessage } from './actions/dispatchMessage'
+import { dispatchTask } from './actions/dispatchTask'
 
 class App extends Component {
+  componentDidMount() {
+    const socket = io('https://diyhelper.herokuapp.com/');
+    socket.on('connect', () => {})
+    socket.on("receiveUpdateMaterials", materials => {
+        console.log('receive update materials', materials)
+        dispatchMaterial(materials)
+    })
+    socket.on("receiveMessage", message => {
+        console.log('receive update message', message.chat_room_id)
+        dispatchMessage(message)
+    })
+    socket.on("receiveUpdateTask", (tasks) => {
+        console.log('receive update task', tasks)
+        dispatchTask(tasks)
+    })
+    openSocket(socket)
+  }
+
   render() {
     return (
       <Router history={history}>

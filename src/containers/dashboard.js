@@ -139,7 +139,7 @@ class Dashboard extends React.PureComponent {
                     {!expert && <p className='menu-item' onClick={() => this.toggleModal('newProject')}>Create New Project</p>}
                     {(user.expert_ins.length && !expert) && <p className='menu-item' onClick={() => this.handleModeSwitch('expert')}>Switch to Expert</p>}
                     {expert && <p className='menu-item' onClick={() => this.handleModeSwitch('novice')}>Switch to Novice</p>}
-                    <p className='menu-item' onClick={this.props.logout}>Logout</p>
+                    <p className='menu-item' onClick={() => this.props.logout(this.props.socket)}>Logout</p>
                     <img alt='current user' id='user-image' src={`${process.env.REACT_APP_API_URL}${this.props.user.image}`}></img>
                 </Menu>
                 { !project && <ProjectCardContainer projectType={projectType} expert={expert} /> }
@@ -183,7 +183,7 @@ function mapStateToProps(state){
         noviceProjects: state.UserReducer.currentUser.novice_projects,
         expertProjects: state.UserReducer.currentUser.expert_projects,
         project: state.ProjectReducer.currentProject,
-        socket: state.UserReducer.socket
+        socket: state.SocketReducer.socket
     }
 }
  

@@ -4,8 +4,8 @@ import { enterChatRoom } from '../functions/enterChatRoom'
 export default function updateProject(projectId, expertId, expertStatus) {
     console.log('update project arguements', projectId, expertId, expertStatus)
     return (dispatch, getState) => {
-        const { ProjectReducer, UserReducer } = getState()
-        ProjectReducer.currentProject && leaveChatRoom(UserReducer.socket, ProjectReducer.currentProject.chat_room)
+        const { ProjectReducer, SocketReducer } = getState()
+        ProjectReducer.currentProject && leaveChatRoom(SocketReducer.socket, ProjectReducer.currentProject.chat_room)
         dispatch({type: 'START_UPDATE_PROJECT'})
         let sentExpertId
         if(expertId) {
@@ -29,7 +29,7 @@ export default function updateProject(projectId, expertId, expertStatus) {
         .then(data => {
             console.log('finish update project data', data)
             dispatch({type: 'FINISH_UPDATE_PROJECT', data})
-            enterChatRoom(UserReducer.socket, data.chat_room.id)
+            enterChatRoom(SocketReducer.socket, data.chat_room.id)
         })
     }
 }

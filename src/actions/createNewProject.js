@@ -14,9 +14,9 @@ export function createNewProject(project) {
     }
 
     return (dispatch, getState) => {
-        const { ProjectReducer, UserReducer } = getState()
+        const { ProjectReducer, UserReducer, SocketReducer } = getState()
         console.log('createNewProject getState', ProjectReducer, UserReducer )
-        ProjectReducer.currentProject && leaveChatRoom(UserReducer.socket, ProjectReducer.currentProject.chat_room)
+        ProjectReducer.currentProject && leaveChatRoom(SocketReducer.socket, ProjectReducer.currentProject.chat_room)
         dispatch({type: 'START_CREATE_PROJECT_REQUEST'}, project)
         fetch(`${process.env.REACT_APP_API_URL}/projects`, {
             method: 'POST',
@@ -34,7 +34,7 @@ export function createNewProject(project) {
         })
         .then(user => {
             dispatch({ type: "FINISH_CREATE_PROJECT", user})
-            enterChatRoom(UserReducer.socket, user.novice_projects[user.novice_projects.length - 1])
+            enterChatRoom(SocketReducer.socket, user.novice_projects[user.novice_projects.length - 1])
             console.log('then in createNewProject, user', user)
             console.log('then is createNewProject, currentUser.novice_projects', user.novice_projects)
             

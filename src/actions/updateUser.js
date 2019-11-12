@@ -1,6 +1,6 @@
 export default function updateUser(id) {
     return (dispatch, getState) => {
-        const { UserReducer } = getState()
+        const { SocketReducer } = getState()
         dispatch({type: 'START_UPDATE_REQUEST'})
         fetch(`${process.env.REACT_APP_API_URL}/users/${id}`, {
             headers: {
@@ -10,7 +10,7 @@ export default function updateUser(id) {
         }})
         .then(resp => resp.json())
         .then(user => {
-            const info = { user, socket: UserReducer.socket }
+            const info = { user, socket: SocketReducer.socket }
             dispatch({ type: "LOGIN", info})
         })
     } 

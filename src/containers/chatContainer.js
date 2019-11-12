@@ -111,7 +111,7 @@ function mapStateToProps(state){
     return {
         user: state.UserReducer.currentUser,
         project: state.ProjectReducer.currentProject,
-        socket: state.UserReducer.socket,
+        socket: state.SocketReducer.socket,
         chatRoom: state.ChatRoomReducer
     }
 }

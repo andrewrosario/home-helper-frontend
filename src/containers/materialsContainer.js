@@ -156,7 +156,7 @@ function mapStateToProps(state) {
         project: state.ProjectReducer.currentProject,
         materials: state.ProjectReducer.currentProject.materials,
         user: state.UserReducer.currentUser,
-        socket: state.UserReducer.socket
+        socket: state.SocketReducer.socket
     }
 }
  
