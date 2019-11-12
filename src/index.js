@@ -18,7 +18,8 @@ import { loadState, saveState } from './localStorage'
 const persistConfig = {
   key: 'root',
   storage: storage,
-  stateReconciler: autoMergeLevel2 // see "Merge Process" section for details.
+  whitelist: ['UserReducer']
+  // stateReconciler: autoMergeLevel2 // see "Merge Process" section for details.
  };
  
 const pReducer = persistReducer(persistConfig, rootReducer);
