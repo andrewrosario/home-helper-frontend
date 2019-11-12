@@ -43,7 +43,7 @@ store.subscribe(() => {
 // Higher order component design pattern
 ReactDOM.render(
     <Provider store={store}>
-      <PersistGate loading={} persistor={persistor}>
+      <PersistGate loading={<App />} persistor={persistor}>
         <App />
       </PersistGate>
     </Provider>
