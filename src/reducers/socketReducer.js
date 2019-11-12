@@ -3,7 +3,7 @@ export default function SocketReducer( state = { socket: null }, action) {
         case "OPEN_SOCKET":
             console.log('open socket', action)
             return {
-                socket: action.socket,
+                socket: action,
             }
         default:
             return state;
