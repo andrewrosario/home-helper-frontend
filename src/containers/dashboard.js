@@ -144,6 +144,7 @@ class Dashboard extends React.PureComponent {
                 </Menu>
                 { !project && <ProjectCardContainer projectType={projectType} expert={expert} /> }
                 { project && <div id='dashboard-container' className='container'>
+                                            <div id='expert-underlay'></div>
                                             <div className='row'>
                                                 <div className='col-lg-8 col-sm-12'>
                                                     <div className='row border-bottom border-dark'>
