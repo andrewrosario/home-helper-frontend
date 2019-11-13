@@ -46,7 +46,7 @@ class DetailsContainer extends Component {
             <div id='details' className='col-12 border-bottom border-dark container2'>
                 <h3>{title} Details</h3>
                 <h5>Progress</h5>
-                <CircularProgressbar value={this.state.percentage} text={`${this.state.percentage}%`} />
+                <CircularProgressbar value={this.state.percentage} text={`${this.state.percentage}%`} strokeWidth='20'/>
                 {!!before_photos.length && <h5>Before Photos</h5>}
                 <div className='row'>
                     {before_photos && before_photos.map( (photo, index) => <img key={index} 

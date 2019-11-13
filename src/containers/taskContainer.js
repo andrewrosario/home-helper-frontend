@@ -7,7 +7,6 @@ import CompleteProject from './completeProject';
 import TaskListItem from '../components/taskListItem'
 import TaskNewForm from '../components/taskNewForm'
 import TaskEditForm from '../components/taskEditForm'
-import CommentNewForm from '../components/commentNewForm'
 import DisplayComments from '../components/displayComments'
 
 import { fetchProject } from '../actions/fetchProject'
@@ -170,11 +169,11 @@ class TaskContainer extends React.PureComponent {
                                         handleDoneEditClick={this.handleDoneNewClick} 
                                         handleNewClick={this.handleNewClick}
                                     />}
-            {this.state.focusTask &&    <CommentNewForm 
+            {/* {this.state.focusTask &&    <CommentNewForm 
                                             show={this.state.showCommentModal} 
                                             
                                             handleClick={this.handleClick}
-                                        />}
+                                        />} */}
             {this.state.focusTask &&    <DisplayComments 
                                             task={this.state.focusTask}
                                             show={this.state.showDisplayModal} 
