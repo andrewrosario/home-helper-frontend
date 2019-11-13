@@ -59,6 +59,8 @@ export default function ProjectReducer( state = { taskCount: 0, currentProject: 
             // let commentArray = object.currentProject[pluralType][index].comments
             // commentArray.push(action.comment)
             // object.currentProject[pluralType][index].comments = commentArray
+            taskState.requesting = false
+            console.log('taskState', taskState)
             return {
                 ...object
             }
@@ -72,7 +74,7 @@ export default function ProjectReducer( state = { taskCount: 0, currentProject: 
             taskState.currentProject.tasks = action.tasks
             taskState.taskCount = taskState.currentProject.tasks.length
             console.log('finish update task, taskState', taskState)
-            console.log('finish update task, action', action)
+            console.log('finish update task, action', action)           
             taskState.requesting = false
             return {
                 ...taskState
