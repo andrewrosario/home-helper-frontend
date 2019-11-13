@@ -14,12 +14,10 @@ function TaskListItem(props) {
                 <td>
                     <div className='fa-lg'>
                         <span className="fa-layers fa-fw">
-                            <FontAwesomeIcon icon={faCommentAlt} onClick={() => props.handleClick(props.task, 'Comment')} />
-                            <span className="fa-layers-counter fa-s" onClick={() => props.handleClick(props.task, 'Display')}>{comments.length}</span>
+                            <FontAwesomeIcon icon={faCommentAlt} onClick={() => props.handleClick(props.task, 'Display')} />
+                            <span className="fa-layers-counter fa-s">{comments.length}</span>
                         </span>
                     </div>
-                        {/* <img onClick={() => props.handleClick(props.task, 'Comment')} className='comment-button' src='./comment-icon.png' alt='comment'/>
-                        <div className='comment-button comment-count' onClick={() => props.handleClick(props.task, 'Display')}>{comments.length}</div> */}
                 </td>
                 <td><img onClick={() => props.handleClick(props.task, 'Edit')} className='edit-button' src='./edit_button.png' alt='edit a task'/></td>
             </tr>

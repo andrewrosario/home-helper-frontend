@@ -1,5 +1,6 @@
 import React from 'react';
 import { Modal, Table } from 'react-bootstrap';
+import CommentNewForm from './commentNewForm'
 
 const DisplayComments = (props) => {
     return ( 
@@ -30,6 +31,7 @@ const DisplayComments = (props) => {
                         })}
                     </tbody>
                 </Table>
+                <CommentNewForm handleDoneCommentClick={this.props.handleDoneCommentClick} />
             </Modal.Body>
         </Modal>
      );

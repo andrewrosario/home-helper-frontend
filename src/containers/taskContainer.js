@@ -172,13 +172,14 @@ class TaskContainer extends React.PureComponent {
                                     />}
             {this.state.focusTask &&    <CommentNewForm 
                                             show={this.state.showCommentModal} 
-                                            handleDoneCommentClick={this.handleDoneCommentClick} 
+                                            
                                             handleClick={this.handleClick}
                                         />}
             {this.state.focusTask &&    <DisplayComments 
                                             task={this.state.focusTask}
                                             show={this.state.showDisplayModal} 
                                             handleClick={this.handleClick}
+                                            handleDoneCommentClick={this.handleDoneCommentClick}
                                         />}
             <CompleteProject show={this.state.projectComplete} toggleComplete={this.toggleComplete} handleHomeClick={this.props.handleHomeClick}/>
             <button id='new-task' className='btn-primary' onClick={this.handleNewClick}>Add a Task</button>
