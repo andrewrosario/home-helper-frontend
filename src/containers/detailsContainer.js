@@ -18,6 +18,8 @@ class DetailsContainer extends Component {
                 return accum + current.time_required
             }
         }, 0)
+        console.log('completedTime', completedTime)
+        console.log('totalTime', totalTime)
         this.state = {
             percentage: completedTime/totalTime
         }
@@ -28,7 +30,7 @@ class DetailsContainer extends Component {
         return ( 
             <div id='details' className='col-12 border-bottom border-dark container2'>
                 <h3>{title} Details</h3>
-                <CircularProgressbar value={this.state.percentage} text={`${this.state.percentage}%`} />;
+                <CircularProgressbar value={this.state.percentage} text={`${this.state.percentage}%`} />
                 {!!before_photos.length && <h5>Before Photos</h5>}
                 <div className='row'>
                     {before_photos && before_photos.map( (photo, index) => <img key={index} 
