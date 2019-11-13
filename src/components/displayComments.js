@@ -31,7 +31,7 @@ const DisplayComments = (props) => {
                         })}
                     </tbody>
                 </Table>
-                <CommentNewForm handleDoneCommentClick={this.props.handleDoneCommentClick} />
+                <CommentNewForm handleDoneCommentClick={props.handleDoneCommentClick} />
             </Modal.Body>
         </Modal>
      );
