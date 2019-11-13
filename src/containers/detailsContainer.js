@@ -6,13 +6,12 @@ import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 
 class DetailsContainer extends Component {
-    constructor(props) {
-        super(props)
-        const totalTime = props.project.tasks.reduce( (accum, current) => {
+    calculateProgress = (project) => {
+        const totalTime = project.tasks.reduce( (accum, current) => {
             console.log('accum', 'current', accum, current.time_required)
             return accum + current.time_required
         }, 0)
-        const completedTime = props.project.tasks.reduce( (accum, current, index, array) => {
+        const completedTime = project.tasks.reduce( (accum, current, index, array) => {
             if(array[index].is_complete) {
                 console.log('accum', 'current', accum, current.time_required)
                 return accum + current.time_required
@@ -20,18 +19,33 @@ class DetailsContainer extends Component {
                 return accum
             }
         }, 0)
+        return completedTime/totalTime*100
+    }
+
+    constructor(props) {
+        super(props)
         console.log('completedTime', completedTime)
         console.log('totalTime', totalTime)
         this.state = {
-            percentage: completedTime/totalTime
+            percentage: this.calculateProgress(props.project)
         }
     }
+
+    componentDidUpdate(prevProps) {
+        if(prevProps.complete_tasks != this.props.complete_tasks) {
+            this.setState({
+                percentage: this.calculateProgress(this.props.project)
+            })
+        }
+    }
+
     render() {
         console.log('details container', this.state)
         const { title, before_photos, description, expert, id } = this.props.project
         return ( 
             <div id='details' className='col-12 border-bottom border-dark container2'>
                 <h3>{title} Details</h3>
+                <h5>Progress</h5>
                 <CircularProgressbar value={this.state.percentage} text={`${this.state.percentage}%`} />
                 {!!before_photos.length && <h5>Before Photos</h5>}
                 <div className='row'>
