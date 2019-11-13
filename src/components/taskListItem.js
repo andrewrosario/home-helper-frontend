@@ -11,10 +11,12 @@ function TaskListItem(props) {
                 <td>{time_required} mins</td>
                 <td>
                     <div className='comment-div'>
-                    <span class="fa-layers fa-fw">
-                        <i class="far fa-comment-alt"></i>
-                        <span class="fa-layers-counter">1,419</span>
-                    </span>
+                        <div className='fa-4x'>
+                            <span className="fa-layers fa-fw">
+                                <i className="far fa-comment-alt"></i>
+                                <span className="fa-layers-counter">1,419</span>
+                            </span>
+                        </div>
                         <img onClick={() => props.handleClick(props.task, 'Comment')} className='comment-button' src='./comment-icon.png' alt='comment'/>
                         <div className='comment-button comment-count' onClick={() => props.handleClick(props.task, 'Display')}>{comments.length}</div>
                     </div>
