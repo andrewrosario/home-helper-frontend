@@ -13,7 +13,7 @@ function TaskListItem(props) {
                 <td>
                     <div className='fa-lg'>
                         <span className="fa-layers fa-fw">
-                            <FontAwesomeIcome icon='fa-comment-alt' onClick={() => props.handleClick(props.task, 'Comment')} />
+                            <FontAwesomeIcon icon='fa-comment-alt' onClick={() => props.handleClick(props.task, 'Comment')} />
                             <span className="fa-layers-counter fa-s" onClick={() => props.handleClick(props.task, 'Display')}>{comments.length}</span>
                         </span>
                     </div>
