@@ -9,13 +9,15 @@ class DetailsContainer extends Component {
     constructor(props) {
         super(props)
         const totalTime = props.project.tasks.reduce( (accum, current) => {
+            console.log('accum', 'current', accum, current.time_required)
             return accum + current.time_required
-        })
+        }, 0)
         const completedTime = props.project.tasks.reduce( (accum, current, index, array) => {
             if(array[index].is_complete) {
+                console.log('accum', 'current', accum, current.time_required)
                 return accum + current.time_required
             }
-        })
+        }, 0)
         this.state = {
             percentage: completedTime/totalTime
         }
