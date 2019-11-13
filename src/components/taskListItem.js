@@ -10,10 +10,10 @@ function TaskListItem(props) {
                 <td>{text}</td>
                 <td>{time_required} mins</td>
                 <td>
-                    <div className='fa-4x'>
+                    <div className='fa-lg'>
                         <span className="fa-layers fa-fw">
-                            <i className="far fa-comment-alt fa-xs" onClick={() => props.handleClick(props.task, 'Comment')}></i>
-                            <span className="fa-layers-counter fa-xs" onClick={() => props.handleClick(props.task, 'Display')}>{comments.length}</span>
+                            <i className="far fa-comment-alt fa-s" onClick={() => props.handleClick(props.task, 'Comment')}></i>
+                            <span className="fa-layers-counter fa-s" onClick={() => props.handleClick(props.task, 'Display')}>{comments.length}</span>
                         </span>
                     </div>
                         {/* <img onClick={() => props.handleClick(props.task, 'Comment')} className='comment-button' src='./comment-icon.png' alt='comment'/>
