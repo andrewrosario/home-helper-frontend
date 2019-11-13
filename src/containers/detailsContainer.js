@@ -24,8 +24,6 @@ class DetailsContainer extends Component {
 
     constructor(props) {
         super(props)
-        console.log('completedTime', completedTime)
-        console.log('totalTime', totalTime)
         this.state = {
             percentage: this.calculateProgress(props.project)
         }
