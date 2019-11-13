@@ -70,12 +70,15 @@ export default function ProjectReducer( state = { taskCount: 0, currentProject: 
                 requesting: true
             }
         case 'FINISH_UPDATE_TASK':
+            const completeCount = action.tasks.filter(t => t.is_complete).length
             let taskState = Object.assign( {}, state)
             taskState.currentProject.tasks = action.tasks
             taskState.taskCount = taskState.currentProject.tasks.length
+            console.log('finish update task, completeCount', completeCount)
             console.log('finish update task, taskState', taskState)
             console.log('finish update task, action', action)           
             taskState.requesting = false
+            taskState.currentProject.complete_tasks = completeCount
             return {
                 ...taskState
             }
