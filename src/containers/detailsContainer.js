@@ -8,17 +8,18 @@ import 'react-circular-progressbar/dist/styles.css';
 class DetailsContainer extends Component {
     calculateProgress = (project) => {
         const totalTime = project.tasks.reduce( (accum, current) => {
-            console.log('accum', 'current', accum, current.time_required)
+            console.log('Total Time: accum', 'current', accum, current.time_required)
             return accum + current.time_required
         }, 0)
         const completedTime = project.tasks.reduce( (accum, current, index, array) => {
             if(array[index].is_complete) {
-                console.log('accum', 'current', accum, current.time_required)
+                console.log('Completed TIme: accum', 'current', accum, current.time_required)
                 return accum + current.time_required
             } else {
                 return accum
             }
         }, 0)
+        console.log('calculateprogress return', completedTime, totalTime)
         return completedTime/totalTime*100
     }
 
@@ -38,7 +39,10 @@ class DetailsContainer extends Component {
             })
         }
         if(prevProps.project.id !== this.props.project.id) {
-            console.log(this.props)
+            console.log('Update if project changes props', this.props)
+            this.setState({
+                percentage: this.calculateProgress(this.props.project)
+            })
         }
     }
 
