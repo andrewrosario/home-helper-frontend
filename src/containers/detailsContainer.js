@@ -13,9 +13,11 @@ class DetailsContainer extends Component {
             return accum + current.time_required
         }, 0)
         const completedTime = props.project.tasks.reduce( (accum, current, index, array) => {
-            return if(array[index].is_complete) {
+            if(array[index].is_complete) {
                 console.log('accum', 'current', accum, current.time_required)
                 return accum + current.time_required
+            } else {
+                return accum
             }
         }, 0)
         console.log('completedTime', completedTime)
