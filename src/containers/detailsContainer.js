@@ -20,7 +20,7 @@ class DetailsContainer extends Component {
             }
         }, 0)
         console.log('calculateprogress return', completedTime, totalTime)
-        return completedTime/totalTime*100
+        return Math.round(completedTime/totalTime*100)
     }
 
     constructor(props) {
