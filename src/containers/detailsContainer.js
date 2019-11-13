@@ -2,15 +2,31 @@ import React, { Component } from 'react'
 import ExpertCard from '../components/expertCard'
 import { connect } from 'react-redux'
 import { Button } from 'react-bootstrap'
+import { CircularProgressbar } from 'react-circular-progressbar';
+import 'react-circular-progressbar/dist/styles.css';
 
 class DetailsContainer extends Component {
-    state = {  }
-
+    constructor(props) {
+        super(props)
+        const totalTime = props.project.tasks.reduce( (accum, current) => {
+            return accum + current.time_required
+        })
+        const completedTime = props.project.tasks.reduce( (accum, current, index, array) => {
+            if(array[index].is_complete) {
+                return accum + current.time_required
+            }
+        })
+        this.state = {
+            percentage: completedTime/totalTime
+        }
+    }
     render() {
+        console.log('details container', state)
         const { title, before_photos, description, expert, id } = this.props.project
         return ( 
             <div id='details' className='col-12 border-bottom border-dark container2'>
                 <h3>{title} Details</h3>
+                <CircularProgressbar value={this.state.percentage} text={`${this.state.percentage}%`} />;
                 {!!before_photos.length && <h5>Before Photos</h5>}
                 <div className='row'>
                     {before_photos && before_photos.map( (photo, index) => <img key={index} 
