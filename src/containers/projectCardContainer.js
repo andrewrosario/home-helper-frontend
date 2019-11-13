@@ -64,7 +64,7 @@ class ProjectCardContainer extends Component {
     render() { 
         return ( 
             <div className='container overflow-auto'>
-                <div className='row'>
+                <div className='row col-12'>
                         {this.renderProjectCards(this.props.projectType)}
                 </div>
                 <Modal className='container' show={!!this.state.pendingProjects.length} onHide={() => console.log('hide')}>

@@ -259,7 +259,12 @@ li {
     border-bottom: 1px solid lightgrey
   }
   .card {
-    width: 50%;
+    @include for-tablet-portrait-up {
+      width: 20%;
+    }
+    @include for-desktop-up {
+      width: 50%;
+    }
     margin-right: auto;
     margin-left: auto;
     margin-bottom: 10px;
@@ -332,7 +337,7 @@ th {
 }
 
 html, #root {
-  background-color: #c3b89f75;
+  background-color: rgba(195,184,159,0.30);
 }
 
 .row .project-card {
