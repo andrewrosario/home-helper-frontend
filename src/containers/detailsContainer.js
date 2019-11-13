@@ -21,7 +21,7 @@ class DetailsContainer extends Component {
         }
     }
     render() {
-        console.log('details container', state)
+        console.log('details container', this.state)
         const { title, before_photos, description, expert, id } = this.props.project
         return ( 
             <div id='details' className='col-12 border-bottom border-dark container2'>
