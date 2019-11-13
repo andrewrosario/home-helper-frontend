@@ -82,7 +82,7 @@ class ChatContainer extends Component {
     render() { 
         return ( 
             <div id='chat'>
-                {(!this.props.project.expert_id && this.props.project.expert_status !== 'accepted') && <div id='chat-overlay'><h5>Select an Expert to Enable Chat</h5></div>}
+                {(!this.props.project.expert_id && this.props.project.expert_status !== 'accepted') && <div id='chat-overlay'><h5>Connect With an Expert to Enable Chat</h5></div>}
                 <div id='messages-window' className='mt-1'>
                     <div id='incoming-messages' className='shadow p-3 mb-3 bg-white rounded overflow-auto'>
                         <MDBContainer className='pt-1 pl-1 pr-1'>
