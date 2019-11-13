@@ -59,8 +59,8 @@ export default function ProjectReducer( state = { taskCount: 0, currentProject: 
             // let commentArray = object.currentProject[pluralType][index].comments
             // commentArray.push(action.comment)
             // object.currentProject[pluralType][index].comments = commentArray
-            taskState.requesting = false
-            console.log('taskState', taskState)
+            object.requesting = false
+            console.log('finish new comment object', object)
             return {
                 ...object
             }
