@@ -1,5 +1,6 @@
 import React from 'react';
 import { Form } from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 function TaskListItem(props) {
     const {id, text, time_required, is_complete, comments} = props.task
@@ -12,7 +13,7 @@ function TaskListItem(props) {
                 <td>
                     <div className='fa-lg'>
                         <span className="fa-layers fa-fw">
-                            <i className="far fa-comment-alt fa-s" onClick={() => props.handleClick(props.task, 'Comment')}></i>
+                            <FontAwesomeIcome icon='fa-comment-alt' onClick={() => props.handleClick(props.task, 'Comment')} />
                             <span className="fa-layers-counter fa-s" onClick={() => props.handleClick(props.task, 'Display')}>{comments.length}</span>
                         </span>
                     </div>
