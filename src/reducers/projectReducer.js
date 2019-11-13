@@ -73,6 +73,7 @@ export default function ProjectReducer( state = { taskCount: 0, currentProject: 
             taskState.taskCount = taskState.currentProject.tasks.length
             console.log('finish update task, taskState', taskState)
             console.log('finish update task, action', action)
+            taskState.requesting = false
             return {
                 ...taskState
             }
