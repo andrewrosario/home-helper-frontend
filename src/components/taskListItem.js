@@ -11,14 +11,14 @@ function TaskListItem(props) {
                 <td>{time_required} mins</td>
                 <td>
                     <div className='comment-div'>
-                        <div className='fa-4x'>
+                        <div className='fa-4x comment-button'>
                             <span className="fa-layers fa-fw">
-                                <i className="far fa-comment-alt"></i>
-                                <span className="fa-layers-counter">1,419</span>
+                                <i className="far fa-comment-alt" onClick={() => props.handleClick(props.task, 'Comment')}></i>
+                                <span className="fa-layers-counter" onClick={() => props.handleClick(props.task, 'Display')}>{comments.length}</span>
                             </span>
                         </div>
-                        <img onClick={() => props.handleClick(props.task, 'Comment')} className='comment-button' src='./comment-icon.png' alt='comment'/>
-                        <div className='comment-button comment-count' onClick={() => props.handleClick(props.task, 'Display')}>{comments.length}</div>
+                        {/* <img onClick={() => props.handleClick(props.task, 'Comment')} className='comment-button' src='./comment-icon.png' alt='comment'/>
+                        <div className='comment-button comment-count' onClick={() => props.handleClick(props.task, 'Display')}>{comments.length}</div> */}
                     </div>
                 </td>
                 <td><img onClick={() => props.handleClick(props.task, 'Edit')} className='edit-button' src='./edit_button.png' alt='edit a task'/></td>
