@@ -30,7 +30,9 @@ class DetailsContainer extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        if(prevProps.complete_tasks != this.props.complete_tasks) {
+        console.log('details did update', prevProps, this.props)
+        if(prevProps.completeCount != this.props.completeCount) {
+            console.log('details did update if')
             this.setState({
                 percentage: this.calculateProgress(this.props.project)
             })
@@ -64,7 +66,8 @@ class DetailsContainer extends Component {
 
 function mapStateToProps(state){
     return {
-        project: state.ProjectReducer.currentProject
+        project: state.ProjectReducer.currentProject,
+        completeCount: state.ProjectReducer.completeCount
     }
 }
  
