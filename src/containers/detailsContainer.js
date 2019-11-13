@@ -31,11 +31,14 @@ class DetailsContainer extends Component {
 
     componentDidUpdate(prevProps) {
         console.log('details did update', prevProps, this.props)
-        if(prevProps.completeCount != this.props.completeCount) {
-            console.log('details did update if')
+        if(prevProps.completeCount !== this.props.completeCount) {
+            console.log('details did update if', this.props.project)
             this.setState({
                 percentage: this.calculateProgress(this.props.project)
             })
+        }
+        if(prevProps.project.id !== this.props.project.id) {
+            console.log(this.props)
         }
     }
 

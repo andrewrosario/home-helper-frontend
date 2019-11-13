@@ -15,7 +15,7 @@ function TaskListItem(props) {
                     <div className='fa-lg'>
                         <span className="fa-layers fa-fw">
                             <FontAwesomeIcon icon={faCommentAlt} onClick={() => props.handleClick(props.task, 'Display')} />
-                            <span className="fa-layers-counter fa-s">{comments.length}</span>
+                            {comments.length && <span className="fa-layers-counter fa-s">{comments.length}</span>}
                         </span>
                     </div>
                 </td>
