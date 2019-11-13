@@ -29,7 +29,7 @@ export default function updateProject(projectId, expertId, expertStatus) {
         .then(data => {
             console.log('finish update project data', data)
             dispatch({type: 'FINISH_UPDATE_PROJECT', data})
-            enterChatRoom(SocketReducer.socket, data.chat_room.id)
+            enterChatRoom(SocketReducer.socket, data.chat_room)
         })
     }
 }

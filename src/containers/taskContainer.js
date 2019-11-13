@@ -169,11 +169,6 @@ class TaskContainer extends React.PureComponent {
                                         handleDoneEditClick={this.handleDoneNewClick} 
                                         handleNewClick={this.handleNewClick}
                                     />}
-            {/* {this.state.focusTask &&    <CommentNewForm 
-                                            show={this.state.showCommentModal} 
-                                            
-                                            handleClick={this.handleClick}
-                                        />} */}
             {this.state.focusTask &&    <DisplayComments 
                                             task={this.state.focusTask}
                                             show={this.state.showDisplayModal} 
