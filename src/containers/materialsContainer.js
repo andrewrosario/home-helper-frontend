@@ -96,6 +96,7 @@ class MaterialsContainer extends Component {
 
     handleDoneCommentClick = (text) => {
         const data = {text, commentOn: this.state.focus.id, userId: this.props.user.id}
+        console.log('handle done comment click', data)
         this.props.newComment('material', data, this.materialSocketUpdate)
         this.setState({
             ...this.state,
