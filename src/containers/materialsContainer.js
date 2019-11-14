@@ -135,16 +135,12 @@ class MaterialsContainer extends Component {
                                                 handleDoneNewClick={this.handleDoneNewClick} 
                                                 handleClick={this.handleClick}
                                             />}
-            {this.state.focus &&    <CommentNewForm 
-                                        show={this.state.showCommentModal} 
-                                        handleDoneCommentClick={this.handleDoneCommentClick} 
-                                        handleClick={this.handleClick}
-                                    />}
-            {this.state.focus &&    <DisplayComments 
-                                        task={this.state.focus}
-                                        show={this.state.showDisplayModal} 
-                                        handleClick={this.handleClick}
-                                    />}  
+            {this.state.focusTask &&    <DisplayComments 
+                                            task={this.state.focusTask}
+                                            show={this.state.showDisplayModal} 
+                                            handleClick={this.handleClick}
+                                            handleDoneCommentClick={this.handleDoneCommentClick}
+                                        />} 
             <button id='new-material' className='btn-primary' onClick={() => this.handleClick(null, 'New')}>Add a Material</button>
             </div>
          );

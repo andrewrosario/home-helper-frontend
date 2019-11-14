@@ -13,8 +13,12 @@ function MaterialListItem(props) {
                 <td>{amount} - {amount_unit}</td>
                 <td>${cost}</td>
                 <td>
-                    <img onClick={() => props.handleClick(props.material, 'Comment')} className='comment-button' src='./comment-icon.png' alt='comment'/>
-                    <div className='comment-button comment-count' onClick={() => props.handleClick(props.material, 'Display')}>{comments.length}</div>
+                    <div className='fa-lg'>
+                        <span className="fa-layers fa-fw">
+                            <FontAwesomeIcon icon={faCommentAlt} onClick={() => props.handleClick(props.material, 'Comment')} />
+                            {comments.length && <span className="fa-layers-counter fa-s">{comments.length}</span>}
+                        </span>
+                    </div>
                 </td>
                 <td>
                     <img onClick={() => props.handleClick(props.material, 'Edit')} className='edit-button' src='./edit_button.png' alt='edit'/>
