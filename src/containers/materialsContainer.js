@@ -138,7 +138,7 @@ class MaterialsContainer extends Component {
                                                 handleClick={this.handleClick}
                                             />}
             {this.state.focus &&    <DisplayComments 
-                                            focus={this.state.focus}
+                                            element={this.state.focus}
                                             show={this.state.showCommentModal} 
                                             handleClick={this.handleClick}
                                             handleDoneCommentClick={this.handleDoneCommentClick}

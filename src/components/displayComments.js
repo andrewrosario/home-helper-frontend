@@ -17,7 +17,7 @@ const DisplayComments = (props) => {
                         </tr>
                     </thead>
                     <tbody>
-                        {props.task.comments.map( (comment) => {
+                        {props.element.comments.map( (comment) => {
                             return (
                                 <tr key={comment.id}>
                                     <td>
