@@ -86,6 +86,7 @@ class MaterialsContainer extends Component {
     }
 
     handleClick = (material, type) => {
+        console.log('handleClikc Materials Container', material, type)
         this.setState({
             ...this.state,
             focus: material,
@@ -120,8 +121,8 @@ class MaterialsContainer extends Component {
                 {this.props.materials && this.props.materials.map( material => <MaterialListItem  
                                                                                     key={material.id} 
                                                                                     material={material} 
+                                                                                    handleDoneEditClick={this.handleDoneEditClick}
                                                                                     handleClick={this.handleClick}
-                                                                                    handleCommentClick={this.handleCommentClick}
                                                                                 />)}
             </Table>
             {this.state.showEditModal &&    <MaterialEditForm 

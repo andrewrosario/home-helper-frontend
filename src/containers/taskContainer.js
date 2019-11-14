@@ -154,7 +154,6 @@ class TaskContainer extends React.PureComponent {
                                                 task={task} 
                                                 handleDoneEditClick={this.handleDoneEditClick} 
                                                 handleClick={this.handleClick}
-                                                handleCommentClick={this.handleCommentClick}
                                             />)}
             </Table>
             {this.state.focusTask && <TaskEditForm 
