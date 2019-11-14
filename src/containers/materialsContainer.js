@@ -86,7 +86,7 @@ class MaterialsContainer extends Component {
     }
 
     handleClick = (material, type) => {
-        console.log('handleClikc Materials Container', material, type)
+        console.log('handleClikc Materials Container', material, type, `show${type}Modal`)
         this.setState({
             ...this.state,
             focus: material,
