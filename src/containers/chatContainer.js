@@ -1,25 +1,38 @@
 import React, { Component } from 'react'
-import socketIOClient from "socket.io-client";
-import MessagesContainer from './messagesContainer'
 import { connect } from 'react-redux'
-
-const endpoint = "http://127.0.0.1:8000"
-const socket = socketIOClient(endpoint);
+import { MDBListGroup, MDBContainer } from "mdbreact"
 
 class ChatContainer extends Component {
     constructor(props) {
         super(props);
         this.state = {
             response: false,
-            endpoint: "http://127.0.0.1:8000",
             message: {
                 text: ''
             }
         };
     }
+    
+    updateScroll = (element) => {
+        var element = document.getElementById('incoming-messages')
+        if(element) {
+            element.scrollTop = element.scrollHeight;
+        }
+    }
 
-    sendChatMessage = (socket, event) => {
-        event.preventDefault(this.props.project.chat_room.id)
+    componentDidMount() {
+        this.updateScroll()
+    }
+
+    componentDidUpdate(prevProps) {
+        if(prevProps.chatRoom.messageCount !== this.props.chatRoom.messageCount) {
+            this.updateScroll()
+        }
+    }
+
+    sendChatMessage = (event) => {
+        const chatRoomId = this.props.project.chat_room.id
+        event.preventDefault()
         fetch(`${process.env.REACT_APP_API_URL}/messages`, {
             method: 'POST',
             headers: {
@@ -29,17 +42,18 @@ class ChatContainer extends Component {
             body: JSON.stringify({
                 ...this.state.message,
                 user_id: this.props.user.id,
-                chat_room_id: this.props.project.chat_room.id
+                chat_room_id: chatRoomId
             })
         })
         .then(resp => resp.json())
         .then(data => {
-            socket.emit("sendMessage", data);
+            this.props.socket.emit("sendMessage", data, chatRoomId);
             this.setState({
                 message: {
                     text: '',
                 } 
             })
+            this.updateScroll()
         });
     };
 
@@ -52,13 +66,26 @@ class ChatContainer extends Component {
         });
     };
 
+    renderChatMessages = (messages) => {
+        return messages.map( (message, key) => {
+            return <li key={key} className={message.user_id === this.props.user.id ? 'chat-message w-50 shadow text-right blue lighten-2 rounded-pill ml-auto' : 'chat-message w-50 shadow mr-auto text-left purple lighten-3 rounded-pill'}>{message.text}</li>
+        });
+    };
+
+
     render() { 
         return ( 
             <div id='chat'>
-                {(!this.props.project.expert_id && this.props.project.expert_status !== 'accepted') && <div id='chat-overlay'><h5>Select an Expert to Enable Chat</h5></div>}
+                {(!this.props.project.expert_id && this.props.project.expert_status !== 'accepted') && <div id='chat-overlay'><h5>Connect With an Expert to Enable Chat</h5></div>}
                 <div id='messages-window' className='mt-1'>
-                    <MessagesContainer />
-                    <form className='mt-1' onSubmit={(e) => {this.sendChatMessage(socket, e)}}>
+                    <div id='incoming-messages' className='shadow p-3 mb-3 bg-white rounded overflow-auto'>
+                        <MDBContainer className='pt-1 pl-1 pr-1'>
+                            <MDBListGroup className='w-100'>
+                                {this.renderChatMessages(this.props.chatRoom.currentChatRoom.messages)}
+                            </MDBListGroup>
+                        </MDBContainer>
+                    </div>
+                    <form className='mt-1' onSubmit={(e) => {this.sendChatMessage(e)}}>
                         <input 
                             className='w-75' 
                             type='text' 
@@ -77,7 +104,9 @@ class ChatContainer extends Component {
 function mapStateToProps(state){
     return {
         user: state.UserReducer.currentUser,
-        project: state.ProjectReducer.currentProject
+        project: state.ProjectReducer.currentProject,
+        socket: state.SocketReducer.socket,
+        chatRoom: state.ChatRoomReducer
     }
 }
  

@@ -1,4 +1,4 @@
-export default function ProjectReducer( state = { currentProject: null , requesting: false }, action) {
+export default function ProjectReducer( state = { completeCount: 0, taskCount: 0, currentProject: null , requesting: false }, action) {
     switch (action.type) {
         case 'START_CREATE_PROJECT_REQUEST':
             return {
@@ -52,11 +52,9 @@ export default function ProjectReducer( state = { currentProject: null , request
             }
         case 'FINISH_NEW_COMMENT':
             const pluralType = action.commentType + 's'
-            const index = state.currentProject[pluralType].findIndex(element => element.id === action.comment[`${action.commentType}_id`])
             let object = Object.assign( {}, state)
-            let commentArray = object.currentProject[pluralType][index].comments
-            commentArray.push(action.comment)
-            object.currentProject[pluralType][index].comments = commentArray
+            object.currentProject[pluralType] = action.comment
+            object.requesting = false
             return {
                 ...object
             }
@@ -66,11 +64,28 @@ export default function ProjectReducer( state = { currentProject: null , request
                 requesting: true
             }
         case 'FINISH_UPDATE_TASK':
-            console.log('action', action.data) 
+            const completeCount = action.tasks.filter(t => t.is_complete).length
             let taskState = Object.assign( {}, state)
-            taskState.currentProject.tasks = action.data
+            taskState.currentProject.tasks = action.tasks
+            taskState.taskCount = taskState.currentProject.tasks.length         
+            taskState.requesting = false
+            taskState.completeCount = completeCount  
             return {
                 ...taskState
+            }
+        case 'UPDATE_MATERIALS':
+            let materialsState = Object.assign( {}, state)
+            materialsState.currentProject.materials = action.materials
+            return {
+                ...materialsState
+            }
+        case 'RECEIVE_CHAT_MESSAGE':
+            let chatState = Object.assign( {}, state)
+            let allMessages = chatState.currentProject.chat_room.messages
+            allMessages.push(action.message)
+            chatState.currentProject.chat_room.messages = allMessages
+            return {
+                ...chatState
             }
         default:
             return state;

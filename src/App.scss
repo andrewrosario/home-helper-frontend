@@ -1,3 +1,19 @@
+@mixin for-phone-only {
+  @media (max-width: 599px) { @content; }
+}
+@mixin for-tablet-portrait-up {
+  @media (min-width: 600px) { @content; }
+}
+@mixin for-tablet-landscape-up {
+  @media (min-width: 900px) { @content; }
+}
+@mixin for-desktop-up {
+  @media (min-width: 1200px) { @content; }
+}
+@mixin for-big-desktop-up {
+  @media (min-width: 1800px) { @content; }
+}
+
 .App {
   text-align: center;
 }
@@ -113,25 +129,33 @@ nav > a, p {
 }
 
 #tasks {
-  overflow: scroll;
-  height: 60vh
+  @include for-desktop-up {
+    overflow: scroll;
+    height: 55vh
+  }
 }
 
 #details {
-  overflow: scroll;
-  height: 55vh;
+  @include for-desktop-up {
+    overflow: scroll;
+    height: 55vh
+  }
   padding-top: 10px
 }
 
 #materials {
-  overflow: scroll;
-  height: 34vh;
+  @include for-desktop-up {
+    overflow: scroll;
+    height: 34vh;
+  }
   padding-top: 10px
 }
 
 #chat {
+  @include for-desktop-up {
+    height: 39vh;
+  }
   width: 100%;
-  height: 39vh;
 }
 
 .edit-button, .comment-button {
@@ -235,7 +259,12 @@ li {
     border-bottom: 1px solid lightgrey
   }
   .card {
-    width: 50%;
+    @include for-tablet-portrait-up {
+      width: 20%;
+    }
+    @include for-desktop-up {
+      width: 50%;
+    }
     margin-right: auto;
     margin-left: auto;
     margin-bottom: 10px;
@@ -308,7 +337,7 @@ th {
 }
 
 html, #root {
-  background-color: #c3b89f75;
+  background-color: rgba(195,184,159,0.30);
 }
 
 .row .project-card {
@@ -334,4 +363,8 @@ html, #root {
 
 .sign-up {
   float: right
+}
+
+.CircularProgressbar {
+  width: 50%;
 }

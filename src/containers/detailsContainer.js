@@ -2,15 +2,56 @@ import React, { Component } from 'react'
 import ExpertCard from '../components/expertCard'
 import { connect } from 'react-redux'
 import { Button } from 'react-bootstrap'
+import { CircularProgressbar } from 'react-circular-progressbar';
+import 'react-circular-progressbar/dist/styles.css';
 
 class DetailsContainer extends Component {
-    state = {  }
+    calculateProgress = (project) => {
+        const totalTime = project.tasks.reduce( (accum, current) => {
+            return accum + current.time_required
+        }, 0)
+        const completedTime = project.tasks.reduce( (accum, current, index, array) => {
+            if(array[index].is_complete) {
+                return accum + current.time_required
+            } else {
+                return accum
+            }
+        }, 0)
+
+        if(totalTime > 0) {
+            return Math.round(completedTime/totalTime*100) 
+        } else {
+            return 0
+        }
+    }
+
+    constructor(props) {
+        super(props)
+        this.state = {
+            percentage: this.calculateProgress(props.project)
+        }
+    }
+
+    componentDidUpdate(prevProps) {
+        if(prevProps.completeCount !== this.props.completeCount) {
+            this.setState({
+                percentage: this.calculateProgress(this.props.project)
+            })
+        }
+        if(prevProps.project.id !== this.props.project.id) {
+            this.setState({
+                percentage: this.calculateProgress(this.props.project)
+            })
+        }
+    }
 
     render() {
         const { title, before_photos, description, expert, id } = this.props.project
         return ( 
             <div id='details' className='col-12 border-bottom border-dark container2'>
                 <h3>{title} Details</h3>
+                <h5>Progress</h5>
+                <CircularProgressbar value={this.state.percentage} text={`${this.state.percentage}%`} strokeWidth='20'/>
                 {!!before_photos.length && <h5>Before Photos</h5>}
                 <div className='row'>
                     {before_photos && before_photos.map( (photo, index) => <img key={index} 
@@ -30,7 +71,8 @@ class DetailsContainer extends Component {
 
 function mapStateToProps(state){
     return {
-        project: state.ProjectReducer.currentProject
+        project: state.ProjectReducer.currentProject,
+        completeCount: state.ProjectReducer.completeCount
     }
 }
  

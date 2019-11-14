@@ -1,3 +1,6 @@
+import { leaveChatRoom } from '../functions/leaveChatRoom'
+import { enterChatRoom } from '../functions/enterChatRoom'
+
 export function createNewProject(project) {
     const formData = new FormData()
     const { user, name, description, type, before_photos } = project
@@ -10,7 +13,9 @@ export function createNewProject(project) {
         formData.append('before_photos[]', file, file.name);
     }
 
-    return (dispatch) => {
+    return (dispatch, getState) => {
+        const { ProjectReducer, UserReducer, SocketReducer } = getState()
+        ProjectReducer.currentProject && leaveChatRoom(SocketReducer.socket, ProjectReducer.currentProject.chat_room)
         dispatch({type: 'START_CREATE_PROJECT_REQUEST'}, project)
         fetch(`${process.env.REACT_APP_API_URL}/projects`, {
             method: 'POST',
@@ -28,6 +33,7 @@ export function createNewProject(project) {
         })
         .then(user => {
             dispatch({ type: "FINISH_CREATE_PROJECT", user})
+            enterChatRoom(SocketReducer.socket, user.novice_projects[user.novice_projects.length - 1])
         })
         .catch(error => console.log(error))
     }

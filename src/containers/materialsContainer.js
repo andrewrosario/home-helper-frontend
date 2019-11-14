@@ -4,15 +4,9 @@ import MaterialListItem from '../components/materialListItem'
 import MaterialNewForm from '../components/materialNewForm'
 import MaterialEditForm from '../components/materialEditForm'
 import { connect } from 'react-redux'
-import socketIOClient from "socket.io-client"
 import { fetchProject } from '../actions/fetchProject'
-import CommentNewForm from '../components/commentNewForm'
 import { newComment } from '../actions/newComment'
 import DisplayComments from '../components/displayComments'
-
-const endpoint = "http://127.0.0.1:8000"
-const socket = socketIOClient(endpoint)
-// process.env.REACT_APP_API_URL
 
 class MaterialsContainer extends Component {
     state = { 
@@ -21,26 +15,6 @@ class MaterialsContainer extends Component {
         showCommentModal: false,
         showDisplayModal: false,
         focus: null
-    }
-
-    componentDidMount() {
-        socket.on('connect', () => {})
-        socket.on("receiveUpdateMaterials", data => {
-            this.props.fetchProject(this.props.project)
-        })
-        socket.emit('room', `materials_id_${this.props.project.id}`)
-    }
-
-    componentDidUpdate(prevProps) {
-        if(prevProps.project.id !== this.props.project.id) {
-            this.setState({
-                showNewModal: false,
-                showEditModal: false,
-                focus: null,
-            })
-            socket.emit('leave', `materials_id_${prevProps.project.chat_room.id}`)
-            socket.emit('room', `materials_id_${this.props.project.chat_room.id}`)
-        }
     }
 
     fetchPostPatch = (materialsObj, method, path) => {
@@ -60,13 +34,14 @@ class MaterialsContainer extends Component {
             })
         })
         .then(resp => resp.json())
-        .then( () => {
-            socket.emit('sendUpdateMaterials', this.props.project.id)
+        .then(materials => {
+            this.props.socket.emit('sendUpdateMaterials', materials, this.props.project.id)
             this.setState({
                 ...this.state,
                 showNewModal: false,
                 showEditModal: false,
                 showDiplayModal: false,
+                showCommentModal: false,
                 focus: null
             })
         })
@@ -92,8 +67,8 @@ class MaterialsContainer extends Component {
                 }
             })
             .then(resp => resp.json())
-            .then( () => {
-                socket.emit('sendUpdateMaterials', this.props.project.id)
+            .then(materials => {
+                this.props.socket.emit('sendUpdateMaterials', materials, this.props.project.id)
                 this.setState({
                     ...this.state,
                     showNewModal: false,
@@ -104,8 +79,8 @@ class MaterialsContainer extends Component {
         }
     }
 
-    socketUpdate = () => {
-        socket.emit('sendUpdateMaterials', this.props.project.id)
+    materialsSocketUpdate = (materials) => {
+        this.props.socket.emit('sendUpdateMaterials', materials, this.props.project.id)
     }
 
     handleClick = (material, type) => {
@@ -118,7 +93,7 @@ class MaterialsContainer extends Component {
 
     handleDoneCommentClick = (text) => {
         const data = {text, commentOn: this.state.focus.id, userId: this.props.user.id}
-        this.props.newComment('material', data, this.socketUpdate)
+        this.props.newComment('material', data, this.materialSocketUpdate)
         this.setState({
             ...this.state,
             focus: null,
@@ -143,6 +118,7 @@ class MaterialsContainer extends Component {
                 {this.props.materials && this.props.materials.map( material => <MaterialListItem  
                                                                                     key={material.id} 
                                                                                     material={material} 
+                                                                                    handleDoneEditClick={this.handleDoneEditClick}
                                                                                     handleClick={this.handleClick}
                                                                                 />)}
             </Table>
@@ -158,16 +134,12 @@ class MaterialsContainer extends Component {
                                                 handleDoneNewClick={this.handleDoneNewClick} 
                                                 handleClick={this.handleClick}
                                             />}
-            {this.state.focus &&    <CommentNewForm 
-                                        show={this.state.showCommentModal} 
-                                        handleDoneCommentClick={this.handleDoneCommentClick} 
-                                        handleClick={this.handleClick}
-                                    />}
             {this.state.focus &&    <DisplayComments 
-                                        task={this.state.focus}
-                                        show={this.state.showDisplayModal} 
-                                        handleClick={this.handleClick}
-                                    />}  
+                                            element={this.state.focus}
+                                            show={this.state.showCommentModal} 
+                                            handleClick={this.handleClick}
+                                            handleDoneCommentClick={this.handleDoneCommentClick}
+                                        />} 
             <button id='new-material' className='btn-primary' onClick={() => this.handleClick(null, 'New')}>Add a Material</button>
             </div>
          );
@@ -178,7 +150,8 @@ function mapStateToProps(state) {
     return {
         project: state.ProjectReducer.currentProject,
         materials: state.ProjectReducer.currentProject.materials,
-        user: state.UserReducer.currentUser
+        user: state.UserReducer.currentUser,
+        socket: state.SocketReducer.socket
     }
 }
  

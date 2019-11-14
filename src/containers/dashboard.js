@@ -4,6 +4,9 @@ import { connect } from 'react-redux'
 import { slide as Menu } from 'react-burger-menu'
 import history from '../history';
 
+import { leaveChatRoom } from '../functions/leaveChatRoom'
+import { enterChatRoom } from '../functions/enterChatRoom'
+
 import TaskContainer from './taskContainer'
 import DetailsContainer from './detailsContainer'
 import MaterialsContainer from './materialsContainer'
@@ -22,7 +25,6 @@ import { clearCurrentProject } from '../actions/clearCurrentProject'
 class Dashboard extends React.PureComponent {
     constructor(props) {
         super(props)
-        console.log(!props.user.novice_projects.length)
         this.state = {
             newProject: !props.user.novice_projects.length,
             menuOpen: false,
@@ -77,10 +79,13 @@ class Dashboard extends React.PureComponent {
     }
 
     handleProjectClick = (project) => {
+        this.props.project && leaveChatRoom(this.props.socket, this.props.project.chat_room)
         this.props.fetchProject(project, this.closeMenu.bind(this))
+        enterChatRoom(this.props.socket, project.chat_room)
     }
 
     handleModeSwitch = (type) => {
+        this.props.project && leaveChatRoom(this.props.socket, this.props.project.chat_room)
         this.props.updateUser(this.props.user.id)
         this.props.clearCurrentProject()
         history.push(`/${type}-dashboard`)
@@ -104,6 +109,7 @@ class Dashboard extends React.PureComponent {
     }
 
     handleHomeClick = () => {
+        this.props.project && leaveChatRoom(this.props.socket, this.props.project.chat_room)
         this.props.clearCurrentProject()
         this.closeMenu()
     }
@@ -132,11 +138,12 @@ class Dashboard extends React.PureComponent {
                     {!expert && <p className='menu-item' onClick={() => this.toggleModal('newProject')}>Create New Project</p>}
                     {(user.expert_ins.length && !expert) && <p className='menu-item' onClick={() => this.handleModeSwitch('expert')}>Switch to Expert</p>}
                     {expert && <p className='menu-item' onClick={() => this.handleModeSwitch('novice')}>Switch to Novice</p>}
-                    <p className='menu-item' onClick={this.props.logout}>Logout</p>
+                    <p className='menu-item' onClick={() => this.props.logout(this.props.socket)}>Logout</p>
                     <img alt='current user' id='user-image' src={`${process.env.REACT_APP_API_URL}${this.props.user.image}`}></img>
                 </Menu>
                 { !project && <ProjectCardContainer projectType={projectType} expert={expert} /> }
                 { project && <div id='dashboard-container' className='container'>
+                                            <div id='expert-underlay'></div>
                                             <div className='row'>
                                                 <div className='col-lg-8 col-sm-12'>
                                                     <div className='row border-bottom border-dark'>
@@ -175,7 +182,8 @@ function mapStateToProps(state){
         user: state.UserReducer.currentUser,
         noviceProjects: state.UserReducer.currentUser.novice_projects,
         expertProjects: state.UserReducer.currentUser.expert_projects,
-        project: state.ProjectReducer.currentProject
+        project: state.ProjectReducer.currentProject,
+        socket: state.SocketReducer.socket
     }
 }
  

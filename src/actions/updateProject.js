@@ -1,5 +1,10 @@
+import { leaveChatRoom } from '../functions/leaveChatRoom'
+import { enterChatRoom } from '../functions/enterChatRoom'
+
 export default function updateProject(projectId, expertId, expertStatus) {
-    return (dispatch) => {
+    return (dispatch, getState) => {
+        const { ProjectReducer, SocketReducer } = getState()
+        ProjectReducer.currentProject && leaveChatRoom(SocketReducer.socket, ProjectReducer.currentProject.chat_room)
         dispatch({type: 'START_UPDATE_PROJECT'})
         let sentExpertId
         if(expertId) {
@@ -21,8 +26,8 @@ export default function updateProject(projectId, expertId, expertStatus) {
         })
         .then(resp => resp.json())
         .then(data => {
-            console.log(data)
             dispatch({type: 'FINISH_UPDATE_PROJECT', data})
+            enterChatRoom(SocketReducer.socket, data.chat_room)
         })
     }
 }

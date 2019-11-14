@@ -1,6 +1,5 @@
 import React from 'react';
 import { Table } from 'react-bootstrap'
-import socketIOClient from "socket.io-client";
 import { connect } from 'react-redux'
 
 import CompleteProject from './completeProject';
@@ -8,15 +7,11 @@ import CompleteProject from './completeProject';
 import TaskListItem from '../components/taskListItem'
 import TaskNewForm from '../components/taskNewForm'
 import TaskEditForm from '../components/taskEditForm'
-import CommentNewForm from '../components/commentNewForm'
 import DisplayComments from '../components/displayComments'
 
 import { fetchProject } from '../actions/fetchProject'
 import { newComment } from '../actions/newComment'
 import { updateTask } from '../actions/updateTask'
-
-const endpoint = "http://127.0.0.1:8000"
-const socket = socketIOClient(endpoint)
 
 class TaskContainer extends React.PureComponent {
         state = { 
@@ -27,11 +22,6 @@ class TaskContainer extends React.PureComponent {
          }
 
     componentDidMount() {
-        socket.on('connect', () => {})
-        socket.on("receiveUpdateTask", () => {
-            this.props.fetchProject(this.props.project)
-        })
-        socket.emit('room', `task_id_${this.props.project.id}`)
         this.setState({
             ...this.state,
             projectComplete: this.checkProjectComplete()
@@ -46,8 +36,6 @@ class TaskContainer extends React.PureComponent {
                 newTask: false,
                 projectComplete: this.checkProjectComplete()
             })
-            socket.emit('leave', `task_id_${prevProps.project.chat_room.id}`)
-            socket.emit('room', `task_id_${this.props.project.chat_room.id}`)
         }
     }
 
@@ -63,8 +51,9 @@ class TaskContainer extends React.PureComponent {
         return false
     }
 
-    setStateAndSocket = () => {
-        socket.emit('sendUpdateTask', this.props.project.id)
+    setStateAndSocket = (tasks) => {
+        const projectId = this.props.project.id
+        this.props.socket.emit('sendUpdateTask', tasks, projectId)
         this.setState({
             ...this.state,
             showNewModal: false,
@@ -79,7 +68,7 @@ class TaskContainer extends React.PureComponent {
 
     handleDeleteClick = () => {
         if (window.confirm("Do you really want to delete this task?")) { 
-            fetch(`${process.env.REACT_APP_API_URL}/tasks/${this.state.editTask.id}`, {
+            fetch(`${process.env.REACT_APP_API_URL}/tasks/${this.state.focusTask.id}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
@@ -88,8 +77,8 @@ class TaskContainer extends React.PureComponent {
                 }
             })
             .then(resp => resp.json())
-            .then( () => {
-                socket.emit('sendUpdateTask', this.props.project.id)
+            .then(tasks => {
+                this.props.socket.emit('sendUpdateTask', tasks, this.props.project.id)
                 this.setState({
                     ...this.state,
                     showNewModal: false,
@@ -118,14 +107,13 @@ class TaskContainer extends React.PureComponent {
     }
 
     handleDoneCommentClick = (text) => {
-        const data = {text, commentOn: this.state.focusTask.id, userId: this.props.user.id}
+        const data = {text, commentOn: this.state.focusTask.id, userId: this.props.user.id, projectId: this.props.project.id}
         this.props.newComment('task', data)
         this.setState({
             ...this.state,
             focusTask: null,
             showCommentModal: !this.state.showCommentModal
         })
-        socket.emit('sendUpdateTask', this.props.project.id)
     }
 
     handleClick = (task, type) => {
@@ -163,7 +151,6 @@ class TaskContainer extends React.PureComponent {
                                                 task={task} 
                                                 handleDoneEditClick={this.handleDoneEditClick} 
                                                 handleClick={this.handleClick}
-                                                handleCommentClick={this.handleCommentClick}
                                             />)}
             </Table>
             {this.state.focusTask && <TaskEditForm 
@@ -178,15 +165,11 @@ class TaskContainer extends React.PureComponent {
                                         handleDoneEditClick={this.handleDoneNewClick} 
                                         handleNewClick={this.handleNewClick}
                                     />}
-            {this.state.focusTask &&    <CommentNewForm 
-                                            show={this.state.showCommentModal} 
-                                            handleDoneCommentClick={this.handleDoneCommentClick} 
-                                            handleClick={this.handleClick}
-                                        />}
             {this.state.focusTask &&    <DisplayComments 
-                                            task={this.state.focusTask}
+                                            element={this.state.focusTask}
                                             show={this.state.showDisplayModal} 
                                             handleClick={this.handleClick}
+                                            handleDoneCommentClick={this.handleDoneCommentClick}
                                         />}
             <CompleteProject show={this.state.projectComplete} toggleComplete={this.toggleComplete} handleHomeClick={this.props.handleHomeClick}/>
             <button id='new-task' className='btn-primary' onClick={this.handleNewClick}>Add a Task</button>
@@ -198,7 +181,10 @@ class TaskContainer extends React.PureComponent {
 function mapStateToProps(state){
     return {
         project: state.ProjectReducer.currentProject,
-        user: state.UserReducer.currentUser
+        user: state.UserReducer.currentUser,
+        socket: state.SocketReducer.socket,
+        taskCount: state.ProjectReducer.taskCount,
+        requesting: state.ProjectReducer.requesting
     }
 }
  

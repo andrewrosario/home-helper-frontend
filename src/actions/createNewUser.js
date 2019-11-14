@@ -5,7 +5,7 @@ export function createNewUser(user) {
     for(let key in user) {
         formData.append(key, user[key])
     }
-
+    
     return (dispatch) => {
         dispatch({type: 'START_CREATE_USER_REQUEST'})
         fetch(`${process.env.REACT_APP_API_URL}/users`, {

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Modal, Table } from 'react-bootstrap';
+import CommentNewForm from './commentNewForm'
 
 const DisplayComments = (props) => {
     return ( 
@@ -16,7 +17,7 @@ const DisplayComments = (props) => {
                         </tr>
                     </thead>
                     <tbody>
-                        {props.task.comments.map( (comment) => {
+                        {props.element.comments.map( (comment) => {
                             return (
                                 <tr key={comment.id}>
                                     <td>
@@ -30,6 +31,8 @@ const DisplayComments = (props) => {
                         })}
                     </tbody>
                 </Table>
+                Leave a Comment:
+                <CommentNewForm handleDoneCommentClick={props.handleDoneCommentClick} />
             </Modal.Body>
         </Modal>
      );

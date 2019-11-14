@@ -13,7 +13,6 @@ class CompleteProject extends Component {
     }
 
     nextStage = () => {
-        console.log('next')
         this.setState({
             ...this.state,
             stage: this.state.stage + 1
@@ -47,7 +46,6 @@ class CompleteProject extends Component {
         })
         .then(resp => resp.json())
         .then(data => {
-            console.log(data)
             this.nextStage()
         })
     }

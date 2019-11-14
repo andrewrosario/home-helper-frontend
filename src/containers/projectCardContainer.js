@@ -36,19 +36,23 @@ class ProjectCardContainer extends Component {
 
     renderProjectCards = (projectType) => {
         if(projectType === 'expertProjects') {
-            return this.props[projectType].map( (project)=> {
-                if(project.expert_status === 'accepted' && project.is_complete !== true) {
-                    return (
-                        <div key={project.id} className='project-card col-lg-3 col-sm-6'>
-                            <ProjectCard project={project} modal={false}/>
-                        </div>
-                    )
-                }
-            })
+            if(this.props[projectType].length) {
+                return (<div id='no-projects'>
+                    You have no projects on which you are an expert. What a great time to work on some DIY projets of your own.
+                </div>)
+            } else {
+                return this.props[projectType].map( (project)=> {
+                    if(project.expert_status === 'accepted' && project.is_complete !== true) {
+                        return (
+                            <div key={project.id} className='project-card col-lg-3 col-sm-6'>
+                                <ProjectCard project={project} modal={false}/>
+                            </div>
+                        )
+                    }
+                })
+            }
         } else {
             return this.props[projectType].map( (project)=> {
-                console.log(project)
-                console.log(project.is_complete)
                 if(project.is_complete !== true) {
                     return (
                         <div key={project.id} className='project-card col-lg-3 col-sm-6'>
@@ -63,7 +67,7 @@ class ProjectCardContainer extends Component {
     render() { 
         return ( 
             <div className='container overflow-auto'>
-                <div className='row'>
+                <div className='row col-12'>
                         {this.renderProjectCards(this.props.projectType)}
                 </div>
                 <Modal className='container' show={!!this.state.pendingProjects.length} onHide={() => console.log('hide')}>
