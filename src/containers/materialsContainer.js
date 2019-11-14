@@ -5,7 +5,6 @@ import MaterialNewForm from '../components/materialNewForm'
 import MaterialEditForm from '../components/materialEditForm'
 import { connect } from 'react-redux'
 import { fetchProject } from '../actions/fetchProject'
-import CommentNewForm from '../components/commentNewForm'
 import { newComment } from '../actions/newComment'
 import DisplayComments from '../components/displayComments'
 
@@ -43,6 +42,7 @@ class MaterialsContainer extends Component {
                 showNewModal: false,
                 showEditModal: false,
                 showDiplayModal: false,
+                showCommentModal: false,
                 focus: null
             })
         })
@@ -137,7 +137,7 @@ class MaterialsContainer extends Component {
                                                 handleDoneNewClick={this.handleDoneNewClick} 
                                                 handleClick={this.handleClick}
                                             />}
-            {this.state.focusTask &&    <DisplayComments 
+            {this.state.focus &&    <DisplayComments 
                                             focus={this.state.focus}
                                             show={this.state.showCommentModal} 
                                             handleClick={this.handleClick}
