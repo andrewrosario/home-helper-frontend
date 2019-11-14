@@ -32,6 +32,14 @@ class App extends Component {
     this.props.openSocket(socket)
   }
 
+  componentDidUpdate() {
+    if(!this.props.socket) {
+      const socket = io('https://diyhelper.herokuapp.com/');
+      socket.on('connect', () => {})
+      this.props.openSocket(socket)
+    }
+  }
+
   render() {
     return (
       <Router history={history}>
@@ -51,7 +59,10 @@ class App extends Component {
 
 function mapStateToProps(state) {
   if(state.UserReducer.currentUser) {
-    return {currentUser: state.UserReducer.currentUser.user}
+    return {
+      currentUser: state.UserReducer.currentUser.user,
+      socket: state.SocketReducer.socket
+    }
   }
 }
 

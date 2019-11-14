@@ -7,6 +7,12 @@ export default function SocketReducer( state = { socket: null }, action) {
                 ...state,
                 socket: action.socket
             }
+        case 'LOGOUT':
+            console.log('logout socket reducer', action.socket)
+            return {
+                ...state,
+                socket: null
+            }
         default:
             return state;
     }
