@@ -21,7 +21,11 @@ class DetailsContainer extends Component {
         }, 0)
         console.log('calculateprogress return', completedTime, totalTime)
 
-        totalTime > 0 ? Math.round(completedTime/totalTime*100) : 0
+        if(totalTime > 0) {
+            return Math.round(completedTime/totalTime*100) 
+        } else {
+            return 0
+        }
     }
 
     constructor(props) {
