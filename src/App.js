@@ -33,9 +33,23 @@ class App extends Component {
   }
 
   componentDidUpdate() {
+    console.log('App did update', !this.props.socket)
     if(!this.props.socket) {
       const socket = io('https://diyhelper.herokuapp.com/');
       socket.on('connect', () => {})
+      socket.on("receiveUpdateMaterials", materials => {
+          console.log('receive update materials', materials)
+          this.props.dispatchMaterial(materials)
+      })
+      socket.on("receiveMessage", message => {
+          console.log('receive update message', message.chat_room_id)
+          this.props.dispatchMessage(message)
+      })
+      socket.on("receiveUpdateTask", (tasks) => {
+          console.log('receive update task', tasks)
+          this.props.dispatchTask(tasks)
+      })
+      console.log('open socket', socket)
       this.props.openSocket(socket)
     }
   }
