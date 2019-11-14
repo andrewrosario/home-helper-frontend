@@ -7,9 +7,7 @@ import { fetchProject } from '../actions/fetchProject'
 import { enterChatRoom } from '../functions/enterChatRoom'
 
 const ProjectCard = (props) => {
-    console.log('project card props.project', props.project)
     const { id, description, title, project_type_id, expert } = props.project
-    console.log('projectCard expert', expert)
 
     const projectType = () => {
         switch(project_type_id) {
@@ -36,7 +34,6 @@ const ProjectCard = (props) => {
     }
 
     const handleViewProject = (project) => {
-        console.log('handle view project', project)
         enterChatRoom(props.socket, project.chat_room)
         props.fetchProject(project)
     }

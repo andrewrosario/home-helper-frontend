@@ -51,12 +51,10 @@ export default function ProjectReducer( state = { completeCount: 0, taskCount: 0
                 requesting: true
             }
         case 'FINISH_NEW_COMMENT':
-            console.log('finish new comment action', action)
             const pluralType = action.commentType + 's'
             let object = Object.assign( {}, state)
             object.currentProject[pluralType] = action.comment
             object.requesting = false
-            console.log('finish new comment object', object)
             return {
                 ...object
             }
@@ -71,22 +69,17 @@ export default function ProjectReducer( state = { completeCount: 0, taskCount: 0
             taskState.currentProject.tasks = action.tasks
             taskState.taskCount = taskState.currentProject.tasks.length         
             taskState.requesting = false
-            taskState.completeCount = completeCount
-            console.log('finish update task, completeCount', completeCount)
-            console.log('finish update task, taskState', taskState)
-            console.log('finish update task, action', action)  
+            taskState.completeCount = completeCount  
             return {
                 ...taskState
             }
         case 'UPDATE_MATERIALS':
-            console.log('materials in reducer', action.materials) 
             let materialsState = Object.assign( {}, state)
             materialsState.currentProject.materials = action.materials
             return {
                 ...materialsState
             }
         case 'RECEIVE_CHAT_MESSAGE':
-            console.log('reducer receive chat message', action)
             let chatState = Object.assign( {}, state)
             let allMessages = chatState.currentProject.chat_room.messages
             allMessages.push(action.message)

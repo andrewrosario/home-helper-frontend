@@ -29,9 +29,7 @@ class TaskContainer extends React.PureComponent {
     }
 
     componentDidUpdate(prevProps) {
-        console.log('task container props', prevProps.taskCount, this.props.taskCount)
         if(prevProps.project.id !== this.props.project.id) {
-            console.log('task container did update if', prevProps)
             this.setState({
                 ...this.state,
                 focusTask: null,
@@ -56,7 +54,6 @@ class TaskContainer extends React.PureComponent {
     setStateAndSocket = (tasks) => {
         const projectId = this.props.project.id
         this.props.socket.emit('sendUpdateTask', tasks, projectId)
-        console.log('setStateandSocket', projectId)
         this.setState({
             ...this.state,
             showNewModal: false,

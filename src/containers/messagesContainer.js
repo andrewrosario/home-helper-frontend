@@ -11,7 +11,6 @@ class MessagesContainer extends Component {
         }
     }
     componentDidUpdate(prevProps) {
-        console.log('messageContainerProps', this.props.project)
         if(prevProps.project.chat_room.messages.length !== this.props.project.chat_room.messages.length) {
             this.forceUpdate()
             this.setState({})
@@ -19,7 +18,6 @@ class MessagesContainer extends Component {
     }
 
     renderChatMessages = (messages) => {
-        console.log('messages container messages', messages)
         return messages.map( (message, key) => {
             return <li key={key} className={message.user_id === this.props.user.id ? 'chat-message w-50 shadow text-right blue lighten-2 rounded-pill ml-auto' : 'chat-message w-50 shadow mr-auto text-left purple lighten-3 rounded-pill'}>{message.text}</li>
         });
@@ -31,7 +29,6 @@ class MessagesContainer extends Component {
             <MDBContainer className='pt-1 pl-1 pr-1'>
                 <MDBListGroup className='w-100'>
                     {this.renderChatMessages(this.props.messages)}
-                    {/* {this.props.chatRoom.messages.map( (message, key) => <li key={key} className={message.user_id === this.props.user.id ? 'chat-message w-50 shadow text-right blue lighten-2 rounded-pill ml-auto' : 'chat-message w-50 shadow mr-auto text-left purple lighten-3 rounded-pill'}>{message.text}</li>)} */}
                 </MDBListGroup>
             </MDBContainer>
         </div> );
@@ -41,7 +38,6 @@ class MessagesContainer extends Component {
 function mapStateToProps(state){
     return {
         user: state.UserReducer.currentUser,
-        // project: state.ProjectReducer.currentProject,
         socket: state.SocketReducer.socket,
         messages: state.ChatRoomReducer.currentChatRoom.messages
     }

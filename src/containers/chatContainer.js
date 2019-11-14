@@ -14,7 +14,6 @@ class ChatContainer extends Component {
     }
     
     updateScroll = (element) => {
-        console.log('updateScroll')
         var element = document.getElementById('incoming-messages')
         if(element) {
             element.scrollTop = element.scrollHeight;
@@ -26,9 +25,6 @@ class ChatContainer extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        console.log('if', prevProps.chatRoom.messageCount, this.props.chatRoom.messageCount)
-        console.log('if', prevProps.chatRoom.currentChatRoom.messages.length !== this.props.chatRoom.currentChatRoom.messages.length)
-        console.log('chatContainer update', prevProps, this.props)
         if(prevProps.chatRoom.messageCount !== this.props.chatRoom.messageCount) {
             this.updateScroll()
         }
@@ -51,7 +47,6 @@ class ChatContainer extends Component {
         })
         .then(resp => resp.json())
         .then(data => {
-            console.log('send chat message data', data)
             this.props.socket.emit("sendMessage", data, chatRoomId);
             this.setState({
                 message: {
@@ -72,7 +67,6 @@ class ChatContainer extends Component {
     };
 
     renderChatMessages = (messages) => {
-        console.log('messages container messages', messages)
         return messages.map( (message, key) => {
             return <li key={key} className={message.user_id === this.props.user.id ? 'chat-message w-50 shadow text-right blue lighten-2 rounded-pill ml-auto' : 'chat-message w-50 shadow mr-auto text-left purple lighten-3 rounded-pill'}>{message.text}</li>
         });

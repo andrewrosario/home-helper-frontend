@@ -35,7 +35,6 @@ class MaterialsContainer extends Component {
         })
         .then(resp => resp.json())
         .then(materials => {
-            console.log('socket emit materials container', materials)
             this.props.socket.emit('sendUpdateMaterials', materials, this.props.project.id)
             this.setState({
                 ...this.state,
@@ -69,7 +68,6 @@ class MaterialsContainer extends Component {
             })
             .then(resp => resp.json())
             .then(materials => {
-                console.log('materials handle delete click', materials, this.props.project.id)
                 this.props.socket.emit('sendUpdateMaterials', materials, this.props.project.id)
                 this.setState({
                     ...this.state,
@@ -86,7 +84,6 @@ class MaterialsContainer extends Component {
     }
 
     handleClick = (material, type) => {
-        console.log('handleClikc Materials Container', material, type, `show${type}Modal`)
         this.setState({
             ...this.state,
             focus: material,
@@ -96,7 +93,6 @@ class MaterialsContainer extends Component {
 
     handleDoneCommentClick = (text) => {
         const data = {text, commentOn: this.state.focus.id, userId: this.props.user.id}
-        console.log('handle done comment click', data)
         this.props.newComment('material', data, this.materialSocketUpdate)
         this.setState({
             ...this.state,

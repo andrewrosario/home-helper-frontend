@@ -9,7 +9,6 @@ class SelectExpert extends Component {
     }
 
     componentDidMount() {
-        console.log('select expert mount', `${process.env.REACT_APP_API_URL}/experts/${this.props.projectTypeId}`)
         fetch(`${process.env.REACT_APP_API_URL}/experts/${this.props.projectTypeId}`, {
             headers: {
                 'Content-Type': 'application/json',
@@ -19,7 +18,6 @@ class SelectExpert extends Component {
         })
         .then(resp => resp.json())
         .then(data => {
-            console.log('select expert data', data)
             this.setState({
                 experts: data
             })
