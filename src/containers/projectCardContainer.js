@@ -36,16 +36,22 @@ class ProjectCardContainer extends Component {
 
     renderProjectCards = (projectType) => {
         if(projectType === 'expertProjects') {
-            return this.props[projectType].map( (project)=> {
-                if(project.expert_status === 'accepted' && project.is_complete !== true) {
-                    console.log('project card container project in map', project)
-                    return (
-                        <div key={project.id} className='project-card col-lg-3 col-sm-6'>
-                            <ProjectCard project={project} modal={false}/>
-                        </div>
-                    )
-                }
-            })
+            if(this.props[projectType].length) {
+                <div id='no-projects'>
+                    You have no projects on which you are an expert. What a great time to work on some DIY projets of your own.
+                </div>
+            } else {
+                return this.props[projectType].map( (project)=> {
+                    if(project.expert_status === 'accepted' && project.is_complete !== true) {
+                        console.log('project card container project in map', project)
+                        return (
+                            <div key={project.id} className='project-card col-lg-3 col-sm-6'>
+                                <ProjectCard project={project} modal={false}/>
+                            </div>
+                        )
+                    }
+                })
+            }
         } else {
             return this.props[projectType].map( (project)=> {
                 console.log('map project cards in project card container', project)
