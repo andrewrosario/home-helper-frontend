@@ -37,9 +37,9 @@ class ProjectCardContainer extends Component {
     renderProjectCards = (projectType) => {
         if(projectType === 'expertProjects') {
             if(this.props[projectType].length) {
-                <div id='no-projects'>
+                return (<div id='no-projects'>
                     You have no projects on which you are an expert. What a great time to work on some DIY projets of your own.
-                </div>
+                </div>)
             } else {
                 return this.props[projectType].map( (project)=> {
                     if(project.expert_status === 'accepted' && project.is_complete !== true) {
