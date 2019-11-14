@@ -121,6 +121,7 @@ class MaterialsContainer extends Component {
                                                                                     key={material.id} 
                                                                                     material={material} 
                                                                                     handleClick={this.handleClick}
+                                                                                    handleCommentClick={this.handleCommentClick}
                                                                                 />)}
             </Table>
             {this.state.showEditModal &&    <MaterialEditForm 
