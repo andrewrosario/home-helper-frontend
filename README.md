@@ -21,15 +21,19 @@ Please enter a unique email and password. If the username is already in use, you
 Novices and experts collaborate on creating materials and task lists. They are able to comment on each item and engage in real-time chat. The dashboard is powered by sockets and acts like a Google Doc, so both the novice and expert can access and make live changes to facilitate collaboration.
 
 ## Built With
-ReactJS
-React Hooks
-Redux
-Socket.io (Websockets)
-Ruby on Rails
-Active Storage/AWS S3
-PostgreSQL
-Bootstrap
-
+* ReactJS
+* React Hooks
+* Redux
+* Socket.io (Websockets)
+* Node.js Express Server
+* JWT Auth
+* Ruby on Rails
+* Active Storage/AWS S3
+* PostgreSQL
+* HTML 5
+* CSS 3
+* Bootstrap
+* SASS
 
 ## Created By:
 Andy Rosario
