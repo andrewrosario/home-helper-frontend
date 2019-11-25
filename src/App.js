@@ -40,6 +40,7 @@ class App extends Component {
       })
       socket.on("receiveUpdateTask", (tasks) => {
           this.props.dispatchTask(tasks)
+          console.log('client receive tasks')
       })
       this.props.openSocket(socket)
     }
