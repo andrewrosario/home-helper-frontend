@@ -1,6 +1,5 @@
 export default function updateUser(id) {
     return (dispatch, getState) => {
-        const { SocketReducer } = getState()
         dispatch({type: 'START_UPDATE_REQUEST'})
         fetch(`${process.env.REACT_APP_API_URL}/users/${id}`, {
             headers: {

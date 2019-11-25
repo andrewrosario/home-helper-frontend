@@ -14,7 +14,7 @@ export function createNewProject(project) {
     }
 
     return (dispatch, getState) => {
-        const { ProjectReducer, UserReducer, SocketReducer } = getState()
+        const { ProjectReducer, SocketReducer } = getState()
         ProjectReducer.currentProject && leaveChatRoom(SocketReducer.socket, ProjectReducer.currentProject.chat_room)
         dispatch({type: 'START_CREATE_PROJECT_REQUEST'}, project)
         fetch(`${process.env.REACT_APP_API_URL}/projects`, {
