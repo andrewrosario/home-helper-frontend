@@ -35,6 +35,7 @@ class ProjectCardContainer extends Component {
     }
 
     renderProjectCards = (projectType) => {
+        console.log(this.props[projectType])
         if(projectType === 'expertProjects') {
             if(this.props[projectType].length) {
                 return (<div id='no-projects'>
