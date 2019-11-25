@@ -37,6 +37,9 @@ class TaskContainer extends React.PureComponent {
                 projectComplete: this.checkProjectComplete()
             })
         }
+        if(this.props.requesting !== prevProps.requesting) {
+            console.log('change in requesting task container')
+        }
     }
 
     checkProjectComplete = () => {
