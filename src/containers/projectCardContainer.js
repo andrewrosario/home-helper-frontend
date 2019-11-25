@@ -38,7 +38,7 @@ class ProjectCardContainer extends Component {
         console.log(this.props[projectType])
         if(projectType === 'expertProjects') {
             if(!this.props[projectType].length) {
-                return (<div id='no-projects'>
+                return (<div id='no-projects' className='mt-5'>
                     You have no projects on which you are an expert. What a great time to work on some DIY projets of your own.
                 </div>)
             } else {
