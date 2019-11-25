@@ -12,24 +12,28 @@ Please enter a unique email and password. If the username is already in use, you
 ## Using DIY Helper!
 
 ### 1) Login/Signup!
-![DIY_Helper_Sign_Up](https://drive.google.com/open?id=1OTGa7LqWhcyRXQK49WGJthZv_dZ9MOQ5)
-![DIY_Helper_Sign_In](https://drive.google.com/open?id=1OTGa7LqWhcyRXQK49WGJthZv_dZ9MOQ5)
+<img src="http://drive.google.com/uc?export=view&id=1OTGa7LqWhcyRXQK49WGJthZv_dZ9MOQ5" alt="drawing" width="300"/>
+<img src="http://drive.google.com/uc?export=view&id=1zec7ASo7huHulmX8LDiGr7ddaY7Q9zvQ" alt="drawing" width="300"/>
 
 ### 2) Check out Project Management Dashboard
-![Lizzo_Menu_Options](https://media.giphy.com/media/j04WCzclHKATpQWjLr/giphy.gif)
+<img src="http://drive.google.com/uc?export=view&id=1p0u1m5H_N3jJd0n2bzPtoZZjG1AHolLC" alt="drawing" width="600"/>
 
 Novices and experts collaborate on creating materials and task lists. They are able to comment on each item and engage in real-time chat. The dashboard is powered by sockets and acts like a Google Doc, so both the novice and expert can access and make live changes to facilitate collaboration.
 
 ## Built With
-ReactJS
-React Hooks
-Redux
-Socket.io (Websockets)
-Ruby on Rails
-Active Storage/AWS S3
-PostgreSQL
-Bootstrap
-
+* ReactJS
+* React Hooks
+* Redux
+* Socket.io (Websockets)
+* Node.js Express Server
+* JWT Auth
+* Ruby on Rails
+* Active Storage/AWS S3
+* PostgreSQL
+* HTML 5
+* CSS 3
+* Bootstrap
+* SASS
 
 ## Created By:
 Andy Rosario
