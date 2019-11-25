@@ -17,6 +17,10 @@ class MaterialsContainer extends Component {
         focus: null
     }
 
+    materialsSocketUpdate = (materials) => {
+        this.props.socket.emit('sendUpdateMaterials', materials, this.props.project.id)
+    }
+
     fetchPostPatch = (materialsObj, method, path) => {
         const projectId = this.props.project.id
         fetch(`${process.env.REACT_APP_API_URL}/${path}`, {
@@ -35,7 +39,7 @@ class MaterialsContainer extends Component {
         })
         .then(resp => resp.json())
         .then(materials => {
-            this.props.socket.emit('sendUpdateMaterials', materials, this.props.project.id)
+            this.materialsSocketUpdate(materials)
             this.setState({
                 ...this.state,
                 showNewModal: false,
@@ -68,7 +72,7 @@ class MaterialsContainer extends Component {
             })
             .then(resp => resp.json())
             .then(materials => {
-                this.props.socket.emit('sendUpdateMaterials', materials, this.props.project.id)
+                this.materialsSocketUpdate(materials)
                 this.setState({
                     ...this.state,
                     showNewModal: false,
@@ -77,10 +81,6 @@ class MaterialsContainer extends Component {
                 })
             })
         }
-    }
-
-    materialsSocketUpdate = (materials) => {
-        this.props.socket.emit('sendUpdateMaterials', materials, this.props.project.id)
     }
 
     handleClick = (material, type) => {

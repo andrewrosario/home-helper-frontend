@@ -5,6 +5,7 @@ import { faCommentAlt } from '@fortawesome/free-solid-svg-icons'
 
 function TaskListItem(props) {
     const {id, text, time_required, is_complete, comments} = props.task
+    
     return ( 
         <tbody>
             <tr>

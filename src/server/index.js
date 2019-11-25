@@ -26,7 +26,7 @@ io.on('connection', function(socket){
         io.sockets.in(`chat_id_${id}`).emit('receiveMessage', message);
     })
     socket.on('sendUpdateTask', function(tasks, id) {
-        console.log('index updateTask', id)
+        console.log('index updateTask', tasks, id)
         io.sockets.in(`task_id_${id}`).emit('receiveUpdateTask', tasks);
     })
     socket.on('sendUpdateMaterials', function(materials, id) {
