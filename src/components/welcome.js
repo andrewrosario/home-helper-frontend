@@ -17,8 +17,9 @@ const  WelcomePage = () => {
 
     return ( 
         <>
-            <Alert onClose={() => setShowAlert(false)} dismissible>
+            <Alert>
                 If you don't want to create an account, use email: 'lizzo@lizzo.com' password: 'lizzo' to log in.
+                The backend host 'sleeps' applications if they are unused for a period. Please be patient with your initial log in.
             </Alert>
             <div id={'welcome'} className='row' style={{backgroundImage: "url(/tools.jpg)", height: '100vh', backgroundSize: 'cover'}}>
                 <div className='col-7'></div>
