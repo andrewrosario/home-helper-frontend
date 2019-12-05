@@ -6,6 +6,7 @@ import Login from '../containers/login'
 const  WelcomePage = () => {
     const [showLogin, setShowLogin] = useState(false)
     const [showSignUp, setShowSignUp] = useState(false);
+    const [showAlert, setShowAlert] = useState(true);
 
     const handleClose = () => {
         setShowSignUp(false)
@@ -16,7 +17,7 @@ const  WelcomePage = () => {
 
     return ( 
         <>
-            <Alert>
+            <Alert onClose={() => setShowAlert(false)} dismissible>
                 If you don't want to create an account, use email: 'lizzo@lizzo.com' password: 'lizzo' to log in.
             </Alert>
             <div id={'welcome'} className='row' style={{backgroundImage: "url(/tools.jpg)", height: '100vh', backgroundSize: 'cover'}}>
