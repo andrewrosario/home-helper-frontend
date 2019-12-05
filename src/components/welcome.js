@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Modal } from 'react-bootstrap';
+import { Button, Modal, Alert } from 'react-bootstrap';
 import NewUser from '../containers/newUser'
 import Login from '../containers/login'
 
@@ -16,6 +16,9 @@ const  WelcomePage = () => {
 
     return ( 
         <>
+            <Alert>
+                If you don't want to create an account, use email: 'lizzo@lizzo.com' password: 'lizzo' to log in.
+            </Alert>
             <div id={'welcome'} className='row' style={{backgroundImage: "url(/tools.jpg)", height: '100vh', backgroundSize: 'cover'}}>
                 <div className='col-7'></div>
                 <div id={'call-to-action'} className='col-lg-5 col-sm-10'>
