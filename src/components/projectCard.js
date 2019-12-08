@@ -27,6 +27,7 @@ const ProjectCard = (props) => {
                 return 'painting';
         }
     }
+    module.exports = sum;
 
     const handleClick = (expert, status) => {
         props.updateProject(id, expert.id, status)
