@@ -6,7 +6,7 @@ import updateUser from '../actions/updateUser'
 import { fetchProject } from '../actions/fetchProject'
 import { enterChatRoom } from '../functions/enterChatRoom'
 
-const ProjectCard = (props) => {
+export const ProjectCard = (props) => {
     const { id, description, title, project_type_id, expert } = props.project
 
     const projectType = () => {
@@ -27,7 +27,6 @@ const ProjectCard = (props) => {
                 return 'painting';
         }
     }
-    module.exports = sum;
 
     const handleClick = (expert, status) => {
         props.updateProject(id, expert.id, status)
