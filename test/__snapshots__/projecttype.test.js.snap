@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`returns the correct project type 1`] = `
+<div
+  className="mt-2 card"
+>
+  <img
+    className="card-img img-fluid"
+    src="./plumbing.jpg"
+  />
+  <div
+    className="card-body"
+  >
+    <div
+      className="card-title h5"
+    >
+      Fix a Leaky Faucet
+    </div>
+    <p
+      className="card-text"
+    >
+      The faucet in my kitchen sink has a consistent drip
+    </p>
+    <button
+      className="btn btn-primary"
+      disabled={false}
+      onClick={[Function]}
+      type="button"
+    >
+      View Project
+    </button>
+  </div>
+</div>
+`;
