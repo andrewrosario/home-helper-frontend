@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`returns the correct project type 1`] = `
+exports[`Snapshot test of Project Card component 1`] = `
 <div
   className="mt-2 card"
 >

@@ -1,6 +1,8 @@
 import React from 'react';
 let { ProjectCard } = require('../src/components/projectCard')
 import renderer from 'react-test-renderer';
+import '@testing-library/jest-dom/extend-expect'
+import {render, fireEvent} from '@testing-library/react'
 
 var project = {
   "id": 1,
@@ -641,7 +643,7 @@ var user = {
     "rating": 0.0
 }
 
-test('returns the correct project type', () => {
+test('Snapshot test of Project Card component', () => {
   const component = renderer.create(
       <ProjectCard 
         project={project}
@@ -653,3 +655,16 @@ test('returns the correct project type', () => {
   console.log(tree)
   expect(tree).toMatchSnapshot();
 });
+
+
+test('returns the correct title', () => {
+    const {queryByText} = render(
+        <ProjectCard 
+          project={project}
+          user={user}
+          handleClick={()=>{}}
+        />
+    )
+    expect(queryByText("Fix a Leaky Faucet")).toBeTruthy()
+});
+
