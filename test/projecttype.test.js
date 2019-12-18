@@ -665,6 +665,18 @@ test('returns the correct title', () => {
           handleClick={()=>{}}
         />
     )
-    expect(queryByText("Fix a Leaky Faucet")).toBeTruthy()
+    expect(queryByText("Fix a Leaky Faucet")).toBeInTheDocument()
 });
+
+test('returns the correct description', () => {
+    const {queryByText} = render(
+        <ProjectCard 
+          project={project}
+          user={user}
+          handleClick={()=>{}}
+        />
+    )
+    expect(queryByText("The faucet in my kitchen sink has a consistent drip")).toBeInTheDocument()
+});
+
 
