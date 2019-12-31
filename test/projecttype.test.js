@@ -658,25 +658,37 @@ test('Snapshot test of Project Card component', () => {
 
 
 test('returns the correct title', () => {
-    const {queryByText} = render(
+    const {getByText} = render(
         <ProjectCard 
           project={project}
           user={user}
           handleClick={()=>{}}
         />
     )
-    expect(queryByText("Fix a Leaky Faucet")).toBeInTheDocument()
+    expect(getByText("Fix a Leaky Faucet")).toBeInTheDocument()
 });
 
 test('returns the correct description', () => {
-    const {queryByText} = render(
+    const {getByText} = render(
         <ProjectCard 
           project={project}
           user={user}
           handleClick={()=>{}}
         />
     )
-    expect(queryByText("The faucet in my kitchen sink has a consistent drip")).toBeInTheDocument()
+    expect(getByText("The faucet in my kitchen sink has a consistent drip")).toBeInTheDocument()
 });
+
+test('shows view project button', () => {
+    const {getByText} = render(
+        <ProjectCard 
+          project={project}
+          user={user}
+          handleClick={()=>{}}
+        />
+    )
+    expect(getByText("View Project")).toBeInTheDocument()
+});
+
 
 
