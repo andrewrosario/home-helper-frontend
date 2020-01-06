@@ -60,7 +60,7 @@ export const ProjectCard = (props) => {
                                 Reject
                             </Button>
                         </> 
-                    : <Button onClick={() => handleViewProject(props.project)}>View Project</Button>}
+                    : <Button id='view' onClick={() => handleViewProject(props.project)}>View Project</Button>}
             </Card.Body>
         </Card>
      );

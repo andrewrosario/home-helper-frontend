@@ -1,8 +1,13 @@
 import React from 'react';
+import Enzyme from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16'
 let { ProjectCard } = require('../src/components/projectCard')
 import renderer from 'react-test-renderer';
 import '@testing-library/jest-dom/extend-expect'
 import {render, fireEvent} from '@testing-library/react'
+import { shallow } from 'enzyme'
+
+Enzyme.configure({ adapter: new Adapter() });
 
 var project = {
   "id": 1,
@@ -652,7 +657,6 @@ test('Snapshot test of Project Card component', () => {
       />
   )
   let tree = component.toJSON();
-  console.log(tree)
   expect(tree).toMatchSnapshot();
 });
 
@@ -690,5 +694,18 @@ test('shows view project button', () => {
     expect(getByText("View Project")).toBeInTheDocument()
 });
 
-
+describe('Test Button Click', () => {
+    it('Clicks', () => {
+      const mockCallBack = jest.fn();
+  
+      const card = shallow((
+        <ProjectCard 
+          project={project}
+          user={user}
+          handleClick={mockCallBack}
+        />))
+      card.find('.button').simulate('click');
+      expect(mockCallBack.mock.calls.length).toEqual(1);
+    });
+  });
 
